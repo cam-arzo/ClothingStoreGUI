@@ -21,3 +21,22 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+
+# (!!) I've added these extra ignores:
+
+# NetBeans and Ant specific files
+nbproject/private/
+nbproject/build-impl.xml
+build/
+build.xml
+manifest.mf
+nbbuild/
+dist/
+nbdist/
+
+# Ignore database-related files
+ClothingStoreDB/
+
+# Ignore all .dat folders and their contents
+*.dat/
