@@ -24,32 +24,24 @@ public class Database {
     String dbpassword = "pdc";  // DB password
     
     public void setup() {
-        
-        Connection conn = null;
         Statement stmt = null;
         
-        // ENSURE TABLES ARE PRESENT IN DATABASE
         try {
             conn = DriverManager.getConnection(url, dbusername, dbpassword);
             stmt = conn.createStatement();
             
             // Create tables if they don't already exist
-            if (!tableExists(conn, "products")) {
+            if (tableExists("products")) {
                 // !! TODO: setup product table properly with correct attributes
                 stmt.executeUpdate("CREATE TABLE products (name VARCHAR(64))");
             }
-        // CATCH ERRORS
-        } catch (Throwable e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Error setting up database.");
-        // CLOSE RESOURCES (such as connection and statement)
+            System.out.println("Error setting up database: " + e.getMessage());
         } finally {
             try {
                 if (stmt != null) {
                     stmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
                 }
             } catch (SQLException se) {
                 se.printStackTrace();
@@ -57,15 +49,17 @@ public class Database {
         }
     }
     
-    public boolean tableExists(Connection conn, String tableName) throws SQLException {
-        // Search for table in metadata
-        DatabaseMetaData metaData = conn.getMetaData();
+    public boolean tableExists(String tableName) {
+        try {
+            // Search for table in metadata
+            DatabaseMetaData metaData = conn.getMetaData();
         try (ResultSet rs = metaData.getTables(null, null, tableName.toUpperCase(), null)) {
-            // If the result set has at least one row, the table exists
-            return rs.next();
+                // If the result set has at least one row, the table exists
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
-    
-    
-    
 }
