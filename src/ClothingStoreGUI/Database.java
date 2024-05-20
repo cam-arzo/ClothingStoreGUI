@@ -60,7 +60,7 @@ public class Database {
     public boolean tableExists(Connection conn, String tableName) throws SQLException {
         // Search for table in metadata
         DatabaseMetaData metaData = conn.getMetaData();
-        try (ResultSet rs = metaData.getTables(null, null, tableName, null)) {
+        try (ResultSet rs = metaData.getTables(null, null, tableName.toUpperCase(), null)) {
             // If the result set has at least one row, the table exists
             return rs.next();
         }
