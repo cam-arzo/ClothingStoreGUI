@@ -1,5 +1,7 @@
 package ClothingStoreGUI;
 
+import java.util.Scanner;
+
 public class ClothingStoreMain {
     
     public static void main(String[] args) {
@@ -21,6 +23,16 @@ public class ClothingStoreMain {
         
         // Create panels, switch to starting panel, show view
         view.setup(controller);
+        
+        
+        // !! used for debugging
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter SQL table: ");
+            String str = scanner.nextLine();
+            database.previewTable(str);
+            
+        }
         
     }
     
