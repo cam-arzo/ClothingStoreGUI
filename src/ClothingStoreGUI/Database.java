@@ -37,6 +37,7 @@ public class Database {
             if (!tableExists(conn, "products")) {
                 // !! TODO: setup product table properly with correct attributes
                 stmt.executeUpdate("CREATE TABLE products (name VARCHAR(64))");
+                stmt.executeUpdate("INSERT INTO products (product_id) VALUES 'Shoes' ");
             }
         // CATCH ERRORS
         } catch (Throwable e) {

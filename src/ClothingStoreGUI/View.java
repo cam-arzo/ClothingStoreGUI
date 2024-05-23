@@ -24,7 +24,7 @@ public class View extends JFrame {
     // Create panels & switch to correct starting panel
     public void setup(Controller controller) {
         // Create panels
-        UserPanel userPanel = new UserPanel(controller);  // need to pass controller so that panel buttons signal controller
+        PanelViewSelection userPanel = new PanelViewSelection(controller);  // need to pass controller so that panel buttons signal controller
         
         // Switch to starting panel
         switchPanel(userPanel);
