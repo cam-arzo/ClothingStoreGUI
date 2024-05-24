@@ -37,7 +37,6 @@ public class PanelCart extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(600, 400));
 
         BackButton.setText("Back");
-        BackButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         BackButton.setInheritsPopupMenu(true);
         BackButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,8 +80,8 @@ public class PanelCart extends javax.swing.JPanel {
                     .addComponent(ConfirmButton)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(191, 191, 191)
+                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(166, 166, 166)
                         .addComponent(CartLabel))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(156, 156, 156)

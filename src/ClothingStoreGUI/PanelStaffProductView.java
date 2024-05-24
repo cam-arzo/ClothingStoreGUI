@@ -44,14 +44,15 @@ public class PanelStaffProductView extends javax.swing.JPanel {
         AddButton = new javax.swing.JButton();
         NoPurposeButton = new javax.swing.JRadioButton();
         NoGenderButton = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
         PurposeLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        PurposeLabel.setText("Purpose");
+        PurposeLabel.setText("Filter by category:");
 
         GenderLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        GenderLabel.setText("Gender");
+        GenderLabel.setText("Filter by gender:");
 
         PurposeButtonGroup.add(CasualButton);
         CasualButton.setText("Casual");
@@ -110,66 +111,82 @@ public class PanelStaffProductView extends javax.swing.JPanel {
         AddButton.setText("Add new item");
 
         PurposeButtonGroup.add(NoPurposeButton);
+        NoPurposeButton.setSelected(true);
         NoPurposeButton.setText("None");
 
         GenderButtonGroup.add(NoGenderButton);
+        NoGenderButton.setSelected(true);
         NoGenderButton.setText("None");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Product menu - Staff");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(31, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(89, 89, 89)
-                            .addComponent(ItemModifyButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(RemoveButton)
-                            .addGap(18, 18, 18)
-                            .addComponent(AddButton)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(SleepButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(NoPurposeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(37, 37, 37)
+                                            .addComponent(SleepButton)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(NoPurposeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(CasualButton)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(FormalButton)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(SportsButton)))
+                                    .addGap(57, 57, 57))
+                                .addGroup(layout.createSequentialGroup()
                                     .addComponent(PurposeLabel)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CasualButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(FormalButton)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(SportsButton)))
-                        .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(MaleButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(FemaleButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(UnisexButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(NoGenderButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(GenderLabel)
-                                .addGap(48, 48, 48)))
-                        .addGap(95, 95, 95)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                                    .addGap(98, 98, 98)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(14, 14, 14)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(MaleButton)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(FemaleButton))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(UnisexButton)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(NoGenderButton))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(29, 29, 29)
+                                    .addComponent(GenderLabel)))
+                            .addGap(95, 95, 95)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(180, 180, 180)
+                        .addComponent(jLabel1)))
+                .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ItemModifyButton)
+                .addGap(18, 18, 18)
+                .addComponent(RemoveButton)
+                .addGap(18, 18, 18)
+                .addComponent(AddButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(PurposeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(GenderLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(GenderLabel)
+                    .addComponent(PurposeLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CasualButton)
@@ -185,12 +202,12 @@ public class PanelStaffProductView extends javax.swing.JPanel {
                     .addComponent(UnisexButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(RemoveButton)
                     .addComponent(ItemModifyButton)
                     .addComponent(AddButton))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -229,6 +246,7 @@ public class PanelStaffProductView extends javax.swing.JPanel {
     private javax.swing.JRadioButton SleepButton;
     private javax.swing.JRadioButton SportsButton;
     private javax.swing.JRadioButton UnisexButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

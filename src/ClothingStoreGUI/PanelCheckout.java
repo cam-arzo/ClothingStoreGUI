@@ -30,6 +30,7 @@ public class PanelCheckout extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         ReciptTable = new javax.swing.JTable();
         TotalPriceLabel = new javax.swing.JLabel();
+        Title = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -74,6 +75,9 @@ public class PanelCheckout extends javax.swing.JPanel {
 
         TotalPriceLabel.setText("Total price: $20.00");
 
+        Title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Title.setText("Checkout");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,17 +89,23 @@ public class PanelCheckout extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Message))
                 .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Title)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(38, Short.MAX_VALUE)
+                .addContainerGap(50, Short.MAX_VALUE)
+                .addComponent(Title)
+                .addGap(18, 18, 18)
                 .addComponent(Message)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TotalPriceLabel)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -103,6 +113,7 @@ public class PanelCheckout extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Message;
     private javax.swing.JTable ReciptTable;
+    private javax.swing.JLabel Title;
     private javax.swing.JLabel TotalPriceLabel;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
