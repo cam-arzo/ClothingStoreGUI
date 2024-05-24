@@ -42,7 +42,7 @@ public class DatabaseDefaultHandler {
                 + "type INT NOT NULL,"
                 + "name VARCHAR(64) UNIQUE NOT NULL,"
                 + "category INT NOT NULL,"
-                + "price NUMERIC(10, 2) NOT NULL,"
+                + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
                 + "gender_id INT NOT NULL,"
                 + "discount_id INT,"
                 + "discount_amount NUMERIC(10, 2))");
@@ -77,9 +77,9 @@ public class DatabaseDefaultHandler {
                 + "name VARCHAR(64) UNIQUE NOT NULL)");
         // fill table
         stmt.executeUpdate("INSERT INTO genders (id, name) VALUES "
-                + "(1, 'male'),"
-                + "(2, 'female'),"
-                + "(3, 'unisex')");
+                + "(1, 'unisex'),"
+                + "(2, 'male'),"
+                + "(3, 'female')");
     }
 
     public void createDiscountsTable(Statement stmt) throws SQLException {
@@ -88,6 +88,7 @@ public class DatabaseDefaultHandler {
                 + "name VARCHAR(64) UNIQUE NOT NULL)");
         // fill table
         stmt.executeUpdate("INSERT INTO discounts (id, name) VALUES "
+                + "(0, 'none'),"
                 + "(1, 'fixed'),"
                 + "(2, 'percent')");
     }
