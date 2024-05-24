@@ -50,6 +50,7 @@ public class PanelStaffModify extends javax.swing.JPanel {
         AddColourButton = new javax.swing.JButton();
         RemoveColourButton = new javax.swing.JButton();
         SaveButton = new javax.swing.JButton();
+        ErrorLabel = new javax.swing.JLabel();
 
         BackButton.setText("Back");
         BackButton.setInheritsPopupMenu(true);
@@ -112,6 +113,10 @@ public class PanelStaffModify extends javax.swing.JPanel {
 
         SaveButton.setText("Save and return");
 
+        ErrorLabel.setBackground(new java.awt.Color(255, 51, 51));
+        ErrorLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        ErrorLabel.setText("Error: Please enter a valid price");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,7 +137,8 @@ public class PanelStaffModify extends javax.swing.JPanel {
                                         .addComponent(ColourTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
                                             .addGap(46, 46, 46)
-                                            .addComponent(AddColourButton)))
+                                            .addComponent(AddColourButton))
+                                        .addComponent(ErrorLabel))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -222,7 +228,9 @@ public class PanelStaffModify extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(RemoveColourButton)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(RemoveColourButton)
+                            .addComponent(ErrorLabel))))
                 .addGap(21, 21, 21)
                 .addComponent(SaveButton)
                 .addContainerGap(43, Short.MAX_VALUE))
@@ -252,6 +260,7 @@ public class PanelStaffModify extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> DiscountDropdown;
     private javax.swing.JTextField DiscountTextField;
     private javax.swing.JLabel DiscountTypeLabel;
+    private javax.swing.JLabel ErrorLabel;
     private javax.swing.JComboBox<String> GenderDropdown;
     private javax.swing.JLabel GenderLabel;
     private javax.swing.JLabel Message;
