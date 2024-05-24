@@ -34,11 +34,9 @@ public class PanelViewSelection extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(1200, 800));
         setMinimumSize(new java.awt.Dimension(300, 200));
         setPreferredSize(new java.awt.Dimension(600, 400));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         WelcomeMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         WelcomeMessage.setText("Welcome to Object Oriented Outfits, an online shopping website for clothing and footwear.");
-        add(WelcomeMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 0, 600, 60));
 
         CustomerViewButton.setText("Customer View");
         CustomerViewButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -49,7 +47,6 @@ public class PanelViewSelection extends javax.swing.JPanel {
                 CustomerViewButtonActionPerformed(evt);
             }
         });
-        add(CustomerViewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 170, -1));
 
         StaffViewButton.setText("Staff View");
         StaffViewButton.addActionListener(new java.awt.event.ActionListener() {
@@ -57,7 +54,34 @@ public class PanelViewSelection extends javax.swing.JPanel {
                 StaffViewButtonActionPerformed(evt);
             }
         });
-        add(StaffViewButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 170, -1));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(StaffViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(CustomerViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(WelcomeMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(153, Short.MAX_VALUE)
+                .addComponent(WelcomeMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CustomerViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(StaffViewButton))
+                .addContainerGap(182, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void StaffViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StaffViewButtonActionPerformed

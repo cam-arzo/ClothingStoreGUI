@@ -28,77 +28,96 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="536" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                          <Component id="ItemModifyButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="RemoveButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="AddButton" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane1" min="-2" pref="527" max="-2" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
-                                      <Component id="PurposeLabel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="GenderLabel" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="SleepButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="NoPurposeButton" min="-2" pref="52" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="PurposeLabel" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="CasualButton" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="FormalButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="SportsButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="SleepButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="95" max="32767" attributes="0"/>
-                                      <Component id="MaleButton" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="FemaleButton" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="UnisexButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="SportsButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="193" max="-2" attributes="0"/>
-                      <Component id="ItemSelectButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                      <Component id="CartButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="MaleButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="FemaleButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="UnisexButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="NoGenderButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="GenderLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="PurposeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="GenderLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="PurposeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="GenderLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="CasualButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="FormalButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="SportsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="MaleButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="FemaleButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="MaleButton" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="FemaleButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="UnisexButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="CasualButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="FormalButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="SportsButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="SleepButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="SleepButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="NoPurposeButton" alignment="3" max="32767" attributes="0"/>
+                  <Component id="NoGenderButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="UnisexButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="165" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="CartButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ItemSelectButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="RemoveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ItemModifyButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="AddButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="100" max="32767" attributes="0"/>
+              <EmptySpace pref="91" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,11 +125,17 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="PurposeLabel">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Purpose"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="GenderLabel">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="12" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Gender"/>
       </Properties>
     </Component>
@@ -148,6 +173,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Sleep"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SleepButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="MaleButton">
       <Properties>
@@ -201,19 +229,40 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="CartButton">
+    <Component class="javax.swing.JButton" name="RemoveButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="View Cart"/>
+        <Property name="text" type="java.lang.String" value="Remove item"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CartButtonActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RemoveButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="ItemSelectButton">
+    <Component class="javax.swing.JButton" name="ItemModifyButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Select item"/>
+        <Property name="text" type="java.lang.String" value="Modify item"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="AddButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Add new item"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="NoPurposeButton">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="PurposeButtonGroup"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="None"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="NoGenderButton">
+      <Properties>
+        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+          <ComponentRef name="GenderButtonGroup"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="None"/>
       </Properties>
     </Component>
   </SubComponents>
