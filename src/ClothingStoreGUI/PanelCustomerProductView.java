@@ -8,15 +8,21 @@ package ClothingStoreGUI;
  *
  * @author annek
  */
-public class PanelCustomerProductView extends javax.swing.JPanel {
+public class PanelCustomerProductView extends javax.swing.JPanel implements InteractivePanel {
 
     /**
      * Creates new form CustomerProductView
      */
-    public PanelCustomerProductView() {
+    public PanelCustomerProductView(Controller controller) {
         initComponents();
+        initConnections(controller);
     }
 
+    public void initConnections(Controller controller) {
+        // CustomerViewButton.addActionListener(e -> controller.customerViewButtonClicked());
+        // !! add other connections in here
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,18 +105,8 @@ public class PanelCustomerProductView extends javax.swing.JPanel {
         SelectButton.setText("Select item");
         SelectButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         SelectButton.setOpaque(true);
-        SelectButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SelectButtonActionPerformed(evt);
-            }
-        });
 
         CartButton.setText("View cart");
-        CartButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CartButtonActionPerformed(evt);
-            }
-        });
 
         PurposeButtonGroup.add(NoPurposeButton);
         NoPurposeButton.setSelected(true);
@@ -128,54 +124,50 @@ public class PanelCustomerProductView extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(37, 37, 37)
+                                            .addComponent(SleepButton)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(NoPurposeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(CasualButton)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(FormalButton)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(SportsButton)))
+                                    .addGap(57, 57, 57))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(PurposeLabel)
+                                    .addGap(98, 98, 98)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(14, 14, 14)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(MaleButton)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(FemaleButton))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(UnisexButton)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(NoGenderButton))))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(29, 29, 29)
+                                    .addComponent(GenderLabel)))
+                            .addGap(95, 95, 95)))
+                    .addComponent(Title)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(37, 37, 37)
-                                        .addComponent(SleepButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(NoPurposeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(CasualButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(FormalButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(SportsButton)))
-                                .addGap(57, 57, 57))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(PurposeLabel)
-                                .addGap(98, 98, 98)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(MaleButton)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(FemaleButton))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(UnisexButton)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(NoGenderButton))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(GenderLabel)))
-                        .addGap(95, 95, 95)))
-                .addContainerGap(32, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Title)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SelectButton)
-                .addGap(18, 18, 18)
-                .addComponent(CartButton)
+                        .addComponent(SelectButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(CartButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -218,17 +210,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_MaleButtonActionPerformed
 
-    private void SelectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelectButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SelectButtonActionPerformed
-
     private void SleepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SleepButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SleepButtonActionPerformed
-
-    private void CartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CartButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CartButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,20 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ClothingStoreGUI;
 
 /**
  *
- * @author annek
+ * @author Cam
  */
-public class PanelCustomerSelection extends javax.swing.JFrame {
+public class PanelCustomerSelection extends javax.swing.JPanel implements InteractivePanel {
 
     /**
      * Creates new form PanelCustomerSelection
      */
-    public PanelCustomerSelection() {
+    public PanelCustomerSelection(Controller controller) {
         initComponents();
+        initConnections(controller);
+    }
+    
+    public void initConnections(Controller controller) {
+        // CustomerViewButton.addActionListener(e -> controller.customerViewButtonClicked());
+        // !! add other connections in here
     }
 
     /**
@@ -26,6 +28,7 @@ public class PanelCustomerSelection extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Title = new javax.swing.JLabel();
         ProductNameLabel = new javax.swing.JLabel();
         BackButton = new javax.swing.JButton();
         SizeLabel = new javax.swing.JLabel();
@@ -33,10 +36,9 @@ public class PanelCustomerSelection extends javax.swing.JFrame {
         SizeDropdown = new javax.swing.JComboBox<>();
         QtyPicker = new javax.swing.JSpinner();
         AddToCartButton = new javax.swing.JButton();
-        Title = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 400));
+        Title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Title.setText("Customise your order");
 
         ProductNameLabel.setText("Placeholder product name - $20.00");
 
@@ -64,15 +66,12 @@ public class PanelCustomerSelection extends javax.swing.JFrame {
             }
         });
 
-        Title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        Title.setText("Customise your order");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(191, Short.MAX_VALUE)
+                .addContainerGap(187, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(AddToCartButton)
@@ -93,7 +92,7 @@ public class PanelCustomerSelection extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(BackButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addContainerGap(186, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,8 +115,6 @@ public class PanelCustomerSelection extends javax.swing.JFrame {
                 .addComponent(AddToCartButton)
                 .addContainerGap(105, Short.MAX_VALUE))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
@@ -128,40 +125,6 @@ public class PanelCustomerSelection extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_AddToCartButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PanelCustomerSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PanelCustomerSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PanelCustomerSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PanelCustomerSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PanelCustomerSelection().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddToCartButton;
