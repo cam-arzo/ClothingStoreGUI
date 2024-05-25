@@ -13,9 +13,7 @@ public class PanelViewSelection extends javax.swing.JPanel {
     
     private void initConnections(Controller controller) {
         CustomerViewButton.addActionListener(e -> controller.customerViewButtonClicked());
-        
-        // !! add other connections in here
-        
+        StaffViewButton.addActionListener(e -> controller.staffViewButtonClicked());
     }
 
     /**
@@ -42,32 +40,21 @@ public class PanelViewSelection extends javax.swing.JPanel {
         CustomerViewButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         CustomerViewButton.setMaximumSize(new java.awt.Dimension(100, 25));
         CustomerViewButton.setMinimumSize(new java.awt.Dimension(100, 25));
-        CustomerViewButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CustomerViewButtonActionPerformed(evt);
-            }
-        });
 
         StaffViewButton.setText("Staff View");
-        StaffViewButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                StaffViewButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addComponent(WelcomeMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(StaffViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(CustomerViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(WelcomeMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(StaffViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(CustomerViewButton, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -82,14 +69,6 @@ public class PanelViewSelection extends javax.swing.JPanel {
                 .addContainerGap(182, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void StaffViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StaffViewButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_StaffViewButtonActionPerformed
-
-    private void CustomerViewButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerViewButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CustomerViewButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

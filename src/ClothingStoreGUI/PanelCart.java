@@ -8,15 +8,21 @@ package ClothingStoreGUI;
  *
  * @author annek
  */
-public class PanelCart extends javax.swing.JPanel {
+public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
 
     /**
      * Creates new form PanelCart
      */
-    public PanelCart() {
+    public PanelCart(Controller controller) {
         initComponents();
+        initConnections(controller);
     }
 
+    public void initConnections(Controller controller) {
+        // CustomerViewButton.addActionListener(e -> controller.customerViewButtonClicked());
+        // !! add other connections in here
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

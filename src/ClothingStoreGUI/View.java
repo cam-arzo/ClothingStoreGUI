@@ -15,6 +15,15 @@ public class View extends JFrame {
 
     Controller controller;
     
+    PanelViewSelection userPanel;
+    
+    PanelCustomerProductView customerProductPanel;
+    PanelCustomerSelection customerSelectionPanel;
+    PanelCart cartPanel;
+    PanelCheckout checkoutPanel;
+    
+    PanelStaffProductView staffProductPanel;
+    
     public View() {
         super("Clothing Store Application");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,8 +32,16 @@ public class View extends JFrame {
     
     // Create panels & switch to correct starting panel
     public void setup(Controller controller) {
-        // Create panels
-        PanelViewSelection userPanel = new PanelViewSelection(controller);  // need to pass controller so that panel buttons signal controller
+        
+// Create panels
+        userPanel = new PanelViewSelection(controller);  // need to pass controller so that panel buttons signal controller
+        
+        customerProductPanel = new PanelCustomerProductView(controller);
+        customerSelectionPanel = new PanelCustomerSelection(controller);
+        cartPanel = new PanelCart(controller);
+        checkoutPanel = new PanelCheckout(controller);
+        
+        staffProductPanel = new PanelStaffProductView(controller);
         
         // Switch to starting panel
         switchPanel(userPanel);
@@ -35,7 +52,7 @@ public class View extends JFrame {
     
     
     // Method to switch to the specified panel
-    private void switchPanel(JPanel panel) {
+    public void switchPanel(JPanel panel) {
         getContentPane().removeAll(); // Remove all panels
         getContentPane().add(panel);  // Add the specified panel
         revalidate();

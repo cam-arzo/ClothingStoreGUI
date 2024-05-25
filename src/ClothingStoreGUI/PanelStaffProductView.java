@@ -8,13 +8,17 @@ package ClothingStoreGUI;
  *
  * @author annek
  */
-public class PanelStaffProductView extends javax.swing.JPanel {
+public class PanelStaffProductView extends javax.swing.JPanel implements InteractivePanel {
 
     /**
      * Creates new form CustomerProductView
      */
-    public PanelStaffProductView() {
+    public PanelStaffProductView(Controller controller) {
         initComponents();
+    }
+    
+    public void initConnections(Controller controller) {
+        // !! implement button connections later
     }
 
     /**

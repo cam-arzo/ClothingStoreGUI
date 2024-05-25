@@ -1,5 +1,7 @@
 package ClothingStoreGUI;
 
+import javax.swing.JPanel;
+
 /**
  * 
  * CONTROLLER:
@@ -20,6 +22,9 @@ public class Controller {
     
     View view;
     
+    // used to go to the previous panel when pressing the back button
+    JPanel previousPanel;
+    
     public void setView(View view) {
         this.view = view;
     }
@@ -28,9 +33,12 @@ public class Controller {
     
     // USER PANEL methods:
     public void customerViewButtonClicked() {
-        System.out.println("Test!");
+        view.switchPanel(view.customerProductPanel);
     }
     
+    public void staffViewButtonClicked() {
+        view.switchPanel(view.staffProductPanel);
+    }
     
     
 }
