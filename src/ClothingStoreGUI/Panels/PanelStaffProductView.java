@@ -21,7 +21,19 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
     }
     
     public void initConnections(Controller controller) {
-        // !! implement button connections later
+         ItemModifyButton.addActionListener(e -> controller.staffEditButtonClicked());
+         AddButton.addActionListener(e -> controller.staffEditButtonClicked());
+         RemoveButton.addActionListener(e -> controller.staffRemoveButtonClicked());
+         CasualButton.addActionListener(e -> controller.categoryButtonClicked(0));
+         SportsButton.addActionListener(e -> controller.categoryButtonClicked(1));
+         FormalButton.addActionListener(e -> controller.categoryButtonClicked(2));
+         SleepButton.addActionListener(e -> controller.categoryButtonClicked(3));
+         NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4));
+         UnisexButton.addActionListener(e -> controller.genderButtonClicked(0));
+         MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
+         FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
+         NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
+
     }
 
     /**
@@ -133,7 +145,7 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,13 +187,14 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
                     .addGroup(layout.createSequentialGroup()
                         .addGap(180, 180, 180)
                         .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(ItemModifyButton)
                         .addGap(18, 18, 18)
                         .addComponent(RemoveButton)
                         .addGap(18, 18, 18)
-                        .addComponent(AddButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(AddButton)
+                        .addGap(99, 99, 99)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

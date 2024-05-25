@@ -4,17 +4,28 @@
  */
 package ClothingStoreGUI.Panels;
 
+import ClothingStoreGUI.Controller;
+import ClothingStoreGUI.InteractivePanel;
+
 /**
  *
  * @author annek
  */
-public class PanelStaffModify extends javax.swing.JPanel {
+public class PanelStaffModify extends javax.swing.JPanel implements InteractivePanel {
 
     /**
      * Creates new form PanelStaffModify
      */
-    public PanelStaffModify() {
+    public PanelStaffModify(Controller controller) {
         initComponents();
+        initConnections(controller);
+    }
+    
+    @Override
+    public void initConnections(Controller controller) {
+        BackButton.addActionListener(e -> controller.backButtonClicked());
+        SaveButton.addActionListener(e -> controller.staffSaveProductButtonClicked());
+        // !! a dozen connections need to be made for each field OR its all read at once when saved
     }
 
     /**
@@ -75,11 +86,6 @@ public class PanelStaffModify extends javax.swing.JPanel {
         NameTextField.setText("Enter product name...");
 
         PriceTextField.setText("$");
-        PriceTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PriceTextFieldActionPerformed(evt);
-            }
-        });
 
         DiscountTextField.setText("$");
 
@@ -208,10 +214,8 @@ public class PanelStaffModify extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void PriceTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PriceTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PriceTextFieldActionPerformed
 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> AvailableDropdown;
@@ -236,4 +240,5 @@ public class PanelStaffModify extends javax.swing.JPanel {
     private javax.swing.JButton SaveButton;
     private javax.swing.JLabel Title;
     // End of variables declaration//GEN-END:variables
+
 }

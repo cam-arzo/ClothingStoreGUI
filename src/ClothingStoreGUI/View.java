@@ -6,6 +6,7 @@ import ClothingStoreGUI.Panels.PanelViewSelection;
 import ClothingStoreGUI.Panels.PanelStaffProductView;
 import ClothingStoreGUI.Panels.PanelCustomerProductView;
 import ClothingStoreGUI.Panels.PanelCart;
+import ClothingStoreGUI.Panels.PanelStaffModify;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -22,13 +23,12 @@ public class View extends JFrame {
     Controller controller;
     
     PanelViewSelection userPanel;
-    
     PanelCustomerProductView customerProductPanel;
     PanelCustomerSelection customerSelectionPanel;
     PanelCart cartPanel;
     PanelCheckout checkoutPanel;
-    
     PanelStaffProductView staffProductPanel;
+    PanelStaffModify staffEditPanel;
     
     public View() {
         super("Clothing Store Application");
@@ -41,13 +41,12 @@ public class View extends JFrame {
         
 // Create panels
         userPanel = new PanelViewSelection(controller);  // need to pass controller so that panel buttons signal controller
-        
         customerProductPanel = new PanelCustomerProductView(controller);
         customerSelectionPanel = new PanelCustomerSelection(controller);
         cartPanel = new PanelCart(controller);
         checkoutPanel = new PanelCheckout(controller);
-        
         staffProductPanel = new PanelStaffProductView(controller);
+        staffEditPanel = new PanelStaffModify(controller);
         
         // Switch to starting panel
         switchPanel(userPanel);

@@ -22,8 +22,7 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
     }
 
     public void initConnections(Controller controller) {
-        // CustomerViewButton.addActionListener(e -> controller.customerViewButtonClicked());
-        // !! add other connections in here
+         ResetButton.addActionListener(e -> controller.resetButtonClicked());
     }
     
     /**
@@ -40,7 +39,7 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
         ReciptTable = new javax.swing.JTable();
         TotalPriceLabel = new javax.swing.JLabel();
         Title = new javax.swing.JLabel();
-        BackButton = new javax.swing.JButton();
+        ResetButton = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -88,13 +87,8 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
         Title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Title.setText("Checkout");
 
-        BackButton.setText("Back");
-        BackButton.setInheritsPopupMenu(true);
-        BackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackButtonActionPerformed(evt);
-            }
-        });
+        ResetButton.setText("Restart program");
+        ResetButton.setInheritsPopupMenu(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -107,37 +101,36 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Message)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(101, 101, 101)
+                        .addGap(183, 183, 183)
                         .addComponent(Title)))
                 .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(202, 202, 202))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Title)
-                    .addComponent(BackButton))
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(Title)
                 .addGap(18, 18, 18)
                 .addComponent(Message)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(TotalPriceLabel)
-                .addContainerGap(127, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(ResetButton)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BackButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BackButton;
     private javax.swing.JLabel Message;
     private javax.swing.JTable ReciptTable;
+    private javax.swing.JButton ResetButton;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TotalPriceLabel;
     private javax.swing.JScrollPane jScrollPane1;

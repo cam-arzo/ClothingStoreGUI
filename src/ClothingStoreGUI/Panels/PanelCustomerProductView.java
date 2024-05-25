@@ -22,8 +22,17 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     }
 
     public void initConnections(Controller controller) {
-        // CustomerViewButton.addActionListener(e -> controller.customerViewButtonClicked());
-        // !! add other connections in here
+         SelectButton.addActionListener(e -> controller.customerSelectButtonClicked());
+         CartButton.addActionListener(e -> controller.cartButtonClicked());
+         CasualButton.addActionListener(e -> controller.categoryButtonClicked(0));
+         SportsButton.addActionListener(e -> controller.categoryButtonClicked(1));
+         FormalButton.addActionListener(e -> controller.categoryButtonClicked(2));
+         SleepButton.addActionListener(e -> controller.categoryButtonClicked(3));
+         NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4));
+         UnisexButton.addActionListener(e -> controller.genderButtonClicked(0));
+         MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
+         FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
+         NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
     }
     
     /**
@@ -64,11 +73,6 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
 
         PurposeButtonGroup.add(CasualButton);
         CasualButton.setText("Casual");
-        CasualButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CasualButtonActionPerformed(evt);
-            }
-        });
 
         PurposeButtonGroup.add(FormalButton);
         FormalButton.setText("Formal");
@@ -78,19 +82,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
 
         PurposeButtonGroup.add(SleepButton);
         SleepButton.setText("Sleep");
-        SleepButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SleepButtonActionPerformed(evt);
-            }
-        });
 
         GenderButtonGroup.add(MaleButton);
         MaleButton.setText("Male");
-        MaleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MaleButtonActionPerformed(evt);
-            }
-        });
 
         GenderButtonGroup.add(FemaleButton);
         FemaleButton.setText("Female");
@@ -127,7 +121,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -166,12 +160,15 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                                     .addGap(29, 29, 29)
                                     .addComponent(GenderLabel)))
                             .addGap(95, 95, 95)))
-                    .addComponent(Title)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(202, 202, 202)
+                        .addComponent(Title))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(SelectButton)
                         .addGap(18, 18, 18)
-                        .addComponent(CartButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(CartButton)
+                        .addGap(173, 173, 173)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,18 +201,6 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                 .addContainerGap(48, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void CasualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CasualButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CasualButtonActionPerformed
-
-    private void MaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaleButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MaleButtonActionPerformed
-
-    private void SleepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SleepButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SleepButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

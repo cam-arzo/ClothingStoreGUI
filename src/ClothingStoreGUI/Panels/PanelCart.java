@@ -22,8 +22,10 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
     }
 
     public void initConnections(Controller controller) {
-        // CustomerViewButton.addActionListener(e -> controller.customerViewButtonClicked());
-        // !! add other connections in here
+         BackButton.addActionListener(e -> controller.backButtonClicked());
+         ModifyButton.addActionListener(e -> controller.customerSelectButtonClicked());
+         RemoveButton.addActionListener(e -> controller.customerRemoveButtonClicked());
+         ConfirmButton.addActionListener(e -> controller.customerConfirmButtonClicked());
     }
     
     /**
@@ -48,11 +50,6 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
 
         BackButton.setText("Back");
         BackButton.setInheritsPopupMenu(true);
-        BackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackButtonActionPerformed(evt);
-            }
-        });
 
         CartList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -62,18 +59,8 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
         jScrollPane1.setViewportView(CartList);
 
         ModifyButton.setText("Modify item");
-        ModifyButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ModifyButtonActionPerformed(evt);
-            }
-        });
 
         RemoveButton.setText("Remove item");
-        RemoveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RemoveButtonActionPerformed(evt);
-            }
-        });
 
         ConfirmButton.setText("Confirm purchase");
 
@@ -118,18 +105,6 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
                 .addContainerGap(71, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BackButtonActionPerformed
-
-    private void ModifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifyButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ModifyButtonActionPerformed
-
-    private void RemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RemoveButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
