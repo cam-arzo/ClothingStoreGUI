@@ -28,6 +28,7 @@ public abstract class Product {
 
     // new product with placeholders
     public Product() {
+        this.id = -1;
         this.name = "Placeholder Name";
         this.available = false;
         this.price = new BigDecimal(10.00);
@@ -38,10 +39,14 @@ public abstract class Product {
     
     // when adding product you only need to provide info unique to that product
     // e.g. sizes are the same across all clothing
-    public Product(String name, boolean available, double price, int gender, int category, Discount discount) {
+    
+    // !! should this be changed to factory pattern?
+    
+    public Product(int id, String name, boolean available, BigDecimal price, int gender, int category, Discount discount) {
+        this.id = id;
         this.name = name;
         this.available = available;
-        this.price = new BigDecimal(price);
+        this.price = price;
         this.gender = 1;
         this.category = 1;
         this.discount = discount;

@@ -12,6 +12,41 @@ import java.sql.Statement;
  */
 public class DatabaseDefaultHandler {
 
+    Database database;
+    
+    public DatabaseDefaultHandler(Database database) {
+        this.database = database;
+    }
+    
+    public void createTables(Statement stmt) throws SQLException {
+        
+        // holds different products
+        if (!database.tableExists("products")) {
+            createProductTable(stmt);
+        }
+
+        // holds product types (clothing, shoe)
+        if (!database.tableExists("product_types")) {
+            createProductTypesTable(stmt);
+        }
+
+        // holds product categories (casual, formal...)
+        if (!database.tableExists("categories")) {
+            createCategoriesTable(stmt);
+        }
+
+        // holds product gender (male, female, unisex)
+        if (!database.tableExists("genders")) {
+            createGendersTable(stmt);
+        }
+
+        // holds discount types (fixed, percent)
+        if (!database.tableExists("discounts")) {
+            createDiscountsTable(stmt);
+        }
+        
+    }
+    
     public void deleteTables(Statement stmt) throws SQLException {
         
         // Drop products table
@@ -37,12 +72,12 @@ public class DatabaseDefaultHandler {
     public void createProductTable(Statement stmt) throws SQLException {
         // create table
         stmt.executeUpdate("CREATE TABLE products("
-                + "id INT PRIMARY KEY,"
                 + "available SMALLINT,"
+                + "id INT PRIMARY KEY,"
                 + "type INT NOT NULL,"
                 + "name VARCHAR(64) UNIQUE NOT NULL,"
                 + "category INT NOT NULL,"
-                + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
+                + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits! and use 
                 + "gender_id INT NOT NULL,"
                 + "discount_id INT,"
                 + "discount_amount NUMERIC(10, 2))");

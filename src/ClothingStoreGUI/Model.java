@@ -1,5 +1,7 @@
 package ClothingStoreGUI;
 
+import java.util.List;
+
 /**
  * 
  * MODEL:
@@ -11,8 +13,12 @@ public class Model {
     
     Database database;
     
+    List<Product> productList;
+    
     public void setDatabase(Database database) {
         this.database = database;
     }
+    
+    
     
 }
