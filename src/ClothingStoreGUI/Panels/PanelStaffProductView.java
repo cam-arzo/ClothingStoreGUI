@@ -2,7 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package ClothingStoreGUI;
+package ClothingStoreGUI.Panels;
+
+import ClothingStoreGUI.Controller;
+import ClothingStoreGUI.InteractivePanel;
 
 /**
  *
@@ -130,7 +133,7 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,15 +174,13 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
                             .addGap(95, 95, 95)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(180, 180, 180)
-                        .addComponent(jLabel1)))
-                .addContainerGap(33, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ItemModifyButton)
-                .addGap(18, 18, 18)
-                .addComponent(RemoveButton)
-                .addGap(18, 18, 18)
-                .addComponent(AddButton)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(ItemModifyButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(RemoveButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(AddButton)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

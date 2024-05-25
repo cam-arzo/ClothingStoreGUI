@@ -1,5 +1,8 @@
 package ClothingStoreGUI;
 
+import ClothingStoreGUI.Enums.Category;
+import ClothingStoreGUI.Enums.DiscountType;
+import ClothingStoreGUI.Enums.Gender;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -40,7 +43,7 @@ public class Database {
             DatabaseDefaultHandler defaultData = new DatabaseDefaultHandler(this);
 
             // Delete tables
-            // defaultData.deleteTables(stmt);
+//             defaultData.deleteTables(stmt);
             // Create tables & fill data if they don't already exist
             defaultData.createTables(stmt);
 
@@ -88,16 +91,15 @@ public class Database {
                 
                 Discount discount = null;
 
-                switch (discount_type) {
-                    case 0:  // None
+                switch (DiscountType.intToDiscount(discount_type)) {
+                    case NONE:  // None
                         break;
-                    case 1:  // Fixed
+                    case FIXED:  // Fixed
                         discount = new FixedDiscount(discount_amount);
-                    case 2:  // Percent
-                        // !! add percent discount
-//                        discount = new PercentDiscount(discount_amount);
+                    case PERCENT:  // Percent
+                        discount = new PctDiscount(discount_amount);
                     default:
-                        System.out.println("Unknown product type in Database: " + String.valueOf(type));
+                        System.out.println("Unknown discount type in Database: " + String.valueOf(discount_type));
                 }                
                 
                 Product product = null;
@@ -105,10 +107,9 @@ public class Database {
                 switch (type) {
                     case 1:  // Clothing
 //                        String name, boolean available, double price, int gender, int category, Discount discount
-                        product = new ClothingItem(id, name, available, price, gender, category, discount);
+                        product = new ClothingItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
                     case 2:  // Shoes
-                        // !! add shoe item
-//                        product = new ShoeItem(id, name, available, price, gender, category, discount);
+                        product = new ShoeItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
                     default:
                         System.out.println("Unknown product type in Database: " + String.valueOf(type));
                 }

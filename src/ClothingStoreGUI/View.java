@@ -1,5 +1,11 @@
 package ClothingStoreGUI;
 
+import ClothingStoreGUI.Panels.PanelCheckout;
+import ClothingStoreGUI.Panels.PanelCustomerSelection;
+import ClothingStoreGUI.Panels.PanelViewSelection;
+import ClothingStoreGUI.Panels.PanelStaffProductView;
+import ClothingStoreGUI.Panels.PanelCustomerProductView;
+import ClothingStoreGUI.Panels.PanelCart;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 

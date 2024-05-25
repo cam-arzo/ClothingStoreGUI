@@ -1,4 +1,7 @@
-package ClothingStoreGUI;
+package ClothingStoreGUI.Panels;
+
+import ClothingStoreGUI.Controller;
+import ClothingStoreGUI.InteractivePanel;
 
 /**
  *
