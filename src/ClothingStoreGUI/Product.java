@@ -1,0 +1,159 @@
+package ClothingStoreGUI;
+
+import java.math.BigDecimal;
+
+// when purchased, a 'SelectedProduct' class is used to store user's choices (size, amount)
+
+public abstract class Product {
+    
+    // unique ID used in the database for each product
+    int id;
+    // product has one main unique name
+    String name;
+    // product is either available or unavailable
+    private boolean available;
+    // category and gender integers have their associated values stored in database
+    private int category;
+    private int gender;
+    // !! stored as a bigdecimal for the correct precision
+    // !! stores as numeric(6,2) in database, so it should have 2dp
+    // !! use price.setScale(2, BigDecimal.ROUND_HALF_UP) to round to 2dp
+    // !! watch out for 999999.99 rounding up to 1000000.00 and causing errors
+    private BigDecimal price;
+    private Discount discount;
+    private BigDecimal discountedPrice;
+    // a unique size system exists for clothes & shoes
+    private String[] sizes;
+      
+
+    // new product with placeholders
+    public Product() {
+        this.name = "Placeholder Name";
+        this.available = false;
+        this.price = new BigDecimal(10.00);
+        this.discount = null;
+        this.gender = 1;
+        this.category = 1;
+    }
+    
+    // when adding product you only need to provide info unique to that product
+    // e.g. sizes are the same across all clothing
+    public Product(String name, boolean available, double price, int gender, int category, Discount discount) {
+        this.name = name;
+        this.available = available;
+        this.price = new BigDecimal(price);
+        this.gender = 1;
+        this.category = 1;
+        this.discount = discount;
+        setDiscountedPrice(discount);
+        // sizes are set in the product subclass
+    }
+    
+    // Used when printing each product in the buy menu.
+    public String cartString() {
+        String out="";
+        
+        // label as unlisted if unavailable
+        if (this.available == false) {
+            out += "(Unlisted) ";
+        }
+        
+        // if discount exists, show discounted & original price 
+        if (discount != null) {
+            // print name, discount price, old price
+            out += String.format("%s - $%.2f (discounted from $%.2f!)", this.name, discount.calcNewPrice(price), this.price);
+        } else {
+            // print name and price (no discount)
+            out += String.format("%s - $%.2f", this.name, this.price);
+        }
+        
+        
+        return out;
+    }
+    
+    // SETTERS AND GETTERS
+    
+    // each product class has a unique size system
+    abstract String[] getSizeSystem();
+    
+    // each product class has a type
+    public String getType() {
+        return this.getClass().getSimpleName();
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public boolean hasDiscount() {
+        return (discount != null);
+    }
+    
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
+        setDiscountedPrice(discount); // update the discounted price
+    }
+
+    public void setDiscountedPrice(Discount discount) {
+        if (discount == null) {
+            this.discountedPrice = price;
+        } else {
+            this.discountedPrice = discount.calcNewPrice(this.price);
+        }
+    }
+
+    public BigDecimal getDiscountedPrice() {
+        return discountedPrice;
+    }
+
+    public int getGender() {
+        return gender;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+        setDiscountedPrice(this.discount); // update the discounted price
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String[] getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(String[] sizes) {
+        this.sizes = sizes;
+    }
+
+    public int getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
+    public BigDecimal getPrice() {
+        return this.price;
+    }
+    
+}
+
