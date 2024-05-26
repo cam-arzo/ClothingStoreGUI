@@ -6,6 +6,7 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -33,6 +34,14 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
         FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
         NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
+    }
+    
+    public void addProductListSelectionListener(ListSelectionListener listener) {
+        ProductList.addListSelectionListener(listener);
+    }
+
+    public int getSelectedProductIndex() {
+        return ProductList.getSelectedIndex();
     }
     
     public void updateProductTable(String[] newData) {
@@ -197,8 +206,8 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                     .addComponent(NoGenderButton)
                     .addComponent(UnisexButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SelectButton)
                     .addComponent(CartButton))

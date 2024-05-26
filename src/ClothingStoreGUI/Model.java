@@ -16,7 +16,11 @@ public class Model {
     
     View view;
     
+    // !! might be messy storing productList and selectedProduct in Model for now
+    
     List<Product> productList;
+    
+    Product selectedProduct = null;
     
     public void setDatabase(Database database) {
         this.database = database;
@@ -28,12 +32,28 @@ public class Model {
     
     public void processAllProducts() {
         productList = database.getAllProducts();
-        // TODO update table
+        
+        String[] cartString = convertProductsToCartString(productList);
+        
+        // send data as String[]
+        view.staffProductPanel.updateProductTable(cartString);
     }
     
     public void processAvailableProducts() {
         productList = database.getAvailableProducts();
         
+        String[] cartString = convertProductsToCartString(productList);
+        
+        // send data as String[]
+        view.customerProductPanel.updateProductTable(cartString);
+    }
+    
+    public void setSelectedProductFromIndex(int index) {
+        selectedProduct = productList.get(index);
+        System.out.println("SELECTED PRODUCT in model: " + selectedProduct.getName());
+    }
+    
+    private String[] convertProductsToCartString(List<Product> productList) {
         for (Product p : productList) {
             System.out.println(p.name);
         }
@@ -46,14 +66,11 @@ public class Model {
             productListLabels.add(product.cartString());
         }
         
-        for (String i : productListLabels) {
-            System.out.println(i);
-        }
-        
-        // send data as String[]
-        view.customerProductPanel.updateProductTable(productListLabels.toArray(new String[0]));
+        return productListLabels.toArray(new String[0]);
     }
-   
+    
+    
+    
     
     
 }

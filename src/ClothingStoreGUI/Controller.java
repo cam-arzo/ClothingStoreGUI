@@ -3,6 +3,8 @@ package ClothingStoreGUI;
 import ClothingStoreGUI.Enums.Category;
 import ClothingStoreGUI.Enums.Gender;
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -27,6 +29,7 @@ public class Controller {
     // used to go to the previous panel when pressing the back button
     JPanel previousPanel;
 
+    
     public void setView(View view) {
         this.view = view;
     }
@@ -42,11 +45,37 @@ public class Controller {
 
     // USER PANEL methods:
     public void customerViewButtonClicked() {
+        
+        // SETUP customer view functions
+        
+        // Add the list selection listener to the view's JList
+        view.customerProductPanel.addProductListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    model.setSelectedProductFromIndex(view.customerProductPanel.getSelectedProductIndex());
+                }
+            }
+        });
+        
+        // show only 'Available' products
         model.processAvailableProducts();
+        
         // go from initial screen to customer product view
         view.switchPanel(view.customerProductPanel);
     }
+    
+//    public void productSelected() {
+//        String selectedItem = view.customerProductPanel.getSelectedProduct();
+//        if (selectedItem != null) {
+//            System.out.println("Selected: " + selectedItem);
+//        }
+//    }
+    
     public void staffViewButtonClicked() {
+        
+        // SETUP staff view functions
+        
+        model.processAllProducts();
         // go from initial screen to staff product view
         view.switchPanel(view.staffProductPanel);
     }
