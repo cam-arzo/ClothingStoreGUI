@@ -8,25 +8,31 @@ import javax.swing.JPanel;
  *
  * CONTROLLER:
  *
- * Handles user input from view. This includes: - Retrieving data from input
- * boxes - Validating / Cleaning input
+ * Handles user input from view. This includes:
+ * - Retrieving data from input boxes
+ * - Validating / Cleaning input
  *
- * Updates model depending on input. This may include: - Performing calculations
- * in model based on inputs from view
+ * Updates model depending on input. This may include:
+ * - Performing calculations in model based on inputs from view
  *
- * Navigates the application. This includes: - Switching between different
- * views/screens based on user input or application logic.
+ * Navigates the application. This includes:
+ * - Switching between different views/screens based on user input or application logic.
  *
  */
 public class Controller {
 
     View view;
+    Model model;
 
     // used to go to the previous panel when pressing the back button
     JPanel previousPanel;
 
     public void setView(View view) {
         this.view = view;
+    }
+    
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     // set the previous panel
@@ -36,21 +42,23 @@ public class Controller {
 
     // USER PANEL methods:
     public void customerViewButtonClicked() {
+        model.processAvailableProducts();
         // go from initial screen to customer product view
         view.switchPanel(view.customerProductPanel);
     }
-
     public void staffViewButtonClicked() {
         // go from initial screen to staff product view
         view.switchPanel(view.staffProductPanel);
     }
-
+    
+    // GENERIC BACK BUTTON
     public void backButtonClicked() {
         // go back to the previous panel
         // !! CODE TO SET PREVIOUS PANEL HAS NOT BEEN IMPLEMENTED
         view.switchPanel(previousPanel);
     }
-
+    
+    // CUSTOMER VIEW BUTTONS
     public void customerSelectButtonClicked() {
         // go to customer selection
         view.switchPanel(view.customerSelectionPanel);
@@ -96,6 +104,7 @@ public class Controller {
         view.switchPanel(view.customerProductPanel);
     }
 
+    // STAFF VIEW BUTTONS
     public void staffSaveProductButtonClicked() {
         // saves and returns to product view
         view.switchPanel(view.staffProductPanel);

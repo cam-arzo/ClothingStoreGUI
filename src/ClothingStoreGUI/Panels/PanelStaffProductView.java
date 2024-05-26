@@ -75,11 +75,6 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
 
         PurposeButtonGroup.add(CasualButton);
         CasualButton.setText("Casual");
-        CasualButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CasualButtonActionPerformed(evt);
-            }
-        });
 
         PurposeButtonGroup.add(FormalButton);
         FormalButton.setText("Formal");
@@ -89,19 +84,9 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
 
         PurposeButtonGroup.add(SleepButton);
         SleepButton.setText("Sleep");
-        SleepButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SleepButtonActionPerformed(evt);
-            }
-        });
 
         GenderButtonGroup.add(MaleButton);
         MaleButton.setText("Male");
-        MaleButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MaleButtonActionPerformed(evt);
-            }
-        });
 
         GenderButtonGroup.add(FemaleButton);
         FemaleButton.setText("Female");
@@ -119,11 +104,6 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
         RemoveButton.setText("Remove item");
         RemoveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         RemoveButton.setOpaque(true);
-        RemoveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RemoveButtonActionPerformed(evt);
-            }
-        });
 
         ItemModifyButton.setText("Modify item");
 
@@ -228,22 +208,6 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
                 .addContainerGap(48, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void CasualButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CasualButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CasualButtonActionPerformed
-
-    private void MaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaleButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MaleButtonActionPerformed
-
-    private void RemoveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RemoveButtonActionPerformed
-
-    private void SleepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SleepButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SleepButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

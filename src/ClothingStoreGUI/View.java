@@ -22,6 +22,8 @@ public class View extends JFrame {
 
     Controller controller;
     
+    JPanel currentPanel;
+    
     PanelViewSelection userPanel;
     PanelCustomerProductView customerProductPanel;
     PanelCustomerSelection customerSelectionPanel;
@@ -36,10 +38,14 @@ public class View extends JFrame {
         this.setSize(600, 400);
     }
     
+        public void setController(Controller controller) {
+        this.controller = controller;
+    }
+    
     // Create panels & switch to correct starting panel
     public void setup(Controller controller) {
         
-// Create panels
+        // Create panels
         userPanel = new PanelViewSelection(controller);  // need to pass controller so that panel buttons signal controller
         customerProductPanel = new PanelCustomerProductView(controller);
         customerSelectionPanel = new PanelCustomerSelection(controller);
@@ -58,18 +64,11 @@ public class View extends JFrame {
     
     // Method to switch to the specified panel
     public void switchPanel(JPanel panel) {
+        currentPanel = panel;
         getContentPane().removeAll(); // Remove all panels
         getContentPane().add(panel);  // Add the specified panel
         revalidate();
         repaint();
     }
-    
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
-    
-    
-    
-
-    
+       
 }

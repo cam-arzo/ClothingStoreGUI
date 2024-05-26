@@ -160,9 +160,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Casual"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CasualButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="FormalButton">
       <Properties>
@@ -187,9 +184,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Sleep"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SleepButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="MaleButton">
       <Properties>
@@ -198,9 +192,6 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Male"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MaleButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="FemaleButton">
       <Properties>
@@ -249,9 +240,6 @@
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="opaque" type="boolean" value="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RemoveButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ItemModifyButton">
       <Properties>

@@ -22,17 +22,21 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     }
 
     public void initConnections(Controller controller) {
-         SelectButton.addActionListener(e -> controller.customerSelectButtonClicked());
-         CartButton.addActionListener(e -> controller.cartButtonClicked());
-         CasualButton.addActionListener(e -> controller.categoryButtonClicked(0));
-         SportsButton.addActionListener(e -> controller.categoryButtonClicked(1));
-         FormalButton.addActionListener(e -> controller.categoryButtonClicked(2));
-         SleepButton.addActionListener(e -> controller.categoryButtonClicked(3));
-         NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4));
-         UnisexButton.addActionListener(e -> controller.genderButtonClicked(0));
-         MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
-         FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
-         NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
+        SelectButton.addActionListener(e -> controller.customerSelectButtonClicked());
+        CartButton.addActionListener(e -> controller.cartButtonClicked());
+        CasualButton.addActionListener(e -> controller.categoryButtonClicked(0));
+        SportsButton.addActionListener(e -> controller.categoryButtonClicked(1));
+        FormalButton.addActionListener(e -> controller.categoryButtonClicked(2));
+        SleepButton.addActionListener(e -> controller.categoryButtonClicked(3));
+        NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4));
+        UnisexButton.addActionListener(e -> controller.genderButtonClicked(0));
+        MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
+        FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
+        NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
+    }
+    
+    public void updateProductTable(String[] newData) {
+        ProductList.setListData(newData);
     }
     
     /**

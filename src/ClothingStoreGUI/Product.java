@@ -56,7 +56,7 @@ public abstract class Product {
         // sizes are set in the product subclass
     }
     
-    // OLD CODE. Used when printing each product in the buy menu.
+    // Used when printing each product in the buy menu.
     public String cartString() {
         String out="";
         
