@@ -15,8 +15,9 @@ public class ClothingStoreMain {
         // Use setter injection to share references to parts of MVC
         view.setController(controller);  // View must attach GUI inputs to the controller
         model.setDatabase(database);  // Model needs database access for calculations / operations
+        model.setView(view); // Model needs view access for applying calculations / operations
         controller.setView(view);  // Controller is responsible for switching between views
-        // !! may need to add more setters
+        controller.setModel(model);  // Controller tells model to process something
         
         // Start database, add tables if they don't exist
         database.setup();

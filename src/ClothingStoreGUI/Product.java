@@ -1,5 +1,7 @@
 package ClothingStoreGUI;
 
+import ClothingStoreGUI.Enums.Category;
+import ClothingStoreGUI.Enums.Gender;
 import java.math.BigDecimal;
 
 // when purchased, a 'SelectedProduct' class is used to store user's choices (size, amount)
@@ -12,9 +14,9 @@ public abstract class Product {
     String name;
     // product is either available or unavailable
     private boolean available;
-    // category and gender integers have their associated values stored in database
-    private int category;
-    private int gender;
+    // category and gender are stored in enums
+    private Category category;
+    private Gender gender;
     // !! stored as a bigdecimal for the correct precision
     // !! stores as numeric(6,2) in database, so it should have 2dp
     // !! use price.setScale(2, BigDecimal.ROUND_HALF_UP) to round to 2dp
@@ -33,8 +35,8 @@ public abstract class Product {
         this.available = false;
         this.price = new BigDecimal(10.00);
         this.discount = null;
-        this.gender = 1;
-        this.category = 1;
+        this.gender = Gender.UNISEX;
+        this.category = Category.CASUAL;
     }
     
     // when adding product you only need to provide info unique to that product
@@ -42,13 +44,13 @@ public abstract class Product {
     
     // !! should this be changed to factory pattern?
     
-    public Product(int id, String name, boolean available, BigDecimal price, int gender, int category, Discount discount) {
+    public Product(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount) {
         this.id = id;
         this.name = name;
         this.available = available;
         this.price = price;
-        this.gender = 1;
-        this.category = 1;
+        this.gender = gender;
+        this.category = category;
         this.discount = discount;
         setDiscountedPrice(discount);
         // sizes are set in the product subclass
@@ -127,7 +129,7 @@ public abstract class Product {
         return discountedPrice;
     }
 
-    public int getGender() {
+    public Gender getGender() {
         return gender;
     }
 
@@ -136,7 +138,7 @@ public abstract class Product {
         setDiscountedPrice(this.discount); // update the discounted price
     }
 
-    public void setGender(int gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -148,11 +150,11 @@ public abstract class Product {
         this.sizes = sizes;
     }
 
-    public int getCategory() {
+    public Category getCategory() {
         return this.category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

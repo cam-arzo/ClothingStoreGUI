@@ -1,5 +1,8 @@
 package ClothingStoreGUI;
 
+import ClothingStoreGUI.Enums.Category;
+import ClothingStoreGUI.Enums.DiscountType;
+import ClothingStoreGUI.Enums.Gender;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -40,7 +43,7 @@ public class Database {
             DatabaseDefaultHandler defaultData = new DatabaseDefaultHandler(this);
 
             // Delete tables
-            // defaultData.deleteTables(stmt);
+            defaultData.deleteTables(stmt);
             // Create tables & fill data if they don't already exist
             defaultData.createTables(stmt);
 
@@ -88,29 +91,33 @@ public class Database {
                 
                 Discount discount = null;
 
-                switch (discount_type) {
-                    case 0:  // None
+                switch (DiscountType.intToDiscount(discount_type)) {
+                    case NONE:  // None
                         break;
-                    case 1:  // Fixed
+                    case FIXED:  // Fixed
                         discount = new FixedDiscount(discount_amount);
-                    case 2:  // Percent
-                        // !! add percent discount
-//                        discount = new PercentDiscount(discount_amount);
+                        break;
+                    case PERCENT:  // Percent
+                        discount = new PctDiscount(discount_amount);
+                        break;
                     default:
-                        System.out.println("Unknown product type in Database: " + String.valueOf(type));
+                        System.out.println("Unknown discount type in Database: " + String.valueOf(discount_type));
+                        break;
                 }                
                 
                 Product product = null;
                 
                 switch (type) {
-                    case 1:  // Clothing
+                    case 0:  // Clothing
 //                        String name, boolean available, double price, int gender, int category, Discount discount
-                        product = new ClothingItem(id, name, available, price, gender, category, discount);
-                    case 2:  // Shoes
-                        // !! add shoe item
-//                        product = new ShoeItem(id, name, available, price, gender, category, discount);
+                        product = new ClothingItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
+                        break;
+                    case 1:  // Shoes
+                        product = new ShoeItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
+                        break;
                     default:
                         System.out.println("Unknown product type in Database: " + String.valueOf(type));
+                        break;
                 }
                 
                 // add to products list
@@ -124,6 +131,80 @@ public class Database {
         return products;
     }
 
+    public List<Product> getAvailableProducts() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM products";
+
+        try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
+            
+//            + "available SMALLINT,"
+//            + "id INT PRIMARY KEY,"
+//            + "type INT NOT NULL,"
+//            + "name VARCHAR(64) UNIQUE NOT NULL,"
+//            + "category INT NOT NULL,"
+//            + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
+//            + "gender_id INT NOT NULL,"
+//            + "discount_id INT,"
+//            + "discount_amount NUMERIC(10, 2))");
+            
+            while (rs.next()) {
+                boolean available = rs.getBoolean("available");
+                
+                if (!available) {
+                    continue;
+                }
+                
+                int id = rs.getInt("id");
+                int type = rs.getInt("type");
+                String name = rs.getString("name");
+                int category = rs.getInt("category");
+                BigDecimal price = rs.getBigDecimal("price");
+                int gender = rs.getInt("gender_id");
+                int discount_type = rs.getInt("discount_id");
+                BigDecimal discount_amount = rs.getBigDecimal("discount_amount");
+                
+                Discount discount = null;
+
+                switch (DiscountType.intToDiscount(discount_type)) {
+                    case NONE:  // None
+                        break;
+                    case FIXED:  // Fixed
+                        discount = new FixedDiscount(discount_amount);
+                        break;
+                    case PERCENT:  // Percent
+                        discount = new PctDiscount(discount_amount);
+                        break;
+                    default:
+                        System.out.println("Unknown discount type in Database: " + String.valueOf(discount_type));
+                        break;
+                }                
+                
+                Product product = null;
+                
+                switch (type) {
+                    case 0:  // Clothing
+//                        String name, boolean available, double price, int gender, int category, Discount discount
+                        product = new ClothingItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
+                        break;
+                    case 1:  // Shoes
+                        product = new ShoeItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
+                        break;
+                    default:
+                        System.out.println("Unknown product type in Database: " + String.valueOf(type));
+                        break;
+                }
+                
+                // add to products list
+                products.add(product);
+                
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
+    
     // Print out table contents
     public void previewTable(String tableName) {
         String query = "SELECT * FROM " + tableName;

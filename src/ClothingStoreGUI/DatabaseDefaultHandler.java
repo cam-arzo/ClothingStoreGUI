@@ -25,25 +25,25 @@ public class DatabaseDefaultHandler {
             createProductTable(stmt);
         }
 
-        // holds product types (clothing, shoe)
-        if (!database.tableExists("product_types")) {
-            createProductTypesTable(stmt);
-        }
-
-        // holds product categories (casual, formal...)
-        if (!database.tableExists("categories")) {
-            createCategoriesTable(stmt);
-        }
-
-        // holds product gender (male, female, unisex)
-        if (!database.tableExists("genders")) {
-            createGendersTable(stmt);
-        }
-
-        // holds discount types (fixed, percent)
-        if (!database.tableExists("discounts")) {
-            createDiscountsTable(stmt);
-        }
+//        // holds product types (clothing, shoe)
+//        if (!database.tableExists("product_types")) {
+//            createProductTypesTable(stmt);
+//        }
+//
+//        // holds product categories (casual, formal...)
+//        if (!database.tableExists("categories")) {
+//            createCategoriesTable(stmt);
+//        }
+//
+//        // holds product gender (male, female, unisex)
+//        if (!database.tableExists("genders")) {
+//            createGendersTable(stmt);
+//        }
+//
+//        // holds discount types (fixed, percent)
+//        if (!database.tableExists("discounts")) {
+//            createDiscountsTable(stmt);
+//        }
         
     }
     
@@ -52,17 +52,17 @@ public class DatabaseDefaultHandler {
         // Drop products table
         stmt.executeUpdate("DROP TABLE products");
 
-        // Drop product_types table
-        stmt.executeUpdate("DROP TABLE product_types");
-
-        // Drop categories table
-        stmt.executeUpdate("DROP TABLE categories");
-
-        // Drop genders table
-        stmt.executeUpdate("DROP TABLE genders");
-
-        // Drop discounts table
-        stmt.executeUpdate("DROP TABLE discounts");
+//        // Drop product_types table
+//        stmt.executeUpdate("DROP TABLE product_types");
+//
+//        // Drop categories table
+//        stmt.executeUpdate("DROP TABLE categories");
+//
+//        // Drop genders table
+//        stmt.executeUpdate("DROP TABLE genders");
+//
+//        // Drop discounts table
+//        stmt.executeUpdate("DROP TABLE discounts");
 
         System.out.println("Tables dropped successfully.");
         
@@ -77,11 +77,14 @@ public class DatabaseDefaultHandler {
                 + "type INT NOT NULL,"
                 + "name VARCHAR(64) UNIQUE NOT NULL,"
                 + "category INT NOT NULL,"
-                + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits! and use 
+                + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits! and use BigDecimal
                 + "gender_id INT NOT NULL,"
                 + "discount_id INT,"
                 + "discount_amount NUMERIC(10, 2))");
         // !! fill table?
+        stmt.executeUpdate("INSERT INTO products (available, id, type, name, category, price, gender_id, discount_id, discount_amount) VALUES "
+                + "(1, 1, 0, 'Sexy T-Shirt', 0, 49.99, 1, 0, null),"
+                + "(1, 2, 1, 'Loafers', 0, 49.99, 1, 0, null)");
     }
 
     public void createProductTypesTable(Statement stmt) throws SQLException {
@@ -94,6 +97,8 @@ public class DatabaseDefaultHandler {
                 + "(2, 'shoes')");
     }
 
+    // !! remove later
+    
     public void createCategoriesTable(Statement stmt) throws SQLException {
         stmt.executeUpdate("CREATE TABLE categories("
                 + "id INT PRIMARY KEY,"

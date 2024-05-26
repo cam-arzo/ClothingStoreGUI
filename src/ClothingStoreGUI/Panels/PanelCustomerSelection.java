@@ -1,4 +1,7 @@
-package ClothingStoreGUI;
+package ClothingStoreGUI.Panels;
+
+import ClothingStoreGUI.Controller;
+import ClothingStoreGUI.InteractivePanel;
 
 /**
  *
@@ -15,8 +18,8 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
     }
     
     public void initConnections(Controller controller) {
-        // CustomerViewButton.addActionListener(e -> controller.customerViewButtonClicked());
-        // !! add other connections in here
+        BackButton.addActionListener(e -> controller.backButtonClicked());
+        AddToCartButton.addActionListener(e -> controller.addToCartButtonClicked());
     }
 
     /**
@@ -44,11 +47,6 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
 
         BackButton.setText("Back");
         BackButton.setInheritsPopupMenu(true);
-        BackButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackButtonActionPerformed(evt);
-            }
-        });
 
         SizeLabel.setText("Size:");
 
@@ -60,11 +58,6 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
         QtyPicker.setValue(1);
 
         AddToCartButton.setText("Add to cart");
-        AddToCartButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AddToCartButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -116,14 +109,6 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
                 .addContainerGap(105, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BackButtonActionPerformed
-
-    private void AddToCartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddToCartButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AddToCartButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

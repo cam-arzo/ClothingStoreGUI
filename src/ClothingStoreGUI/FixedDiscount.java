@@ -13,7 +13,8 @@ public class FixedDiscount extends Discount{
     
     @Override
     protected BigDecimal calcNewPrice(BigDecimal price) {
-        return super.amount.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal newPrice = price.subtract(amount);
+        return newPrice.setScale(2, RoundingMode.HALF_UP);
     }
     
     @Override

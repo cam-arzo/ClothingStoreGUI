@@ -94,9 +94,6 @@
         <Property name="text" type="java.lang.String" value="Back"/>
         <Property name="inheritsPopupMenu" type="boolean" value="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="SizeLabel">
       <Properties>
@@ -135,9 +132,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Add to cart"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddToCartButtonActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

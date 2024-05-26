@@ -70,9 +70,6 @@
         <Property name="text" type="java.lang.String" value="Back"/>
         <Property name="inheritsPopupMenu" type="boolean" value="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BackButtonActionPerformed"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -103,17 +100,11 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Modify item"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ModifyButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="RemoveButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Remove item"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="RemoveButtonActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="ConfirmButton">
       <Properties>
