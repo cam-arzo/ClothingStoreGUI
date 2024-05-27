@@ -49,14 +49,17 @@ public class Model {
     }
     
     public void setSelectedProductFromIndex(int index) {
-        selectedProduct = productList.get(index);
-        System.out.println("SELECTED PRODUCT in model: " + selectedProduct.getName());
+        if ((index >= 0) && (index < productList.size())) {
+            selectedProduct = productList.get(index);
+            System.out.println("SELECTED PRODUCT in model: " + selectedProduct.getName());
+        }
     }
     
     private String[] convertProductsToCartString(List<Product> productList) {
-        for (Product p : productList) {
-            System.out.println(p.name);
-        }
+        // debug
+//        for (Product p : productList) {
+//            System.out.println(p.name);
+//        }
         
         // make list of products
         List<String> productListLabels = new ArrayList<>();
@@ -69,8 +72,19 @@ public class Model {
         return productListLabels.toArray(new String[0]);
     }
     
+    // get info of the customers selected product and set components to display
+    public void setCustomerSelectedProductVariables() {
+        view.customerSelectionPanel.getProductNameLabel().setText(selectedProduct.cartString());
+        String[] sizes = {"S", "M", "L"}; // place holder
+        view.customerSelectionPanel.getSizeDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(sizes));
+        // !! UNFINISHED
+    }
     
+    // get info of the staff selected product and set components to display
+    public void setNewProductVariables() {
+    }
     
-    
-    
+// get info of the staff selected product and set components to display
+    public void setStaffSelectedProductVariables() {
+    }
 }

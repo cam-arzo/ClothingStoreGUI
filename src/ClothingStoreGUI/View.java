@@ -52,6 +52,7 @@ public class View extends JFrame {
         checkoutPanel = new PanelCheckout(controller);
         staffProductPanel = new PanelStaffProductView(controller);
         staffEditPanel = new PanelStaffModify(controller);
+        controller.setUpProductListListeners();
         
         // Switch to starting panel
         switchPanel(userPanel);

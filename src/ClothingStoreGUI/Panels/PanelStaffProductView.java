@@ -6,6 +6,8 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import javax.swing.JLabel;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -19,11 +21,12 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
     public PanelStaffProductView(Controller controller) {
         initComponents();
         initConnections(controller);
+        ErrorLabel.setVisible(false);
     }
     
     public void initConnections(Controller controller) {
-         ItemModifyButton.addActionListener(e -> controller.staffEditButtonClicked());
-         AddButton.addActionListener(e -> controller.staffEditButtonClicked());
+         ItemModifyButton.addActionListener(e -> controller.staffModifyButtonClicked());
+         AddButton.addActionListener(e -> controller.staffAddButtonClicked());
          RemoveButton.addActionListener(e -> controller.staffRemoveButtonClicked());
          CasualButton.addActionListener(e -> controller.categoryButtonClicked(0));
          SportsButton.addActionListener(e -> controller.categoryButtonClicked(1));
@@ -38,8 +41,20 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
 
     }
 
+    public void addProductListSelectionListener(ListSelectionListener listener) {
+        ProductList.addListSelectionListener(listener);
+    }
+
+    public int getSelectedProductIndex() {
+        return ProductList.getSelectedIndex();
+    }
+    
     public void updateProductTable(String[] newData) {
         ProductList.setListData(newData);
+    }
+
+    public JLabel getErrorLabel() {
+        return ErrorLabel;
     }
     
     /**
@@ -71,6 +86,7 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
         NoGenderButton = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         ResetButton = new javax.swing.JButton();
+        ErrorLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -130,6 +146,9 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
         ResetButton.setText("Reset");
         ResetButton.setInheritsPopupMenu(true);
 
+        ErrorLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        ErrorLabel.setText("ERROR: Please select a product");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -188,6 +207,10 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
                         .addComponent(AddButton)
                         .addGap(99, 99, 99)))
                 .addContainerGap(32, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ErrorLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +243,9 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
                     .addComponent(RemoveButton)
                     .addComponent(ItemModifyButton)
                     .addComponent(AddButton))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ErrorLabel)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -228,6 +253,7 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
     private javax.swing.JRadioButton CasualButton;
+    private javax.swing.JLabel ErrorLabel;
     private javax.swing.JRadioButton FemaleButton;
     private javax.swing.JRadioButton FormalButton;
     private javax.swing.ButtonGroup GenderButtonGroup;

@@ -3,6 +3,7 @@ package ClothingStoreGUI;
 import ClothingStoreGUI.Enums.Category;
 import ClothingStoreGUI.Enums.DiscountType;
 import ClothingStoreGUI.Enums.Gender;
+import ClothingStoreGUI.Enums.ProductType;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -107,12 +108,12 @@ public class Database {
                 
                 Product product = null;
                 
-                switch (type) {
-                    case 0:  // Clothing
+                switch (ProductType.intToType(type)) {
+                    case CLOTHING:  // Clothing
 //                        String name, boolean available, double price, int gender, int category, Discount discount
                         product = new ClothingItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
                         break;
-                    case 1:  // Shoes
+                    case SHOES:  // Shoes
                         product = new ShoeItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
                         break;
                     default:

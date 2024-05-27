@@ -6,6 +6,7 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import javax.swing.JLabel;
 import javax.swing.event.ListSelectionListener;
 
 /**
@@ -20,6 +21,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     public PanelCustomerProductView(Controller controller) {
         initComponents();
         initConnections(controller);
+        ErrorLabel.setVisible(false);
     }
 
     public void initConnections(Controller controller) {
@@ -47,6 +49,10 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
 
     public void updateProductTable(String[] newData) {
         ProductList.setListData(newData);
+    }
+
+    public JLabel getErrorLabel() {
+        return ErrorLabel;
     }
 
     /**
@@ -77,6 +83,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         NoGenderButton = new javax.swing.JRadioButton();
         Title = new javax.swing.JLabel();
         ResetButton = new javax.swing.JButton();
+        ErrorLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -134,6 +141,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         ResetButton.setText("Reset");
         ResetButton.setInheritsPopupMenu(true);
 
+        ErrorLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        ErrorLabel.setText("ERROR: Please select a product");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,9 +194,12 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ResetButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(SelectButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(CartButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ErrorLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(SelectButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(CartButton)))
                         .addGap(173, 173, 173)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -220,7 +233,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SelectButton)
                     .addComponent(CartButton))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ErrorLabel)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -228,6 +243,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CartButton;
     private javax.swing.JRadioButton CasualButton;
+    private javax.swing.JLabel ErrorLabel;
     private javax.swing.JRadioButton FemaleButton;
     private javax.swing.JRadioButton FormalButton;
     private javax.swing.ButtonGroup GenderButtonGroup;

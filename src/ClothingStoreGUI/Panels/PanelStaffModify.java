@@ -19,6 +19,9 @@ public class PanelStaffModify extends javax.swing.JPanel implements InteractiveP
     public PanelStaffModify(Controller controller) {
         initComponents();
         initConnections(controller);
+        NameErrorLabel.setVisible(false);
+        PriceErrorLabel.setVisible(false);
+        DiscountErrorLabel.setVisible(false);
     }
     
     @Override
