@@ -2,6 +2,11 @@ package ClothingStoreGUI;
 
 import java.util.ArrayList;
 import java.util.List;
+import ClothingStoreGUI.Enums.Category;
+import ClothingStoreGUI.Enums.DiscountType;
+import ClothingStoreGUI.Enums.Gender;
+import ClothingStoreGUI.Enums.ProductType;
+
 
 /**
  * 
@@ -82,6 +87,12 @@ public class Model {
     
     // get info of the staff selected product and set components to display
     public void setNewProductVariables() {
+        view.staffEditPanel.getMessage().setText("Adding new product.");
+        view.staffEditPanel.getCategoryDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(Category.toStringArray()));
+        view.staffEditPanel.getGenderDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(Gender.toStringArray()));
+        view.staffEditPanel.getAvailableDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"True", "False"}));
+        view.staffEditPanel.getItemTypeDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(ProductType.toStringArray()));
+        view.staffEditPanel.getDiscountDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(DiscountType.toStringArray()));
     }
     
 // get info of the staff selected product and set components to display

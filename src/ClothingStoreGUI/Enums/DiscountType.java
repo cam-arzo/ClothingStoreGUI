@@ -20,4 +20,8 @@ public enum DiscountType {
         }
         return NONE;
     }
+    
+    public static String[] toStringArray() {
+        return new String[]{"None", "Fixed", "Percent"};
+    }
 }

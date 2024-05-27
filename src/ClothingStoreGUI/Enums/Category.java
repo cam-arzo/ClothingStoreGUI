@@ -16,4 +16,8 @@ public enum Category {
         }
         return NONE;
     }
+    
+    public static String[] toStringArray() {
+        return new String[]{"Casual", "Sport", "Formal", "Sleep"};
+    }
 }

@@ -12,4 +12,8 @@ public enum ProductType {
         }
         return CLOTHING;
     }
+    
+    public static String[] toStringArray() {
+        return new String[]{"Clothing", "Shoes"};
+    }
 }

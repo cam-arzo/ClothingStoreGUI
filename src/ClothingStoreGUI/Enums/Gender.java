@@ -12,4 +12,8 @@ public enum Gender {
         }
         return NONE;
     }
+    
+    public static String[] toStringArray() {
+        return new String[]{"Unisex", "Male", "Female"};
+    }
 }
