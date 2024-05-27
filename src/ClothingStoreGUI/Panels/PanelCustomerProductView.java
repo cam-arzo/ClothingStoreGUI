@@ -34,8 +34,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
         FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
         NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
+        ResetButton.addActionListener(e -> controller.resetButtonClicked());
     }
-    
+
     public void addProductListSelectionListener(ListSelectionListener listener) {
         ProductList.addListSelectionListener(listener);
     }
@@ -43,11 +44,11 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     public int getSelectedProductIndex() {
         return ProductList.getSelectedIndex();
     }
-    
+
     public void updateProductTable(String[] newData) {
         ProductList.setListData(newData);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,6 +76,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         NoPurposeButton = new javax.swing.JRadioButton();
         NoGenderButton = new javax.swing.JRadioButton();
         Title = new javax.swing.JLabel();
+        ResetButton = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -129,13 +131,16 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         Title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Title.setText("Product menu");
 
+        ResetButton.setText("Reset");
+        ResetButton.setInheritsPopupMenu(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
@@ -175,7 +180,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                             .addGap(95, 95, 95)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(202, 202, 202)
-                        .addComponent(Title))
+                        .addComponent(Title)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ResetButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(SelectButton)
                         .addGap(18, 18, 18)
@@ -187,7 +194,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(30, Short.MAX_VALUE)
-                .addComponent(Title)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Title)
+                    .addComponent(ResetButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(GenderLabel)
@@ -211,7 +220,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SelectButton)
                     .addComponent(CartButton))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -229,6 +238,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     private javax.swing.JList<String> ProductList;
     private javax.swing.ButtonGroup PurposeButtonGroup;
     private javax.swing.JLabel PurposeLabel;
+    private javax.swing.JButton ResetButton;
     private javax.swing.JButton SelectButton;
     private javax.swing.JRadioButton SleepButton;
     private javax.swing.JRadioButton SportsButton;
