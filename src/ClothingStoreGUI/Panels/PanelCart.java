@@ -23,7 +23,7 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
 
     public void initConnections(Controller controller) {
          BackButton.addActionListener(e -> controller.backButtonClicked());
-         ModifyButton.addActionListener(e -> controller.customerSelectButtonClicked());
+         ModifyButton.addActionListener(e -> controller.customerModifyButtonClicked());
          RemoveButton.addActionListener(e -> controller.customerRemoveButtonClicked());
          ConfirmButton.addActionListener(e -> controller.customerConfirmButtonClicked());
     }
