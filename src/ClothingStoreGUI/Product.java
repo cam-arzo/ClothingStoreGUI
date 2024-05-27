@@ -96,8 +96,12 @@ public abstract class Product {
         this.name = name;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public String isAvailable() { // formatted as String for the combo box
+        if (available) {
+            return "True";
+        } else {
+            return "False";
+        }
     }
 
     public void setAvailable(boolean available) {

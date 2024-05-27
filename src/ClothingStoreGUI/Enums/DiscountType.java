@@ -9,9 +9,26 @@ package ClothingStoreGUI.Enums;
  * @author annek
      */
 public enum DiscountType {
-    NONE, FIXED, PERCENT;
+    NONE("None"), FIXED("Fixed"), PERCENT("Percent");
     
     private static final DiscountType[] VALUES = values();
+    private final String displayName;
+
+    DiscountType(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public static String[] toStringArray() {
+        String[] array = new String[VALUES.length];
+        for (int i = 0; i < VALUES.length; ++i) {
+            array[i] = VALUES[i].displayName;
+        }
+        return array; // {"None", "Fixed", "Percent"};
+    }
 
     // convert int to enum
     public static DiscountType intToDiscount(int value) {
@@ -19,9 +36,5 @@ public enum DiscountType {
             return VALUES[value];
         }
         return NONE;
-    }
-    
-    public static String[] toStringArray() {
-        return new String[]{"None", "Fixed", "Percent"};
     }
 }

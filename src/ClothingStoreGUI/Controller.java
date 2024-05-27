@@ -206,6 +206,10 @@ public class Controller {
         view.switchPanel(view.staffProductPanel);
         // need to read and SAVE name price category gender avaliability discount type/amount to product list
     }
+
+    public void discountTypeModified() {
+        model.setDiscountStatus((String) view.staffEditPanel.getDiscountDropdown().getSelectedItem(), null);
+    }
     
     
     
