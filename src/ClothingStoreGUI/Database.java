@@ -87,12 +87,13 @@ public class Database {
                 int category = rs.getInt("category");
                 BigDecimal price = rs.getBigDecimal("price");
                 int gender = rs.getInt("gender_id");
-                int discount_type = rs.getInt("discount_id");
+                int discount_int = rs.getInt("discount_id");
                 BigDecimal discount_amount = rs.getBigDecimal("discount_amount");
                 
                 Discount discount = null;
+                DiscountType discountType = DiscountType.intToDiscount(discount_int); // change int to enum form
 
-                switch (DiscountType.intToDiscount(discount_type)) {
+                switch (discountType) {
                     case NONE:  // None
                         break;
                     case FIXED:  // Fixed
@@ -102,7 +103,7 @@ public class Database {
                         discount = new PctDiscount(discount_amount);
                         break;
                     default:
-                        System.out.println("Unknown discount type in Database: " + String.valueOf(discount_type));
+                        System.out.println("Unknown discount type in Database: " + discountType.getDisplayName());
                         break;
                 }                
                 
@@ -111,10 +112,10 @@ public class Database {
                 switch (ProductType.intToType(type)) {
                     case CLOTHING:  // Clothing
 //                        String name, boolean available, double price, int gender, int category, Discount discount
-                        product = new ClothingItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
+                        product = new ClothingItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount, discountType);
                         break;
                     case SHOES:  // Shoes
-                        product = new ShoeItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
+                        product = new ShoeItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount, discountType);
                         break;
                     default:
                         System.out.println("Unknown product type in Database: " + String.valueOf(type));
@@ -161,12 +162,13 @@ public class Database {
                 int category = rs.getInt("category");
                 BigDecimal price = rs.getBigDecimal("price");
                 int gender = rs.getInt("gender_id");
-                int discount_type = rs.getInt("discount_id");
+                int discount_int = rs.getInt("discount_id");
                 BigDecimal discount_amount = rs.getBigDecimal("discount_amount");
                 
                 Discount discount = null;
+                DiscountType discountType = DiscountType.intToDiscount(discount_int); // change int to enum form
 
-                switch (DiscountType.intToDiscount(discount_type)) {
+                switch (discountType) {
                     case NONE:  // None
                         break;
                     case FIXED:  // Fixed
@@ -176,19 +178,19 @@ public class Database {
                         discount = new PctDiscount(discount_amount);
                         break;
                     default:
-                        System.out.println("Unknown discount type in Database: " + String.valueOf(discount_type));
+                        System.out.println("Unknown discount type in Database: " + discountType.getDisplayName());
                         break;
                 }                
                 
                 Product product = null;
                 
-                switch (type) {
-                    case 0:  // Clothing
+                switch (ProductType.intToType(type)) {
+                    case CLOTHING:  // Clothing
 //                        String name, boolean available, double price, int gender, int category, Discount discount
-                        product = new ClothingItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
+                        product = new ClothingItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount, discountType);
                         break;
-                    case 1:  // Shoes
-                        product = new ShoeItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount);
+                    case SHOES:  // Shoes
+                        product = new ShoeItem(id, name, available, price, Gender.intToGender(gender), Category.intToCategory(category), discount, discountType);
                         break;
                     default:
                         System.out.println("Unknown product type in Database: " + String.valueOf(type));

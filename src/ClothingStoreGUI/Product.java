@@ -1,7 +1,9 @@
 package ClothingStoreGUI;
 
 import ClothingStoreGUI.Enums.Category;
+import ClothingStoreGUI.Enums.DiscountType;
 import ClothingStoreGUI.Enums.Gender;
+import ClothingStoreGUI.Enums.ProductType;
 import java.math.BigDecimal;
 
 // when purchased, a 'SelectedProduct' class is used to store user's choices (size, amount)
@@ -23,9 +25,11 @@ public abstract class Product {
     // !! watch out for 999999.99 rounding up to 1000000.00 and causing errors
     private BigDecimal price;
     private Discount discount;
+    private DiscountType discountType;
     private BigDecimal discountedPrice;
     // a unique size system exists for clothes & shoes
     private String[] sizes;
+    private ProductType productType;
       
 
     // new product with placeholders
@@ -44,7 +48,7 @@ public abstract class Product {
     
     // !! should this be changed to factory pattern?
     
-    public Product(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount) {
+    public Product(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount, DiscountType discountType, ProductType productType) {
         this.id = id;
         this.name = name;
         this.available = available;
@@ -52,6 +56,8 @@ public abstract class Product {
         this.gender = gender;
         this.category = category;
         this.discount = discount;
+        this.discountType = discountType;
+        this.productType = productType;
         setDiscountedPrice(discount);
         // sizes are set in the product subclass
     }
@@ -164,6 +170,14 @@ public abstract class Product {
 
     public BigDecimal getPrice() {
         return this.price;
+    }
+
+    public DiscountType getDiscountType() {
+        return discountType;
+    }
+
+    public ProductType getProductType() {
+        return productType;
     }
     
 }

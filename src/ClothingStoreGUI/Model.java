@@ -101,9 +101,14 @@ public class Model {
         view.staffEditPanel.getGenderDropdown().setSelectedItem(selectedProduct.getGender().getDisplayName());
         view.staffEditPanel.getAvailableDropdown().setSelectedItem(selectedProduct.isAvailable());
         // !! need to store item and discount type in Product
-        view.staffEditPanel.getItemTypeDropdown().setSelectedItem("NA");
-        view.staffEditPanel.getDiscountDropdown().setSelectedItem("NA");
-        setDiscountStatus("None", null);
+        view.staffEditPanel.getItemTypeDropdown().setSelectedItem(selectedProduct.getProductType().getDisplayName());
+        String discountType = selectedProduct.getDiscountType().getDisplayName();
+        BigDecimal discountAmount = null;
+        view.staffEditPanel.getDiscountDropdown().setSelectedItem(discountType);
+        if (Objects.nonNull(selectedProduct.getDiscount())) {
+            discountAmount = selectedProduct.getDiscount().amount;
+        }
+        setDiscountStatus(discountType, discountAmount);
     }
 
     // changes settings in the product editing panel
