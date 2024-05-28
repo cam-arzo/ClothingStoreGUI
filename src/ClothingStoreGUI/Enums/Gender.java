@@ -29,4 +29,13 @@ public enum Gender {
         }
         return NONE;
     }
+    
+    public static Gender fromDisplayName(String displayName) {
+        for (Gender gender : VALUES) {
+            if (gender.getDisplayName().equalsIgnoreCase(displayName)) {
+                return gender;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant with display name " + displayName);
+    }
 }

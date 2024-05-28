@@ -29,4 +29,13 @@ public enum ProductType {
         }
         return CLOTHING;
     }
+    
+    public static ProductType fromDisplayName(String displayName) {
+        for (ProductType productType : ProductType.values()) {
+            if (productType.getDisplayName().equalsIgnoreCase(displayName)) {
+                return productType;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant with display name " + displayName);
+    }
 }

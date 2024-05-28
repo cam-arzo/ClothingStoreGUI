@@ -196,14 +196,16 @@ public class Controller {
     }
 
     public void staffRemoveButtonClicked() {
-        // !! need to remove selected product from database
-        System.out.println("Product remove from database button clicked. Not coded yet.");
+        // product is removed from product list in model
+        model.removeProduct();
     }
 
     // Staff edit panel
     public void staffSaveProductButtonClicked() {
+        if (model.staffSaveChanges()) {
+            view.switchPanel(view.staffProductPanel);
+        }
         // saves and returns to product view
-        view.switchPanel(view.staffProductPanel);
         // need to read and SAVE name price category gender avaliability discount type/amount to product list
     }
 

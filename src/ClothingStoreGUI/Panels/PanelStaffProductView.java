@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
@@ -143,7 +139,7 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Product menu - Staff");
 
-        ResetButton.setText("Reset");
+        ResetButton.setText("Save and reset");
         ResetButton.setInheritsPopupMenu(true);
 
         ErrorLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
@@ -195,7 +191,7 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
                                         .addComponent(GenderLabel)))
                                 .addGap(95, 95, 95))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(180, 180, 180)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(ResetButton))))
