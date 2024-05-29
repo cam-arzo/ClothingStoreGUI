@@ -99,7 +99,7 @@ public class Model {
 
         // get cart labels for each product
         for (Product product : productList) {
-            productListLabels.add(product.toStringArray());
+            productListLabels.add(product.toString());
         }
 
         return productListLabels.toArray(new String[0]);
@@ -108,18 +108,29 @@ public class Model {
     // CUSTOMER FUNCTIONS
     // get info of the customers selected product and set components to display
     public void setCustomerSelectedProductVariables() {
-        view.customerSelectionPanel.getProductNameLabel().setText(selectedProduct.toStringArray());
+        isModifyingProduct = false;
+        view.customerSelectionPanel.getProductNameLabel().setText(selectedProduct.toString());
         String[] sizes = selectedProduct.getSizeSystem();
         view.customerSelectionPanel.getSizeDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(sizes));
         view.customerSelectionPanel.getSizeDropdown().setSelectedIndex(2); // set size to M or 7-8 instead of smallest size by default
         view.customerSelectionPanel.getQtyPicker().setValue(1);
+        view.customerSelectionPanel.getAddToCartButton().setText("Add to cart");
     }
-
+    
+    // get info on OrderProduct when user selects it to modify
+    public void setOrderModify() {
+       isModifyingProduct = true;
+       view.customerSelectionPanel.getProductNameLabel().setText(selectedOrder.getProduct().toString());
+       view.customerSelectionPanel.getSizeDropdown().setSelectedItem(selectedOrder.getSize());
+       view.customerSelectionPanel.getQtyPicker().setValue(selectedOrder.getQuantity());
+       view.customerSelectionPanel.getAddToCartButton().setText("Save changes");
+    }
+    
     public boolean customerSaveChanges() {
-        boolean validQty = checkQty();
+        boolean validQuantity = checkQuantity();
 
         // return false if qty is invalid
-        if (!validQty) {
+        if (!validQuantity) {
             return false;
         }
 
@@ -127,13 +138,22 @@ public class Model {
         int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
 
         OrderProduct newOrder = new OrderProduct(selectedProduct, size, qty);
-//        System.out.println(newOrder); // debug
-        cart.addItem(newOrder);
-        System.out.println(cart);
+        
+        if (isModifyingProduct) { // user is modifying
+            modifyCartOrder(newOrder);
+        } else { // user is adding
+            cart.addItem(newOrder);
+        }
+        displayCart();
         return true;
     }
+    
+    public void modifyCartOrder(OrderProduct newOrder) {
+        selectedOrder.setQuantity(newOrder.getQuantity());
+        selectedOrder.setSize(newOrder.getSize());
+    }
 
-    public boolean checkQty() {
+    public boolean checkQuantity() {
         int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
         if (qty > 0) {
             view.customerSelectionPanel.getQtyErrorLabel().setVisible(false);

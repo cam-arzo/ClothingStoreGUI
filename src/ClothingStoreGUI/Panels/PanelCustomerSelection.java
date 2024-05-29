@@ -2,6 +2,7 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
@@ -28,6 +29,10 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
 
     public JLabel getProductNameLabel() {
         return ProductNameLabel;
+    }
+
+    public JButton getAddToCartButton() {
+        return AddToCartButton;
     }
 
     public JLabel getQtyErrorLabel() {

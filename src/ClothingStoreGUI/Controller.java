@@ -140,15 +140,21 @@ public class Controller {
     public void addToCartButtonClicked() {
         // save and return to customer product view
         if (model.customerSaveChanges()) {
-            view.switchPanel(view.customerProductPanel);
+            if (model.isModifyingProduct) { // if user is making changes, go back to cart to view
+                view.switchPanel(view.cartPanel);
+                model.isModifyingProduct = false;
+            } else { // otherwise go back to product view
+                view.switchPanel(view.customerProductPanel);
+            }
         }
     }
 
     // Customer cart view:
     public void customerModifyButtonClicked() {
-        
         if (Objects.nonNull(model.selectedOrder)) { // check if user has selected something
             // go to customer selection
+            model.setCustomerSelectedProductVariables();
+            model.setOrderModify();
             setPreviousPanel(view.cartPanel);
             view.switchPanel(view.customerSelectionPanel);
             view.cartPanel.getErrorLabel().setVisible(false);
