@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 public abstract class Product {
     
     // unique ID used in the database for each product
-    int id;
+    private int id;
     // product has one main unique name
-    String name;
+    private String name;
     // product is either available or unavailable
     private boolean available;
     // category and gender are stored in enums
@@ -63,7 +63,7 @@ public abstract class Product {
     }
     
     // Used when printing each product in the buy menu.
-    public String cartString() {
+    public String toStringArray() {
         String out="";
         
         // label as unlisted if unavailable
@@ -88,6 +88,22 @@ public abstract class Product {
     
     // each product class has a unique size system
     abstract String[] getSizeSystem();
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDiscountType(DiscountType discountType) {
+        this.discountType = discountType;
+    }
+
+    public void setDiscountedPrice(BigDecimal discountedPrice) {
+        this.discountedPrice = discountedPrice;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
     
     // each product class has a type
     public String getType() {
@@ -102,12 +118,16 @@ public abstract class Product {
         this.name = name;
     }
 
-    public String isAvailable() { // formatted as String for the combo box
+    public String isAvailableString() { // formatted as String for the combo box
         if (available) {
             return "True";
         } else {
             return "False";
         }
+    }
+    
+    public boolean isAvailable() { // formatted as String for the combo box
+        return available;
     }
 
     public void setAvailable(boolean available) {

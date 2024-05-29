@@ -21,24 +21,30 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     public PanelCustomerProductView(Controller controller) {
         initComponents();
         initConnections(controller);
-        ErrorLabel.setVisible(false);
+        setDefaultComponentVisibilities();
     }
 
     public void initConnections(Controller controller) {
         SelectButton.addActionListener(e -> controller.customerSelectButtonClicked());
         CartButton.addActionListener(e -> controller.cartButtonClicked());
-        CasualButton.addActionListener(e -> controller.categoryButtonClicked(0));
-        SportsButton.addActionListener(e -> controller.categoryButtonClicked(1));
-        FormalButton.addActionListener(e -> controller.categoryButtonClicked(2));
-        SleepButton.addActionListener(e -> controller.categoryButtonClicked(3));
-        NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4));
-        UnisexButton.addActionListener(e -> controller.genderButtonClicked(0));
-        MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
-        FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
-        NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
+        CasualButton.addActionListener(e -> controller.categoryButtonClicked(0, this));
+        SportsButton.addActionListener(e -> controller.categoryButtonClicked(1, this));
+        FormalButton.addActionListener(e -> controller.categoryButtonClicked(2, this));
+        SleepButton.addActionListener(e -> controller.categoryButtonClicked(3, this));
+        NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4, this));
+        UnisexButton.addActionListener(e -> controller.genderButtonClicked(0, this));
+        MaleButton.addActionListener(e -> controller.genderButtonClicked(1, this));
+        FemaleButton.addActionListener(e -> controller.genderButtonClicked(2, this));
+        NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3, this));
         ResetButton.addActionListener(e -> controller.resetButtonClicked());
     }
 
+    public void setDefaultComponentVisibilities() {
+        ErrorLabel.setVisible(false);
+        NoPurposeButton.setSelected(true);
+        NoGenderButton.setSelected(true);
+    }
+    
     public void addProductListSelectionListener(ListSelectionListener listener) {
         ProductList.addListSelectionListener(listener);
     }

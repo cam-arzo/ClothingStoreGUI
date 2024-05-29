@@ -100,9 +100,9 @@ public class Controller {
 
     // GENERIC RESTART BUTTON
     public void resetButtonClicked() {
-        // restart program
+        // restart program by resetting variables and views
+        model.reset();
         view.switchPanel(view.userPanel);
-        model.selectedProduct = null;
     }
 
     // CUSTOMER VIEW BUTTONS
@@ -153,20 +153,12 @@ public class Controller {
     }
 
     // Product view filters (both staff and customer):
-    public void categoryButtonClicked(int value) {
-        // set category filter
-        // !! might need to pass in parameter for the product list display
-        Category category = Category.intToCategory(value);
-        System.out.println("Category filter to change to " + category + ". Not coded yet.");
-        // !! insert code
+    public void categoryButtonClicked(int value, JPanel panel) {
+        model.setCategoryFilter(value, panel);
     }
 
-    public void genderButtonClicked(int value) {
-        // set gender filter
-        // !! might need to pass in parameter for the product list display
-        Gender gender = Gender.intToGender(value);
-        System.out.println("Gender filter to change to " + gender + ". Not coded yet.");
-        // !! insert code
+    public void genderButtonClicked(int value, JPanel panel) {
+        model.setGenderFilter(value, panel);
     }
 
     // STAFF VIEW BUTTONS

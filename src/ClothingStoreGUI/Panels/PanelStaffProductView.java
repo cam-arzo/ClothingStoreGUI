@@ -17,22 +17,22 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
     public PanelStaffProductView(Controller controller) {
         initComponents();
         initConnections(controller);
-        ErrorLabel.setVisible(false);
+        setDefaultComponentVisibilities();
     }
     
     public void initConnections(Controller controller) {
          ItemModifyButton.addActionListener(e -> controller.staffModifyButtonClicked());
          AddButton.addActionListener(e -> controller.staffAddButtonClicked());
          RemoveButton.addActionListener(e -> controller.staffRemoveButtonClicked());
-         CasualButton.addActionListener(e -> controller.categoryButtonClicked(0));
-         SportsButton.addActionListener(e -> controller.categoryButtonClicked(1));
-         FormalButton.addActionListener(e -> controller.categoryButtonClicked(2));
-         SleepButton.addActionListener(e -> controller.categoryButtonClicked(3));
-         NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4));
-         UnisexButton.addActionListener(e -> controller.genderButtonClicked(0));
-         MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
-         FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
-         NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
+         CasualButton.addActionListener(e -> controller.categoryButtonClicked(0, this));
+         SportsButton.addActionListener(e -> controller.categoryButtonClicked(1, this));
+         FormalButton.addActionListener(e -> controller.categoryButtonClicked(2, this));
+         SleepButton.addActionListener(e -> controller.categoryButtonClicked(3, this));
+         NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4, this));
+         UnisexButton.addActionListener(e -> controller.genderButtonClicked(0, this));
+         MaleButton.addActionListener(e -> controller.genderButtonClicked(1, this));
+         FemaleButton.addActionListener(e -> controller.genderButtonClicked(2, this));
+         NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3, this));
          ResetButton.addActionListener(e -> controller.resetButtonClicked());
 
     }
@@ -51,6 +51,12 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
 
     public JLabel getErrorLabel() {
         return ErrorLabel;
+    }
+    
+    public void setDefaultComponentVisibilities() {
+        ErrorLabel.setVisible(false);
+        NoPurposeButton.setSelected(true);
+        NoGenderButton.setSelected(true);
     }
     
     /**
@@ -269,4 +275,5 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
 }

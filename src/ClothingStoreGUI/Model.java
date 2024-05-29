@@ -8,6 +8,9 @@ import ClothingStoreGUI.Enums.Gender;
 import ClothingStoreGUI.Enums.ProductType;
 import java.math.BigDecimal;
 import java.util.Objects;
+import javax.swing.JPanel;
+import ClothingStoreGUI.Panels.PanelStaffProductView;
+import ClothingStoreGUI.Panels.PanelCustomerProductView;
 
 /**
  *
@@ -22,8 +25,13 @@ public class Model {
 
     // !! might be messy storing productList and selectedProduct in Model for now
     List<Product> productList;
-
+    List<Product> filteredProductList = new ArrayList<>();
+    Category categoryFilter = Category.NONE;
+    Gender genderFilter = Gender.NONE;
     Product selectedProduct = null;
+
+    // variable to tell whether staff is adding a new product (false) or modifying an existing one (true)
+    boolean isModifyingProduct = false;
 
     public void setDatabase(Database database) {
         this.database = database;
@@ -35,25 +43,17 @@ public class Model {
 
     public void processAllProducts() {
         productList = database.getAllProducts();
-
-        String[] stringArray = convertProductsToStringArray(productList);
-
-        // send data as String[]
-        view.staffProductPanel.updateProductTable(stringArray);
+        updateProductTableInPanel(view.staffProductPanel);
     }
 
     public void processAvailableProducts() {
         productList = database.getAvailableProducts();
-
-        String[] stringArray = convertProductsToStringArray(productList);
-
-        // send data as String[]
-        view.customerProductPanel.updateProductTable(stringArray);
+        updateProductTableInPanel(view.customerProductPanel);
     }
 
     public void setSelectedProductFromIndex(int index) {
-        if ((index >= 0) && (index < productList.size())) {
-            selectedProduct = productList.get(index);
+        if ((index >= 0) && (index < filteredProductList.size())) {
+            selectedProduct = filteredProductList.get(index);
             System.out.println("SELECTED PRODUCT in model: " + selectedProduct.getName());
         }
     }
@@ -69,7 +69,7 @@ public class Model {
 
         // get cart labels for each product
         for (Product product : productList) {
-            productListLabels.add(product.cartString());
+            productListLabels.add(product.toStringArray());
         }
 
         return productListLabels.toArray(new String[0]);
@@ -78,7 +78,7 @@ public class Model {
     // CUSTOMER FUNCTIONS
     // get info of the customers selected product and set components to display
     public void setCustomerSelectedProductVariables() {
-        view.customerSelectionPanel.getProductNameLabel().setText(selectedProduct.cartString());
+        view.customerSelectionPanel.getProductNameLabel().setText(selectedProduct.toStringArray());
         String[] sizes = selectedProduct.getSizeSystem();
         view.customerSelectionPanel.getSizeDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(sizes));
         view.customerSelectionPanel.getSizeDropdown().setSelectedIndex(2); // set size to M or 7-8 instead of smallest size by default
@@ -89,18 +89,20 @@ public class Model {
     // STAFF FUNCTIONS
     // get info of the staff selected product and set components to display
     public void setNewProductVariables() {
+        isModifyingProduct = false;
         view.staffEditPanel.getMessage().setText("Adding new product");
         setDefaultProductSettings();
     }
 
 // get info of the staff selected product and set components to display
     public void setStaffSelectedProductVariables() {
-        view.staffEditPanel.getMessage().setText("Modifying product: "+selectedProduct.getName());
+        isModifyingProduct = true;
+        view.staffEditPanel.getMessage().setText("Modifying product: " + selectedProduct.getName());
         view.staffEditPanel.getNameTextField().setText(selectedProduct.getName());
-        view.staffEditPanel.getPriceTextField().setText("$"+selectedProduct.getPrice());
+        view.staffEditPanel.getPriceTextField().setText("$" + selectedProduct.getPrice());
         view.staffEditPanel.getCategoryDropdown().setSelectedItem(selectedProduct.getCategory().getDisplayName());
         view.staffEditPanel.getGenderDropdown().setSelectedItem(selectedProduct.getGender().getDisplayName());
-        view.staffEditPanel.getAvailableDropdown().setSelectedItem(selectedProduct.isAvailable());
+        view.staffEditPanel.getAvailableDropdown().setSelectedItem(selectedProduct.isAvailableString());
         view.staffEditPanel.getItemTypeDropdown().setSelectedItem(selectedProduct.getProductType().getDisplayName());
         String discountType = selectedProduct.getDiscountType().getDisplayName();
         BigDecimal discountAmount = null;
@@ -137,23 +139,22 @@ public class Model {
                 break;
             case "Fixed":
                 view.staffEditPanel.getDiscountTextField().setEditable(true);
-                view.staffEditPanel.getDiscountTextField().setText("$"+amount.setScale(2, BigDecimal.ROUND_HALF_UP));
+                view.staffEditPanel.getDiscountTextField().setText("$" + amount.setScale(2, BigDecimal.ROUND_HALF_UP));
                 break;
             case "Percent":
                 view.staffEditPanel.getDiscountTextField().setEditable(true);
-                view.staffEditPanel.getDiscountTextField().setText(amount.setScale(0, BigDecimal.ROUND_HALF_UP)+"%");
+                view.staffEditPanel.getDiscountTextField().setText(amount.setScale(0, BigDecimal.ROUND_HALF_UP) + "%");
                 break;
         }
     }
-    
+
     // !! need to remove from database
     public void removeProduct() {
         productList.remove(selectedProduct);
-        String[] stringArray = convertProductsToStringArray(productList);
-        view.staffProductPanel.updateProductTable(stringArray);
+        updateProductTableInPanel(view.staffProductPanel);
         selectedProduct = null; // resetting the product list means user loses their selection
     }
-    
+
     // returns true if saving changes is successful
     public boolean staffSaveChanges() {
         // run all checks and display error msgs if needed
@@ -165,7 +166,7 @@ public class Model {
         if (!validName || !validPrice || !validDiscount) {
             return false;
         }
-        
+
         // name price type category gender avaliability discount amount
         String name = view.staffEditPanel.getNameTextField().getText();
         BigDecimal price = convertStringToBigDecimal(view.staffEditPanel.getPriceTextField().getText());
@@ -176,7 +177,7 @@ public class Model {
         DiscountType discountType = DiscountType.fromDisplayName((String) view.staffEditPanel.getDiscountDropdown().getSelectedItem());
         BigDecimal discountAmount = convertStringToBigDecimal(view.staffEditPanel.getDiscountTextField().getText());
         Discount discount = null;
-        
+
         switch (discountType) {
             case NONE:
                 break;
@@ -187,27 +188,50 @@ public class Model {
                 discount = new PctDiscount(discountAmount);
                 break;
         }
-        
-        Product product = null;
+
+        Product newProduct = null;
         //    public Product(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount, DiscountType discountType, ProductType productType) {
-    
-        // adding product NOT modifying
-        // when modifying, need to get id 
+
         switch (productType) {
             case CLOTHING:  // Clothing
-                product = new ClothingItem(-1, name, available, price, gender, category, discount, discountType);
+                newProduct = new ClothingItem(-1, name, available, price, gender, category, discount, discountType);
             case SHOES:  // Shoes
-                product = new ShoeItem(-1, name, available, price, gender, category, discount, discountType);
+                newProduct = new ShoeItem(-1, name, available, price, gender, category, discount, discountType);
             default:
         }
-        
-        // !! NEED TO ADD MODIFY
 
-        productList.add(product);
-        String[] stringArray = convertProductsToStringArray(productList);
-        view.staffProductPanel.updateProductTable(stringArray);
+        if (isModifyingProduct) { // staff is modifying
+            modifySelectedProduct(newProduct);
+            database.modifyProductInDatabase(newProduct);
+        } else { // staff is adding
+            productList.add(newProduct);
+            database.addProductToDatabase(newProduct);
+        }
+        updateProductTableInPanel(view.staffProductPanel);
         return true;
 
+    }
+
+    public void updateProductTableInPanel(JPanel panel) {
+//        System.out.println("Filtering based on category "+categoryFilter+" and gender "+genderFilter); // debug
+        if (!categoryFilter.equals(Category.NONE) || !genderFilter.equals(Gender.NONE)) {
+            filteredProductList.clear();
+            for (Product product : productList) {
+                if (categoryFilter.equals(Category.NONE) || product.getCategory().equals(categoryFilter)) {
+                    if (genderFilter.equals(Gender.NONE) || product.getGender().equals(genderFilter)) {
+                        filteredProductList.add(product);
+                    }
+                }
+            }
+        } else {
+            filteredProductList = new ArrayList<>(productList);
+        }
+        String[] stringArray = convertProductsToStringArray(filteredProductList);
+        if (panel instanceof PanelCustomerProductView) {
+            view.customerProductPanel.updateProductTable(stringArray);
+        } else if (panel instanceof PanelStaffProductView) {
+            view.staffProductPanel.updateProductTable(stringArray);
+        }
     }
     
     public boolean isAvailableFromString() {
@@ -217,7 +241,7 @@ public class Model {
         }
         return false;
     }
-    
+
     public boolean checkName() {
         String text = view.staffEditPanel.getNameTextField().getText();
         if (text == null || text.trim().isEmpty() || text.equals("Enter new product name...")) { // placeholder text
@@ -229,7 +253,7 @@ public class Model {
             return true;
         }
     }
-    
+
     public boolean checkPrice() {
         String text = view.staffEditPanel.getPriceTextField().getText();
         BigDecimal price = convertStringToBigDecimal(text);
@@ -242,7 +266,7 @@ public class Model {
             return true;
         }
     }
-    
+
     public boolean checkDiscountAmount() {
         // iff discount text field isnt editable then return true as no errors to give
         if (!view.staffEditPanel.getDiscountTextField().isEditable()) {
@@ -260,10 +284,10 @@ public class Model {
             return true;
         }
     }
-    
+
     public BigDecimal convertStringToBigDecimal(String string) {
         try {
-            String cleanedText = string.replaceAll("[^\\d.]", ""); // remove all chars that are not decimals (d) or points (.)
+            String cleanedText = string.replaceAll("[\\s\\$\\%]", ""); // remove all whitespace and chars that are $ or %
             BigDecimal bigDecimal;
             if (cleanedText.matches("\\d*\\.?\\d+")) { // d* means 0 or more decimals, .? means 0 or 1 point, d+ means 1 or more decimals
                 bigDecimal = new BigDecimal(cleanedText);
@@ -274,4 +298,45 @@ public class Model {
         }
         return null;
     }
+
+    private void modifySelectedProduct(Product newProduct) {
+        selectedProduct.setName(newProduct.getName());
+        selectedProduct.setAvailable(newProduct.isAvailable());
+        selectedProduct.setCategory(newProduct.getCategory());
+        selectedProduct.setGender(newProduct.getGender());
+        selectedProduct.setPrice(newProduct.getPrice());
+        selectedProduct.setDiscount(newProduct.getDiscount());
+        selectedProduct.setDiscountType(newProduct.getDiscountType());
+        selectedProduct.setDiscountedPrice(newProduct.getDiscountedPrice());
+        selectedProduct.setSizes(newProduct.getSizes());
+        selectedProduct.setProductType(newProduct.getProductType());
+    }
+    
+    public void setCategoryFilter(int value, JPanel panel) {
+        categoryFilter = Category.intToCategory(value);
+        updateProductTableInPanel(panel);
+    }
+
+    public void setGenderFilter(int value, JPanel panel) {
+        genderFilter = Gender.intToGender(value);
+        updateProductTableInPanel(panel);
+    }
+    
+    public void reset() {
+        // restart program by resetting variables and views
+        selectedProduct = null;
+        categoryFilter = Category.NONE;
+        genderFilter = Gender.NONE;
+        view.customerProductPanel.setDefaultComponentVisibilities();
+        view.staffProductPanel.setDefaultComponentVisibilities();
+    }
+    
+    public void printDebugProductList(List<Product> productList) {
+        System.out.print("[");
+        for (Product product : productList) {
+            System.out.print(product.getName()+", ");
+        }
+        System.out.print("]");
+    }
+    
 }
