@@ -58,14 +58,14 @@ public class Model {
             System.out.println("SELECTED PRODUCT in product view: " + selectedProduct.getName());
         }
     }
-    
+
     public void setCartSelectedOrderFromIndex(int index) {
         if ((index >= 0) && (index < cart.cartProducts.size())) {
             selectedOrder = cart.cartProducts.get(index);
             System.out.println("SELECTED ORDER in cart: " + selectedOrder.getProduct().getName());
         }
     }
-    
+
     public void updateProductTableInPanel(JPanel panel) {
 //        System.out.println("Filtering based on category "+categoryFilter+" and gender "+genderFilter); // debug
         if (!categoryFilter.equals(Category.NONE) || !genderFilter.equals(Gender.NONE)) {
@@ -117,22 +117,22 @@ public class Model {
 
     public boolean customerSaveChanges() {
         boolean validQty = checkQty();
-        
+
         // return false if qty is invalid
         if (!validQty) {
             return false;
         }
-        
+
         String size = (String) view.customerSelectionPanel.getSizeDropdown().getSelectedItem();
         int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
-        
+
         OrderProduct newOrder = new OrderProduct(selectedProduct, size, qty);
 //        System.out.println(newOrder); // debug
         cart.addItem(newOrder);
         System.out.println(cart);
         return true;
     }
-    
+
     public boolean checkQty() {
         int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
         if (qty > 0) {
@@ -144,11 +144,11 @@ public class Model {
             return false; // qty is negative
         }
     }
-    
+
     public void displayCart() {
         view.cartPanel.getCartList().setListData(cart.toStringArray());
         selectedOrder = null;
-        
+
         if (cart.getCartProducts().isEmpty()) {
             view.cartPanel.getTotalPriceLabel().setVisible(false);
             view.cartPanel.getErrorLabel().setVisible(true);
@@ -159,23 +159,23 @@ public class Model {
             return;
         } else {
             view.cartPanel.getTotalPriceLabel().setVisible(true);
-            view.cartPanel.getTotalPriceLabel().setText("Total price: $"+cart.getTotalPrice());
+            view.cartPanel.getTotalPriceLabel().setText("Total price: $" + cart.getTotalPrice());
             view.cartPanel.getErrorLabel().setVisible(false);
             view.cartPanel.getRemoveButton().setEnabled(true);
             view.cartPanel.getModifyButton().setEnabled(true);
             view.cartPanel.getConfirmButton().setEnabled(true);
             view.cartPanel.getErrorLabel().setText("ERROR: Please select a product");
         }
-        
+
         view.cartPanel.getErrorLabel().setVisible(false);
-        
+
     }
-    
+
     public void removeFromCart() {
         cart.removeOrderProduct(selectedOrder);
         displayCart();
     }
-    
+
     // STAFF FUNCTIONS
     // get info of the staff selected product and set components to display
     public void setNewProductVariables() {
@@ -301,7 +301,7 @@ public class Model {
         return true;
 
     }
-    
+
     public boolean isAvailableFromString() {
         String string = (String) view.staffEditPanel.getAvailableDropdown().getSelectedItem();
         if (string.equals("True")) {
@@ -325,32 +325,48 @@ public class Model {
     public boolean checkPrice() {
         String text = view.staffEditPanel.getPriceTextField().getText();
         BigDecimal price = convertStringToBigDecimal(text);
-        if (Objects.isNull(price)) {
-            System.out.println("price invalid");
-            view.staffEditPanel.getPriceErrorLabel().setVisible(true);
-            return false;
-        } else {
+        if (Objects.nonNull(price) && price.compareTo(BigDecimal.ZERO) > 0) {
             view.staffEditPanel.getPriceErrorLabel().setVisible(false);
             return true;
         }
+        System.out.println("price invalid");
+        view.staffEditPanel.getPriceErrorLabel().setVisible(true);
+
+        return false;
     }
 
     public boolean checkDiscountAmount() {
-        // iff discount text field isnt editable then return true as no errors to give
-        if (!view.staffEditPanel.getDiscountTextField().isEditable()) {
+        DiscountType discountType = DiscountType.fromDisplayName((String) view.staffEditPanel.getDiscountDropdown().getSelectedItem());
+
+        // if discount text field isnt editable then return true as no errors to give
+        if (discountType.equals(DiscountType.NONE)) {
             return true;
         }
 
         String text = view.staffEditPanel.getDiscountTextField().getText();
-        BigDecimal discount = convertStringToBigDecimal(text);
-        if (Objects.isNull(discount)) {
-            System.out.println("discount invalid");
-            view.staffEditPanel.getDiscountErrorLabel().setVisible(true);
-            return false;
-        } else {
-            view.staffEditPanel.getDiscountErrorLabel().setVisible(false);
-            return true;
+        BigDecimal num = convertStringToBigDecimal(text);
+        if (Objects.nonNull(num)) {
+            if (discountType.equals(DiscountType.FIXED) && checkPrice()) { // if fixed discount, check its above 0
+                BigDecimal price = convertStringToBigDecimal(view.staffEditPanel.getPriceTextField().getText());
+                if (isInRange(num, BigDecimal.ZERO, price)) {
+                    view.staffEditPanel.getDiscountErrorLabel().setVisible(false);
+                    return true;
+                }
+            } else if (discountType.equals(DiscountType.PERCENT)) { // if pct discount, check its between 0 and 100
+                if (isInRange(num, BigDecimal.ZERO, BigDecimal.valueOf(100))) {
+                    view.staffEditPanel.getDiscountErrorLabel().setVisible(false);
+                    return true;
+                }
+            }
         }
+        System.out.println("discount invalid");
+        view.staffEditPanel.getDiscountErrorLabel().setVisible(true);
+        return false;
+    }
+
+    public static boolean isInRange(BigDecimal number, BigDecimal min, BigDecimal max) {
+        // Check if number is greater than min and less than or equal to max
+        return number.compareTo(min) > 0 && number.compareTo(max) <= 0;
     }
 
     public BigDecimal convertStringToBigDecimal(String string) {
@@ -379,7 +395,7 @@ public class Model {
         selectedProduct.setSizes(newProduct.getSizes());
         selectedProduct.setProductType(newProduct.getProductType());
     }
-    
+
     public void setCategoryFilter(int value, JPanel panel) {
         categoryFilter = Category.intToCategory(value);
         updateProductTableInPanel(panel);
@@ -389,22 +405,24 @@ public class Model {
         genderFilter = Gender.intToGender(value);
         updateProductTableInPanel(panel);
     }
-    
+
     public void reset() {
         // restart program by resetting variables and views
         selectedProduct = null;
+        selectedOrder = null;
+        isModifyingProduct = false;
         categoryFilter = Category.NONE;
         genderFilter = Gender.NONE;
         view.customerProductPanel.setDefaultComponentVisibilities();
         view.staffProductPanel.setDefaultComponentVisibilities();
     }
-    
+
     public void printDebugProductList(List<Product> productList) {
         System.out.print("[");
         for (Product product : productList) {
-            System.out.print(product.getName()+", ");
+            System.out.print(product.getName() + ", ");
         }
         System.out.print("]");
     }
-    
+
 }
