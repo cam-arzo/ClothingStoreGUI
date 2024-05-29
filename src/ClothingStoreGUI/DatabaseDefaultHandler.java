@@ -25,6 +25,12 @@ public class DatabaseDefaultHandler {
             createProductTable(stmt);
             fillProductTable(stmt);
         }
+        
+        // holds different order detail
+        if (!database.tableExists("orders")) {
+            createOrderTable(stmt);
+            fillOrderTable(stmt);
+        }
 
     }
 
@@ -43,9 +49,9 @@ public class DatabaseDefaultHandler {
                 + "id INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
                 + "available SMALLINT,"
                 + "type INT NOT NULL,"
-                + "name VARCHAR(64) UNIQUE NOT NULL,"
+                + "name VARCHAR(64) NOT NULL,"  // temporarially (?) changed product name to allow for duplicates
                 + "category INT NOT NULL,"
-                + "price NUMERIC(6, 2) NOT NULL," // cap prices at 6 digits! and use BigDecimal
+                + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits! and use BigDecimal
                 + "gender_id INT NOT NULL,"
                 + "discount_id INT,"
                 + "discount_amount NUMERIC(10, 2))");
@@ -73,4 +79,20 @@ public class DatabaseDefaultHandler {
                 + "(1, 1, 'Open-Toe Stilletos',         2, 70,      2, 0, null),"
                 + "(1, 0, 'Black Leather Jacket',       0, 45,      1, 2, 30)");
     }
+    
+    public void createOrderTable(Statement stmt) throws SQLException {
+        // create table
+        stmt.executeUpdate("CREATE TABLE orders("
+                + "id INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
+                + "quantity INT NOT NULL,"  // total quantity of items in the order
+                + "total_price NUMERIC(10, 2))");  // total price of items in the order
+    }
+    
+    public void fillOrderTable(Statement stmt) throws SQLException {
+        stmt.executeUpdate("INSERT INTO orders (quantity, total_price) VALUES "
+                + "(2, 59.98),"
+                + "(3, 185.00),"
+                + "(1, 119.99)");
+    }
+    
 }
