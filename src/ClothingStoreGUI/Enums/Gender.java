@@ -30,6 +30,7 @@ public enum Gender {
         return NONE;
     }
     
+    // convert string name to enum constant
     public static Gender fromDisplayName(String displayName) {
         for (Gender gender : VALUES) {
             if (gender.getDisplayName().equalsIgnoreCase(displayName)) {
@@ -38,4 +39,10 @@ public enum Gender {
         }
         throw new IllegalArgumentException("No enum constant with display name " + displayName);
     }
+    
+    // Convert enum to int
+    public int toInt() {
+        return ordinal();
+    }
+    
 }

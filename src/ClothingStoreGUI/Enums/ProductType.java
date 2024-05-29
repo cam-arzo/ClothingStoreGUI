@@ -30,6 +30,7 @@ public enum ProductType {
         return CLOTHING;
     }
     
+    // convert string name to enum constant
     public static ProductType fromDisplayName(String displayName) {
         for (ProductType productType : ProductType.values()) {
             if (productType.getDisplayName().equalsIgnoreCase(displayName)) {
@@ -38,4 +39,10 @@ public enum ProductType {
         }
         throw new IllegalArgumentException("No enum constant with display name " + displayName);
     }
+    
+    // Convert enum to int
+    public int toInt() {
+        return ordinal();
+    }
+    
 }

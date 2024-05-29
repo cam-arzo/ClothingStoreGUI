@@ -324,7 +324,8 @@ public class Model {
                 discount = new PctDiscount(discountAmount);
                 break;
         }
-
+        
+        // Stores product information from Edit Panel GUI
         Product newProduct = null;
         //    public Product(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount, DiscountType discountType, ProductType productType) {
 
@@ -338,7 +339,7 @@ public class Model {
 
         if (isModifyingProduct) { // staff is modifying
             modifySelectedProduct(newProduct);
-            database.modifyProductInDatabase(selectedProduct, newProduct);
+            database.modifyProductInDatabase(selectedProduct);
         } else { // staff is adding
             productList.add(newProduct);
             database.addProductToDatabase(newProduct);
@@ -428,7 +429,8 @@ public class Model {
         }
         return null;
     }
-
+    
+    // Update selected product with new information from temporary product (product info retrieved from GUI)
     private void modifySelectedProduct(Product newProduct) {
         selectedProduct.setName(newProduct.getName());
         selectedProduct.setAvailable(newProduct.isAvailable());
@@ -439,7 +441,7 @@ public class Model {
         selectedProduct.setDiscountType(newProduct.getDiscountType());
         selectedProduct.setDiscountedPrice(newProduct.getDiscountedPrice());
         selectedProduct.setSizes(newProduct.getSizes());
-        selectedProduct.setProductType(newProduct.getProductType());
+        selectedProduct.setType(newProduct.getProductType());
     }
 
     public void setCategoryFilter(int value, JPanel panel) {

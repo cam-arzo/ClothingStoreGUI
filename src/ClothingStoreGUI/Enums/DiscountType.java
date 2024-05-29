@@ -38,6 +38,7 @@ public enum DiscountType {
         return NONE;
     }
     
+    // convert string name to enum constant
     public static DiscountType fromDisplayName(String displayName) {
         for (DiscountType discountType : DiscountType.values()) {
             if (discountType.getDisplayName().equalsIgnoreCase(displayName)) {
@@ -46,4 +47,10 @@ public enum DiscountType {
         }
         throw new IllegalArgumentException("No enum constant with display name " + displayName);
     }
+    
+    // Convert enum to int
+    public int toInt() {
+        return ordinal();
+    }
+    
 }

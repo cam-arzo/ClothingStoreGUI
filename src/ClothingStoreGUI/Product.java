@@ -89,7 +89,11 @@ public abstract class Product {
     
     // each product class has a unique size system
     abstract String[] getSizeSystem();
-
+    
+    public int getID() {
+        return this.id;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }
@@ -102,13 +106,19 @@ public abstract class Product {
         this.discountedPrice = discountedPrice;
     }
 
-    public void setProductType(ProductType productType) {
+    public void setType(ProductType productType) {
         this.productType = productType;
     }
+  
+    // !! old code
+//    // each product class has a type
+//    public String getType() {
+//        return this.getClass().getSimpleName();
+//    }
     
     // each product class has a type
-    public String getType() {
-        return this.getClass().getSimpleName();
+    public ProductType getType() {
+        return this.productType;
     }
     
     public String getName() {

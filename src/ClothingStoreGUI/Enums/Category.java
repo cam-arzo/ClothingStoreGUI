@@ -34,6 +34,7 @@ public enum Category {
         return NONE;
     }
     
+    // convert string name to enum constant
     public static Category fromDisplayName(String displayName) {
         for (Category category : Category.values()) {
             if (category.getDisplayName().equalsIgnoreCase(displayName)) {
@@ -42,6 +43,11 @@ public enum Category {
         }
         throw new IllegalArgumentException("No enum constant with display name " + displayName);
     }
-
+    
+    // Convert enum to int
+    public int toInt() {
+        return ordinal();
+    }
+    
     
 }

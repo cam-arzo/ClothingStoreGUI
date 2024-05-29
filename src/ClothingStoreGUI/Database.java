@@ -44,7 +44,7 @@ public class Database {
             DatabaseDefaultHandler defaultData = new DatabaseDefaultHandler(this);
 
             // Delete tables
-            defaultData.deleteTables(stmt);
+//            defaultData.deleteTables(stmt);
             // Create tables & fill data if they don't already exist
             defaultData.createTables(stmt);
 
@@ -235,18 +235,141 @@ public class Database {
         // add function in category, discounttype gender and producttype enums to
         // get int from category
         //INSERT INTO products (available, type, name, category, price, gender_id, discount_id, discount_amount) VALUES (1, 0, 'Comfy Cotton T-shirt',        0, 29.99,   1, 0, null)
+    
+        String sql = "INSERT INTO products (available, type, name, category, price, gender_id, discount_id, discount_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            
+            // Set the values for the placeholders
+            preparedStatement.setInt(1, newProduct.isAvailable() ? 1 : 0); // available
+            preparedStatement.setInt(2, newProduct.getType().toInt()); // type  // !! check this is right
+            preparedStatement.setString(3, newProduct.getName()); // name
+            preparedStatement.setInt(4, newProduct.getCategory().toInt()); // category
+            preparedStatement.setBigDecimal(5, newProduct.getPrice()); // price
+            preparedStatement.setInt(6, newProduct.getGender().toInt()); // gender_id
+            preparedStatement.setInt(7, newProduct.getDiscountType().toInt()); // discount_id
+            
+            if (newProduct.hasDiscount())
+            {
+                preparedStatement.setBigDecimal(8, newProduct.getDiscount().amount);
+            }
+            else {
+                preparedStatement.setNull(8, java.sql.Types.INTEGER);
+            }
+            
+            // Execute the prepared statement
+            int rowsAffected = preparedStatement.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                System.out.println("Product added successfully.");
+            } else {
+                System.out.println("Failed to add product.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
     }
 
-    public void modifyProductInDatabase(Product oldProduct, Product modifiedProduct) {
+    public void modifyProductInDatabase(Product product) {
         // use id to modify
+        
+        String sql =    "UPDATE products \n" +
+                        "SET available = ?, \n" +
+                        "    type = ?, \n" +
+                        "    name = ?, \n" +
+                        "    category = ?, \n" +
+                        "    price = ?, \n" +
+                        "    gender_id = ?, \n" +
+                        "    discount_id = ?, \n" +
+                        "    discount_amount = ? \n" +
+                        "WHERE id = ?";
+        
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            
+            // Set the values for the placeholders
+            preparedStatement.setInt(1, product.isAvailable() ? 1 : 0); // available
+            preparedStatement.setInt(2, product.getType().toInt()); // type
+            preparedStatement.setString(3, product.getName()); // name
+            preparedStatement.setInt(4, product.getCategory().toInt()); // category
+            preparedStatement.setBigDecimal(5, product.getPrice()); // price
+            preparedStatement.setInt(6, product.getGender().toInt()); // gender_id
+            preparedStatement.setInt(7, product.getDiscountType().toInt()); // discount_id
+            
+            if (product.hasDiscount())
+            {
+                preparedStatement.setBigDecimal(8, product.getDiscount().amount);
+            }
+            else {
+                preparedStatement.setNull(8, java.sql.Types.INTEGER);
+            }
+            
+            preparedStatement.setInt(9, product.getID());
+            
+            // Execute the prepared statement
+            int rowsAffected = preparedStatement.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                System.out.println("Product modified successfully.");
+            } else {
+                System.out.println("Failed to modify product.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     public void removeProductFromDatabase(Product product) {
         // use id to identify and remove
+        
+        String sql = "DELETE FROM products WHERE id = ?";
+        
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            
+            // Set the values for the placeholders
+            preparedStatement.setInt(1, product.getID());
+            
+            // Execute the prepared statement
+            int rowsAffected = preparedStatement.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                System.out.println("Product deleted successfully.");
+            } else {
+                System.out.println("Failed to delete product.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     public void addOrderToDatabase(int qty, BigDecimal price) {
-
+        
+        String sql = "INSERT INTO orders (quantity, price) VALUES (?, ?)";
+        
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            
+            // Set the values for the placeholders
+            preparedStatement.setInt(1, qty);
+            preparedStatement.setBigDecimal(2, price);
+            
+            // Execute the prepared statement
+            int rowsAffected = preparedStatement.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                System.out.println("Order details added successfully.");
+            } else {
+                System.out.println("Failed to add order details.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
     }
 
 }
