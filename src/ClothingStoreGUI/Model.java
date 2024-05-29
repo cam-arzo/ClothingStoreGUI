@@ -11,7 +11,10 @@ import java.util.Objects;
 import javax.swing.JPanel;
 import ClothingStoreGUI.Panels.PanelStaffProductView;
 import ClothingStoreGUI.Panels.PanelCustomerProductView;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -116,16 +119,16 @@ public class Model {
         view.customerSelectionPanel.getQtyPicker().setValue(1);
         view.customerSelectionPanel.getAddToCartButton().setText("Add to cart");
     }
-    
+
     // get info on OrderProduct when user selects it to modify
     public void setOrderModify() {
-       isModifyingProduct = true;
-       view.customerSelectionPanel.getProductNameLabel().setText(selectedOrder.getProduct().toString());
-       view.customerSelectionPanel.getSizeDropdown().setSelectedItem(selectedOrder.getSize());
-       view.customerSelectionPanel.getQtyPicker().setValue(selectedOrder.getQuantity());
-       view.customerSelectionPanel.getAddToCartButton().setText("Save changes");
+        isModifyingProduct = true;
+        view.customerSelectionPanel.getProductNameLabel().setText(selectedOrder.getProduct().toString());
+        view.customerSelectionPanel.getSizeDropdown().setSelectedItem(selectedOrder.getSize());
+        view.customerSelectionPanel.getQtyPicker().setValue(selectedOrder.getQuantity());
+        view.customerSelectionPanel.getAddToCartButton().setText("Save changes");
     }
-    
+
     public boolean customerSaveChanges() {
         boolean validQuantity = checkQuantity();
 
@@ -138,19 +141,15 @@ public class Model {
         int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
 
         OrderProduct newOrder = new OrderProduct(selectedProduct, size, qty);
-        
+
         if (isModifyingProduct) { // user is modifying
-            modifyCartOrder(newOrder);
+            cart.updateCart(selectedOrder, newOrder);
         } else { // user is adding
             cart.addItem(newOrder);
         }
         displayCart();
+        
         return true;
-    }
-    
-    public void modifyCartOrder(OrderProduct newOrder) {
-        selectedOrder.setQuantity(newOrder.getQuantity());
-        selectedOrder.setSize(newOrder.getSize());
     }
 
     public boolean checkQuantity() {
@@ -194,6 +193,31 @@ public class Model {
     public void removeFromCart() {
         cart.removeOrderProduct(selectedOrder);
         displayCart();
+    }
+    
+    public void updateCartLabel() {
+        int numItems = cart.getNumItems();
+        String labelText = numItems + " item" + (numItems != 1 ? "s" : ""); // show "item" if only 1 item, otherwise show "items"
+        view.customerProductPanel.getNumItemsLabel().setText(labelText);
+    }
+
+    public void printReceipt() {
+        JTable table = view.checkoutPanel.getReceiptTable();
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Name", "Size", "Qty", "Price"}, 0); // 0 rows at first
+        
+        // add orders to table
+        for (OrderProduct order : cart.getCartProducts()) {
+            Object[] row = {order.getProduct().getName(), order.getSize(), order.getQuantity(), "$"+order.getTotalPrice().toString()};
+            model.addRow(row);
+        }
+        table.setModel(model);
+        
+        table.getColumnModel().getColumn(0).setPreferredWidth(300);
+        table.getColumnModel().getColumn(1).setPreferredWidth(50);
+        table.getColumnModel().getColumn(2).setPreferredWidth(50);
+        table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        
+        view.checkoutPanel.getTotalPriceLabel().setText("Total price: $"+cart.getTotalPrice());
     }
 
     // STAFF FUNCTIONS

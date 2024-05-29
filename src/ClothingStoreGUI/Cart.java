@@ -74,14 +74,21 @@ public class Cart {
         setNumItems(); // update total no of items
         setTotalPrice(); // update total price
     }
-    
-    public void updateCart(int index, OrderProduct newProduct) {
-        System.out.println("updating "+newProduct);
-        cartProducts.set(index, newProduct);
+
+    public void updateCart(OrderProduct oldProduct, OrderProduct newProduct) {
+        // search through the cart products to find the old product
+        for (int i = 0; i < cartProducts.size(); i++) {
+            OrderProduct product = cartProducts.get(i);
+            if (product.equals(oldProduct)) {
+                // Replace the old product with the new one
+                cartProducts.set(i, newProduct);
+                break; // Stop searching after finding the old product
+            }
+        }
         setNumItems(); // update total no of items
-        System.out.println("numitems is "+numItems);
+//        System.out.println("numitems is "+numItems);
         setTotalPrice(); // update total price
-        System.out.println(String.format("total price is $%.2f",totalPrice));
+//        System.out.println(String.format("total price is $%.2f",totalPrice));
     }
     
     public int getNumItems() {

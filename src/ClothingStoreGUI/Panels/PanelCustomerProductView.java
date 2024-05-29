@@ -49,6 +49,10 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         ProductList.addListSelectionListener(listener);
     }
 
+    public JLabel getNumItemsLabel() {
+        return NumItemsLabel;
+    }
+
     public int getSelectedProductIndex() {
         return ProductList.getSelectedIndex();
     }
@@ -90,6 +94,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         Title = new javax.swing.JLabel();
         ResetButton = new javax.swing.JButton();
         ErrorLabel = new javax.swing.JLabel();
+        NumItemsLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -150,6 +155,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         ErrorLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         ErrorLabel.setText("ERROR: Please select a product");
 
+        NumItemsLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        NumItemsLabel.setText("0 items");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -206,7 +214,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                                 .addComponent(SelectButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(CartButton)))
-                        .addGap(173, 173, 173)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(NumItemsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -238,7 +248,8 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SelectButton)
-                    .addComponent(CartButton))
+                    .addComponent(CartButton)
+                    .addComponent(NumItemsLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ErrorLabel)
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -257,6 +268,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     private javax.swing.JRadioButton MaleButton;
     private javax.swing.JRadioButton NoGenderButton;
     private javax.swing.JRadioButton NoPurposeButton;
+    private javax.swing.JLabel NumItemsLabel;
     private javax.swing.JList<String> ProductList;
     private javax.swing.ButtonGroup PurposeButtonGroup;
     private javax.swing.JLabel PurposeLabel;

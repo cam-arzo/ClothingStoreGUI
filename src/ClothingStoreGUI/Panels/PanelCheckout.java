@@ -6,6 +6,8 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 
 /**
  *
@@ -19,6 +21,7 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
     public PanelCheckout(Controller controller) {
         initComponents();
         initConnections(controller);
+        ReceiptTable.setEnabled(false);
     }
 
     public void initConnections(Controller controller) {
@@ -36,7 +39,7 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
 
         Message = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        ReciptTable = new javax.swing.JTable();
+        ReceiptTable = new javax.swing.JTable();
         TotalPriceLabel = new javax.swing.JLabel();
         Title = new javax.swing.JLabel();
         ResetButton = new javax.swing.JButton();
@@ -45,7 +48,7 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
 
         Message.setText("Thank you for your purchase! Here is a receipt of your order:");
 
-        ReciptTable.setModel(new javax.swing.table.DefaultTableModel(
+        ReceiptTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null}
@@ -69,17 +72,17 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
                 return canEdit [columnIndex];
             }
         });
-        ReciptTable.getTableHeader().setResizingAllowed(false);
-        ReciptTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(ReciptTable);
-        if (ReciptTable.getColumnModel().getColumnCount() > 0) {
-            ReciptTable.getColumnModel().getColumn(0).setResizable(false);
-            ReciptTable.getColumnModel().getColumn(0).setPreferredWidth(300);
-            ReciptTable.getColumnModel().getColumn(1).setResizable(false);
-            ReciptTable.getColumnModel().getColumn(1).setPreferredWidth(50);
-            ReciptTable.getColumnModel().getColumn(2).setPreferredWidth(50);
-            ReciptTable.getColumnModel().getColumn(3).setResizable(false);
-            ReciptTable.getColumnModel().getColumn(3).setPreferredWidth(50);
+        ReceiptTable.getTableHeader().setResizingAllowed(false);
+        ReceiptTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(ReceiptTable);
+        if (ReceiptTable.getColumnModel().getColumnCount() > 0) {
+            ReceiptTable.getColumnModel().getColumn(0).setResizable(false);
+            ReceiptTable.getColumnModel().getColumn(0).setPreferredWidth(300);
+            ReceiptTable.getColumnModel().getColumn(1).setResizable(false);
+            ReceiptTable.getColumnModel().getColumn(1).setPreferredWidth(50);
+            ReceiptTable.getColumnModel().getColumn(2).setPreferredWidth(50);
+            ReceiptTable.getColumnModel().getColumn(3).setResizable(false);
+            ReceiptTable.getColumnModel().getColumn(3).setPreferredWidth(50);
         }
 
         TotalPriceLabel.setText("Total price: $20.00");
@@ -95,18 +98,15 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(74, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TotalPriceLabel)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Message)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(183, 183, 183)
-                        .addComponent(Title)))
-                .addContainerGap(74, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Title))
+                    .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -121,15 +121,22 @@ public class PanelCheckout extends javax.swing.JPanel implements InteractivePane
                 .addGap(18, 18, 18)
                 .addComponent(TotalPriceLabel)
                 .addGap(18, 18, 18)
-                .addComponent(ResetButton)
+                .addComponent(ResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(87, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public JTable getReceiptTable() {
+        return ReceiptTable;
+    }
+
+    public JLabel getTotalPriceLabel() {
+        return TotalPriceLabel;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Message;
-    private javax.swing.JTable ReciptTable;
+    private javax.swing.JTable ReceiptTable;
     private javax.swing.JButton ResetButton;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel TotalPriceLabel;

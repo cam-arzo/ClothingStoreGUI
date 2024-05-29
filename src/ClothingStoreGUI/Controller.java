@@ -147,6 +147,7 @@ public class Controller {
                 view.switchPanel(view.customerProductPanel);
             }
         }
+        model.updateCartLabel(); // updates the label that displays "[num] items" in cart
     }
 
     // Customer cart view:
@@ -178,7 +179,7 @@ public class Controller {
 
     public void customerConfirmButtonClicked() {
         // go to checkout from customer cart view
-        // !! show receipt
+        model.printReceipt();
         view.switchPanel(view.checkoutPanel);
     }
 
