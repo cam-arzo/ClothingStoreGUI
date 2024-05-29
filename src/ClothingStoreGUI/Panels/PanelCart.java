@@ -6,6 +6,10 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -19,6 +23,7 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
     public PanelCart(Controller controller) {
         initComponents();
         initConnections(controller);
+        ErrorLabel.setVisible(false);
     }
 
     public void initConnections(Controller controller) {
@@ -26,6 +31,38 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
          ModifyButton.addActionListener(e -> controller.customerModifyButtonClicked());
          RemoveButton.addActionListener(e -> controller.customerRemoveButtonClicked());
          ConfirmButton.addActionListener(e -> controller.customerConfirmButtonClicked());
+    }
+
+    public int getSelectedProductIndex() {
+        return CartList.getSelectedIndex();
+    }
+
+    public JButton getConfirmButton() {
+        return ConfirmButton;
+    }
+
+    public JButton getModifyButton() {
+        return ModifyButton;
+    }
+
+    public JButton getRemoveButton() {
+        return RemoveButton;
+    }
+    
+    public JLabel getTotalPriceLabel() {
+        return TotalPriceLabel;
+    }
+    
+    public void addProductListSelectionListener(ListSelectionListener listener) {
+        CartList.addListSelectionListener(listener);
+    }
+    
+    public JLabel getErrorLabel() {
+        return ErrorLabel;
+    }
+
+    public JList<String> getCartList() {
+        return CartList;
     }
     
     /**
@@ -45,6 +82,8 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
         RemoveButton = new javax.swing.JButton();
         ConfirmButton = new javax.swing.JButton();
         CartLabel = new javax.swing.JLabel();
+        ErrorLabel = new javax.swing.JLabel();
+        TotalPriceLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -67,14 +106,24 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
         CartLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         CartLabel.setText("Cart");
 
+        ErrorLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        ErrorLabel.setText("ERROR: Please select a product");
+
+        TotalPriceLabel.setText("Total price: $20.00");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ConfirmButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(TotalPriceLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ErrorLabel)
+                        .addGap(61, 61, 61)
+                        .addComponent(ConfirmButton))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -100,8 +149,15 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ModifyButton)
                     .addComponent(RemoveButton))
-                .addGap(18, 18, 18)
-                .addComponent(ConfirmButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(ConfirmButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ErrorLabel)
+                            .addComponent(TotalPriceLabel))))
                 .addContainerGap(71, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -112,8 +168,10 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
     private javax.swing.JLabel CartLabel;
     private javax.swing.JList<String> CartList;
     private javax.swing.JButton ConfirmButton;
+    private javax.swing.JLabel ErrorLabel;
     private javax.swing.JButton ModifyButton;
     private javax.swing.JButton RemoveButton;
+    private javax.swing.JLabel TotalPriceLabel;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

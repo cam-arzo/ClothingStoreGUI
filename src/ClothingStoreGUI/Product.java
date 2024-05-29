@@ -63,7 +63,8 @@ public abstract class Product {
     }
     
     // Used when printing each product in the buy menu.
-    public String toStringArray() {
+    @Override
+    public String toString() {
         String out="";
         
         // label as unlisted if unavailable

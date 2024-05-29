@@ -62,72 +62,6 @@ public class Database {
             }
         }
     }
-
-    public List<Product> getAllProducts() {
-        List<Product> products = new ArrayList<>();
-        String sql = "SELECT * FROM products";
-
-        try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
-            
-//            + "available SMALLINT,"
-//            + "id INT PRIMARY KEY,"
-//            + "type INT NOT NULL,"
-//            + "name VARCHAR(64) UNIQUE NOT NULL,"
-//            + "category INT NOT NULL,"
-//            + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
-//            + "gender_id INT NOT NULL,"
-//            + "discount_id INT,"
-//            + "discount_amount NUMERIC(10, 2))");
-            
-            while (rs.next()) {
-                Product product = createProduct(rs);
-                
-                // add to products list
-                products.add(product);
-                
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return products;
-    }
-
-    public List<Product> getAvailableProducts() {
-        List<Product> products = new ArrayList<>();
-        String sql = "SELECT * FROM products";
-
-        try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
-            
-//            + "available SMALLINT,"
-//            + "id INT PRIMARY KEY,"
-//            + "type INT NOT NULL,"
-//            + "name VARCHAR(64) UNIQUE NOT NULL,"
-//            + "category INT NOT NULL,"
-//            + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
-//            + "gender_id INT NOT NULL,"
-//            + "discount_id INT,"
-//            + "discount_amount NUMERIC(10, 2))");
-            
-            while (rs.next()) {
-                boolean available = rs.getBoolean("available");
-                
-                if (!available) {
-                    continue;
-                }
-                
-                Product product = createProduct(rs);
-                
-                // add to products list
-                products.add(product);
-                
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return products;
-    }
     
     public Product createProduct(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
@@ -222,15 +156,97 @@ public class Database {
             return false;
         }
     }
+
+    // READ FUNCTIONS
+    public List<Product> getAllProducts() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM products";
+
+        try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
+
+//            + "available SMALLINT,"
+//            + "id INT PRIMARY KEY,"
+//            + "type INT NOT NULL,"
+//            + "name VARCHAR(64) UNIQUE NOT NULL,"
+//            + "category INT NOT NULL,"
+//            + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
+//            + "gender_id INT NOT NULL,"
+//            + "discount_id INT,"
+//            + "discount_amount NUMERIC(10, 2))");
+            while (rs.next()) {
+                Product product = createProduct(rs);
+
+                // add to products list
+                products.add(product);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
+
+    public List<Product> getAvailableProducts() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM products";
+
+        try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
+
+//            + "available SMALLINT,"
+//            + "id INT PRIMARY KEY,"
+//            + "type INT NOT NULL,"
+//            + "name VARCHAR(64) UNIQUE NOT NULL,"
+//            + "category INT NOT NULL,"
+//            + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
+//            + "gender_id INT NOT NULL,"
+//            + "discount_id INT,"
+//            + "discount_amount NUMERIC(10, 2))");
+            while (rs.next()) {
+                boolean available = rs.getBoolean("available");
+
+                if (!available) {
+                    continue;
+                }
+
+                Product product = createProduct(rs);
+
+                // add to products list
+                products.add(product);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
+
+    // other read functions could include (we might need to implement all 3): 
+    //  - getAllOrders from order table, store in a list like products.
+    //  - getNumOrders from order table, stored in an int.
+    //  - getTotalRevenue from order table, stored in a BigDecimal.
+    // these would have to be displayed in a new panel
     
+    
+    // WRITE FUNCTIONS
     public void addProductToDatabase(Product newProduct) {
         // id is -1
         // add function in category, discounttype gender and producttype enums to
         // get int from category
+        //INSERT INTO products (available, type, name, category, price, gender_id, discount_id, discount_amount) VALUES (1, 0, 'Comfy Cotton T-shirt',        0, 29.99,   1, 0, null)
     }
-    
-    public void modifyProductInDatabase(Product modifiedProduct) {
+
+    public void modifyProductInDatabase(Product oldProduct, Product modifiedProduct) {
         // use id to modify
+    }
+
+    public void removeProductFromDatabase(Product product) {
+        // use id to identify and remove
+    }
+
+    public void addOrderToDatabase(int qty, BigDecimal price) {
+
     }
 
 }

@@ -67,6 +67,14 @@ public class Controller {
                 }
             }
         });
+        
+        view.cartPanel.addProductListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    model.setCartSelectedOrderFromIndex(view.cartPanel.getSelectedProductIndex());
+                }
+            }
+        });
     }
 
     // USER PANEL methods:
@@ -123,32 +131,55 @@ public class Controller {
 
     public void cartButtonClicked() {
         setPreviousPanel(view.customerProductPanel);
+        model.displayCart();
         // go to cart from customer product view
         view.switchPanel(view.cartPanel);
     }
 
     // Customer selection view:
     public void addToCartButtonClicked() {
-        // !! add customised selected product to cart
         // save and return to customer product view
-        view.switchPanel(view.customerProductPanel);
+        if (model.customerSaveChanges()) {
+            if (model.isModifyingProduct) { // if user is making changes, go back to cart to view
+                view.switchPanel(view.cartPanel);
+                model.isModifyingProduct = false;
+            } else { // otherwise go back to product view
+                view.switchPanel(view.customerProductPanel);
+            }
+        }
+        model.updateCartLabel(); // updates the label that displays "[num] items" in cart
     }
 
     // Customer cart view:
     public void customerModifyButtonClicked() {
-        setPreviousPanel(view.cartPanel);
-        // go to customer selection
-        view.switchPanel(view.customerSelectionPanel);
+        if (Objects.nonNull(model.selectedOrder)) { // check if user has selected something
+            // go to customer selection
+            model.setCustomerSelectedProductVariables();
+            model.setOrderModify();
+            setPreviousPanel(view.cartPanel);
+            view.switchPanel(view.customerSelectionPanel);
+            view.cartPanel.getErrorLabel().setVisible(false);
+        } else {
+            // if not, show error label
+            view.cartPanel.getErrorLabel().setVisible(true);
+        }
     }
 
     public void customerRemoveButtonClicked() {
         // remove selected product from cart
-        System.out.println("Customer remove button clicked. Not coded yet.");
-        // !! need a parameter for product they selected
+        if (Objects.nonNull(model.selectedOrder)) { // check if user has selected something
+            view.cartPanel.getErrorLabel().setVisible(false);
+            model.removeFromCart();
+        } else {
+            // if not, show error label
+            view.cartPanel.getErrorLabel().setVisible(true);
+        }
+        
     }
 
     public void customerConfirmButtonClicked() {
         // go to checkout from customer cart view
+        model.printReceipt();
         view.switchPanel(view.checkoutPanel);
     }
 
@@ -189,7 +220,13 @@ public class Controller {
 
     public void staffRemoveButtonClicked() {
         // product is removed from product list in model
-        model.removeProduct();
+        if (Objects.nonNull(model.selectedProduct)) { // check if user has selected something
+            view.staffProductPanel.getErrorLabel().setVisible(false);
+            model.removeProduct();
+        } else {
+            // if not, show error label
+            view.staffProductPanel.getErrorLabel().setVisible(true);
+        }
     }
 
     // Staff edit panel
