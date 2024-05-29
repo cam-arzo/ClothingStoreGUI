@@ -148,7 +148,7 @@ public class Model {
             cart.addItem(newOrder);
         }
         displayCart();
-        
+
         return true;
     }
 
@@ -194,7 +194,7 @@ public class Model {
         cart.removeOrderProduct(selectedOrder);
         displayCart();
     }
-    
+
     public void updateCartLabel() {
         int numItems = cart.getNumItems();
         String labelText = numItems + " item" + (numItems != 1 ? "s" : ""); // show "item" if only 1 item, otherwise show "items"
@@ -204,20 +204,22 @@ public class Model {
     public void printReceipt() {
         JTable table = view.checkoutPanel.getReceiptTable();
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Name", "Size", "Qty", "Price"}, 0); // 0 rows at first
-        
+
         // add orders to table
         for (OrderProduct order : cart.getCartProducts()) {
-            Object[] row = {order.getProduct().getName(), order.getSize(), order.getQuantity(), "$"+order.getTotalPrice().toString()};
+            Object[] row = {order.getProduct().getName(), order.getSize(), order.getQuantity(), "$" + order.getTotalPrice().toString()};
             model.addRow(row);
         }
         table.setModel(model);
-        
+
         table.getColumnModel().getColumn(0).setPreferredWidth(300);
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
         table.getColumnModel().getColumn(2).setPreferredWidth(50);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
-        
-        view.checkoutPanel.getTotalPriceLabel().setText("Total price: $"+cart.getTotalPrice());
+
+        view.checkoutPanel.getTotalPriceLabel().setText("Total price: $" + cart.getTotalPrice());
+
+        database.addOrderToDatabase(cart.getNumItems(), cart.getTotalPrice());
     }
 
     // STAFF FUNCTIONS
@@ -282,9 +284,9 @@ public class Model {
         }
     }
 
-    // !! need to remove from database
     public void removeProduct() {
         productList.remove(selectedProduct);
+        database.removeProductFromDatabase(selectedProduct);
         updateProductTableInPanel(view.staffProductPanel);
         selectedProduct = null; // resetting the product list means user loses their selection
     }
@@ -336,7 +338,7 @@ public class Model {
 
         if (isModifyingProduct) { // staff is modifying
             modifySelectedProduct(newProduct);
-            database.modifyProductInDatabase(newProduct);
+            database.modifyProductInDatabase(selectedProduct, newProduct);
         } else { // staff is adding
             productList.add(newProduct);
             database.addProductToDatabase(newProduct);
