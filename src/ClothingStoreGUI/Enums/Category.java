@@ -5,9 +5,26 @@
 package ClothingStoreGUI.Enums;
 
 public enum Category {
-    CASUAL, SPORT, FORMAL, SLEEP, NONE;
+    CASUAL("Casual"), SPORT("Sport"), FORMAL("Formal"), SLEEP("Sleep"), NONE("None");
 
     private static final Category[] VALUES = values();
+    private final String displayName;
+
+    Category(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public static String[] toStringArray() {
+        String[] array = new String[VALUES.length-1]; // skip over NONE
+        for (int i = 0; i < VALUES.length-1; ++i) {
+            array[i] = VALUES[i].displayName;
+        }
+        return array; // {"Casual", "Sport", "Formal", "Sleep"};
+    }
 
     // convert int to enum
     public static Category intToCategory(int value) {
@@ -16,4 +33,15 @@ public enum Category {
         }
         return NONE;
     }
+    
+    public static Category fromDisplayName(String displayName) {
+        for (Category category : Category.values()) {
+            if (category.getDisplayName().equalsIgnoreCase(displayName)) {
+                return category;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant with display name " + displayName);
+    }
+
+    
 }

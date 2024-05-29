@@ -7,6 +7,7 @@ import ClothingStoreGUI.Panels.PanelStaffProductView;
 import ClothingStoreGUI.Panels.PanelCustomerProductView;
 import ClothingStoreGUI.Panels.PanelCart;
 import ClothingStoreGUI.Panels.PanelStaffModify;
+import java.util.Objects;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -21,9 +22,7 @@ import javax.swing.JPanel;
 public class View extends JFrame {
 
     Controller controller;
-    
-    JPanel currentPanel;
-    
+        
     PanelViewSelection userPanel;
     PanelCustomerProductView customerProductPanel;
     PanelCustomerSelection customerSelectionPanel;
@@ -53,6 +52,7 @@ public class View extends JFrame {
         checkoutPanel = new PanelCheckout(controller);
         staffProductPanel = new PanelStaffProductView(controller);
         staffEditPanel = new PanelStaffModify(controller);
+        controller.setUpProductListListeners();
         
         // Switch to starting panel
         switchPanel(userPanel);
@@ -64,7 +64,11 @@ public class View extends JFrame {
     
     // Method to switch to the specified panel
     public void switchPanel(JPanel panel) {
-        currentPanel = panel;
+        // this code handles the case where a customer presses back twice from selection -> cart -> product view
+        if (Objects.nonNull(controller.getPreviousPanel()) && panel.equals(controller.getPreviousPanel())) {
+            // check whether the panel and previousPanel are both cart. then set prevpanel to be product view.
+            controller.setPreviousPanel(customerProductPanel);
+        }
         getContentPane().removeAll(); // Remove all panels
         getContentPane().add(panel);  // Add the specified panel
         revalidate();

@@ -1,7 +1,9 @@
 package ClothingStoreGUI;
 
 import ClothingStoreGUI.Enums.Category;
+import ClothingStoreGUI.Enums.DiscountType;
 import ClothingStoreGUI.Enums.Gender;
+import ClothingStoreGUI.Enums.ProductType;
 import java.math.BigDecimal;
 
 // when purchased, a 'SelectedProduct' class is used to store user's choices (size, amount)
@@ -9,9 +11,9 @@ import java.math.BigDecimal;
 public abstract class Product {
     
     // unique ID used in the database for each product
-    int id;
+    private int id;
     // product has one main unique name
-    String name;
+    private String name;
     // product is either available or unavailable
     private boolean available;
     // category and gender are stored in enums
@@ -23,9 +25,11 @@ public abstract class Product {
     // !! watch out for 999999.99 rounding up to 1000000.00 and causing errors
     private BigDecimal price;
     private Discount discount;
+    private DiscountType discountType;
     private BigDecimal discountedPrice;
     // a unique size system exists for clothes & shoes
     private String[] sizes;
+    private ProductType productType;
       
 
     // new product with placeholders
@@ -44,7 +48,7 @@ public abstract class Product {
     
     // !! should this be changed to factory pattern?
     
-    public Product(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount) {
+    public Product(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount, DiscountType discountType, ProductType productType) {
         this.id = id;
         this.name = name;
         this.available = available;
@@ -52,12 +56,14 @@ public abstract class Product {
         this.gender = gender;
         this.category = category;
         this.discount = discount;
+        this.discountType = discountType;
+        this.productType = productType;
         setDiscountedPrice(discount);
         // sizes are set in the product subclass
     }
     
     // Used when printing each product in the buy menu.
-    public String cartString() {
+    public String toStringArray() {
         String out="";
         
         // label as unlisted if unavailable
@@ -82,6 +88,22 @@ public abstract class Product {
     
     // each product class has a unique size system
     abstract String[] getSizeSystem();
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDiscountType(DiscountType discountType) {
+        this.discountType = discountType;
+    }
+
+    public void setDiscountedPrice(BigDecimal discountedPrice) {
+        this.discountedPrice = discountedPrice;
+    }
+
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
     
     // each product class has a type
     public String getType() {
@@ -96,7 +118,15 @@ public abstract class Product {
         this.name = name;
     }
 
-    public boolean isAvailable() {
+    public String isAvailableString() { // formatted as String for the combo box
+        if (available) {
+            return "True";
+        } else {
+            return "False";
+        }
+    }
+    
+    public boolean isAvailable() { // formatted as String for the combo box
         return available;
     }
 
@@ -160,6 +190,14 @@ public abstract class Product {
 
     public BigDecimal getPrice() {
         return this.price;
+    }
+
+    public DiscountType getDiscountType() {
+        return discountType;
+    }
+
+    public ProductType getProductType() {
+        return productType;
     }
     
 }

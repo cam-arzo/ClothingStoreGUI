@@ -11,9 +11,6 @@ public abstract class Discount {
     
     protected abstract BigDecimal calcNewPrice(BigDecimal price);
     
-    // !! may need a way for database to know the ID to use for each discount
-    // 0: None, 1: Fixed, 2: Percent
-    
     public abstract String cartString();
     
 }

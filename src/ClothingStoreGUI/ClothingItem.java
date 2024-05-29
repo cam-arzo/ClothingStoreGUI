@@ -5,7 +5,9 @@
 package ClothingStoreGUI;
 
 import ClothingStoreGUI.Enums.Category;
+import ClothingStoreGUI.Enums.DiscountType;
 import ClothingStoreGUI.Enums.Gender;
+import ClothingStoreGUI.Enums.ProductType;
 import java.math.BigDecimal;
 
 public class ClothingItem extends Product {
@@ -19,8 +21,8 @@ public class ClothingItem extends Product {
         setSizes(getSizeSystem());
     }
     
-    public ClothingItem(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount) {
-        super(id, name, available, price, gender, category, discount);
+    public ClothingItem(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount, DiscountType discountType) {
+        super(id, name, available, price, gender, category, discount, discountType, ProductType.CLOTHING);
         setSizes(getSizeSystem());
     }
 

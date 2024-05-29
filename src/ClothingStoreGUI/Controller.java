@@ -2,6 +2,7 @@ package ClothingStoreGUI;
 
 import ClothingStoreGUI.Enums.Category;
 import ClothingStoreGUI.Enums.Gender;
+import java.util.Objects;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -10,15 +11,14 @@ import javax.swing.event.ListSelectionListener;
  *
  * CONTROLLER:
  *
- * Handles user input from view. This includes:
- * - Retrieving data from input boxes
- * - Validating / Cleaning input
+ * Handles user input from view. This includes: - Retrieving data from input
+ * boxes - Validating / Cleaning input
  *
- * Updates model depending on input. This may include:
- * - Performing calculations in model based on inputs from view
+ * Updates model depending on input. This may include: - Performing calculations
+ * in model based on inputs from view
  *
- * Navigates the application. This includes:
- * - Switching between different views/screens based on user input or application logic.
+ * Navigates the application. This includes: - Switching between different
+ * views/screens based on user input or application logic.
  *
  */
 public class Controller {
@@ -29,11 +29,10 @@ public class Controller {
     // used to go to the previous panel when pressing the back button
     JPanel previousPanel;
 
-    
     public void setView(View view) {
         this.view = view;
     }
-    
+
     public void setModel(Model model) {
         this.model = model;
     }
@@ -43,11 +42,14 @@ public class Controller {
         previousPanel = panel;
     }
 
-    // USER PANEL methods:
-    public void customerViewButtonClicked() {
-        
+    // get the previous panel
+    public JPanel getPreviousPanel() {
+        return previousPanel;
+    }
+
+    // set up action listeners for product lists so it can get selected product
+    public void setUpProductListListeners() {
         // SETUP customer view functions
-        
         // Add the list selection listener to the view's JList
         view.customerProductPanel.addProductListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -56,45 +58,92 @@ public class Controller {
                 }
             }
         });
-        
+
+        // !! code repeated. might want to change
+        view.staffProductPanel.addProductListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    model.setSelectedProductFromIndex(view.staffProductPanel.getSelectedProductIndex());
+                }
+            }
+        });
+    }
+
+    // USER PANEL methods:
+    // View selection: 
+    public void customerViewButtonClicked() {
         // show only 'Available' products
         model.processAvailableProducts();
-        
+
         // go from initial screen to customer product view
         view.switchPanel(view.customerProductPanel);
     }
-    
+
 //    public void productSelected() {
 //        String selectedItem = view.customerProductPanel.getSelectedProduct();
 //        if (selectedItem != null) {
 //            System.out.println("Selected: " + selectedItem);
 //        }
 //    }
-    
     public void staffViewButtonClicked() {
-        
         // SETUP staff view functions
-        
         model.processAllProducts();
         // go from initial screen to staff product view
         view.switchPanel(view.staffProductPanel);
     }
-    
+
     // GENERIC BACK BUTTON
     public void backButtonClicked() {
         // go back to the previous panel
-        // !! CODE TO SET PREVIOUS PANEL HAS NOT BEEN IMPLEMENTED
         view.switchPanel(previousPanel);
     }
-    
+
+    // GENERIC RESTART BUTTON
+    public void resetButtonClicked() {
+        // restart program by resetting variables and views
+        model.reset();
+        view.switchPanel(view.userPanel);
+    }
+
     // CUSTOMER VIEW BUTTONS
+    // Customer product view:
     public void customerSelectButtonClicked() {
+        // go to customer selection
+        if (Objects.nonNull(model.selectedProduct)) { // check if user has selected something
+            // if so, continue to selection panel
+            setPreviousPanel(view.customerProductPanel);
+            model.setCustomerSelectedProductVariables();
+            view.customerProductPanel.getErrorLabel().setVisible(false);
+            view.switchPanel(view.customerSelectionPanel);
+        } else {
+            // if not, show error label
+            view.customerProductPanel.getErrorLabel().setVisible(true);
+        }
+    }
+
+    public void cartButtonClicked() {
+        setPreviousPanel(view.customerProductPanel);
+        // go to cart from customer product view
+        view.switchPanel(view.cartPanel);
+    }
+
+    // Customer selection view:
+    public void addToCartButtonClicked() {
+        // !! add customised selected product to cart
+        // save and return to customer product view
+        view.switchPanel(view.customerProductPanel);
+    }
+
+    // Customer cart view:
+    public void customerModifyButtonClicked() {
+        setPreviousPanel(view.cartPanel);
         // go to customer selection
         view.switchPanel(view.customerSelectionPanel);
     }
 
     public void customerRemoveButtonClicked() {
         // remove selected product from cart
+        System.out.println("Customer remove button clicked. Not coded yet.");
         // !! need a parameter for product they selected
     }
 
@@ -103,52 +152,59 @@ public class Controller {
         view.switchPanel(view.checkoutPanel);
     }
 
-    public void resetButtonClicked() {
-        // restart program
-        view.switchPanel(view.userPanel);
-        // !! add reset button to staff product view?
+    // Product view filters (both staff and customer):
+    public void categoryButtonClicked(int value, JPanel panel) {
+        model.setCategoryFilter(value, panel);
     }
 
-    public void cartButtonClicked() {
-        // go to cart from customer product view
-        view.switchPanel(view.cartPanel);
-    }
-
-    public void categoryButtonClicked(int value) {
-        // set category filter
-        // !! might need to pass in parameter for the product list display
-        Category category = Category.intToCategory(value);
-        // !! insert code
-    }
-
-    public void genderButtonClicked(int value) {
-        // set gender filter
-        // !! might need to pass in parameter for the product list display
-        Gender gender = Gender.intToGender(value);
-        // !! insert code
-    }
-
-    public void addToCartButtonClicked() {
-        // add customised selected product to cart and returns to customer product view
-        view.switchPanel(view.customerProductPanel);
+    public void genderButtonClicked(int value, JPanel panel) {
+        model.setGenderFilter(value, panel);
     }
 
     // STAFF VIEW BUTTONS
-    public void staffSaveProductButtonClicked() {
-        // saves and returns to product view
-        view.switchPanel(view.staffProductPanel);
-        // need to read and SAVE name price category gender avaliability discount type/amount to product list
+    // Staff product view
+    public void staffAddButtonClicked() {
+        view.staffProductPanel.getErrorLabel().setVisible(false);
+        setPreviousPanel(view.staffProductPanel);
+        model.setNewProductVariables();
+        view.switchPanel(view.staffEditPanel);
     }
 
-    public void staffEditButtonClicked() {
+    public void staffModifyButtonClicked() {
         // move to staff modify panel from product view
-        view.switchPanel(view.staffEditPanel);
+        
+        if (Objects.nonNull(model.selectedProduct)) { // check if user has selected something
+            // if so, continue to selection panel
+            setPreviousPanel(view.staffProductPanel);
+            model.setStaffSelectedProductVariables();
+            view.staffProductPanel.getErrorLabel().setVisible(false);
+            view.switchPanel(view.staffEditPanel);
+        } else {
+            // if not, show error label
+            view.staffProductPanel.getErrorLabel().setVisible(true);
+        }
+
         // modify: need to read and LOAD name price category gender avaliability discount type/amount from the selected product
-        // add: just load placeholders
     }
 
     public void staffRemoveButtonClicked() {
-        // need to remove selected product from database
+        // product is removed from product list in model
+        model.removeProduct();
     }
 
+    // Staff edit panel
+    public void staffSaveProductButtonClicked() {
+        if (model.staffSaveChanges()) {
+            view.switchPanel(view.staffProductPanel);
+        }
+        // saves and returns to product view
+        // need to read and SAVE name price category gender avaliability discount type/amount to product list
+    }
+
+    public void discountTypeModified() {
+        model.setDiscountStatus((String) view.staffEditPanel.getDiscountDropdown().getSelectedItem(), null);
+    }
+    
+    
+    
 }

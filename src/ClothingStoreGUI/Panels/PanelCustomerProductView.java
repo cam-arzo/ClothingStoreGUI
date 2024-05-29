@@ -6,6 +6,7 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import javax.swing.JLabel;
 import javax.swing.event.ListSelectionListener;
 
 /**
@@ -20,20 +21,28 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     public PanelCustomerProductView(Controller controller) {
         initComponents();
         initConnections(controller);
+        setDefaultComponentVisibilities();
     }
 
     public void initConnections(Controller controller) {
         SelectButton.addActionListener(e -> controller.customerSelectButtonClicked());
         CartButton.addActionListener(e -> controller.cartButtonClicked());
-        CasualButton.addActionListener(e -> controller.categoryButtonClicked(0));
-        SportsButton.addActionListener(e -> controller.categoryButtonClicked(1));
-        FormalButton.addActionListener(e -> controller.categoryButtonClicked(2));
-        SleepButton.addActionListener(e -> controller.categoryButtonClicked(3));
-        NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4));
-        UnisexButton.addActionListener(e -> controller.genderButtonClicked(0));
-        MaleButton.addActionListener(e -> controller.genderButtonClicked(1));
-        FemaleButton.addActionListener(e -> controller.genderButtonClicked(2));
-        NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3));
+        CasualButton.addActionListener(e -> controller.categoryButtonClicked(0, this));
+        SportsButton.addActionListener(e -> controller.categoryButtonClicked(1, this));
+        FormalButton.addActionListener(e -> controller.categoryButtonClicked(2, this));
+        SleepButton.addActionListener(e -> controller.categoryButtonClicked(3, this));
+        NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4, this));
+        UnisexButton.addActionListener(e -> controller.genderButtonClicked(0, this));
+        MaleButton.addActionListener(e -> controller.genderButtonClicked(1, this));
+        FemaleButton.addActionListener(e -> controller.genderButtonClicked(2, this));
+        NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3, this));
+        ResetButton.addActionListener(e -> controller.resetButtonClicked());
+    }
+
+    public void setDefaultComponentVisibilities() {
+        ErrorLabel.setVisible(false);
+        NoPurposeButton.setSelected(true);
+        NoGenderButton.setSelected(true);
     }
     
     public void addProductListSelectionListener(ListSelectionListener listener) {
@@ -43,11 +52,15 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     public int getSelectedProductIndex() {
         return ProductList.getSelectedIndex();
     }
-    
+
     public void updateProductTable(String[] newData) {
         ProductList.setListData(newData);
     }
-    
+
+    public JLabel getErrorLabel() {
+        return ErrorLabel;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -75,6 +88,8 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         NoPurposeButton = new javax.swing.JRadioButton();
         NoGenderButton = new javax.swing.JRadioButton();
         Title = new javax.swing.JLabel();
+        ResetButton = new javax.swing.JButton();
+        ErrorLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(600, 400));
 
@@ -129,13 +144,19 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         Title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Title.setText("Product menu");
 
+        ResetButton.setText("Reset");
+        ResetButton.setInheritsPopupMenu(true);
+
+        ErrorLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        ErrorLabel.setText("ERROR: Please select a product");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createSequentialGroup()
@@ -175,11 +196,16 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                             .addGap(95, 95, 95)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(202, 202, 202)
-                        .addComponent(Title))
+                        .addComponent(Title)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ResetButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(SelectButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(CartButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ErrorLabel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(SelectButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(CartButton)))
                         .addGap(173, 173, 173)))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -187,7 +213,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(30, Short.MAX_VALUE)
-                .addComponent(Title)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Title)
+                    .addComponent(ResetButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(GenderLabel)
@@ -211,7 +239,9 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SelectButton)
                     .addComponent(CartButton))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ErrorLabel)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -219,6 +249,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CartButton;
     private javax.swing.JRadioButton CasualButton;
+    private javax.swing.JLabel ErrorLabel;
     private javax.swing.JRadioButton FemaleButton;
     private javax.swing.JRadioButton FormalButton;
     private javax.swing.ButtonGroup GenderButtonGroup;
@@ -229,6 +260,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
     private javax.swing.JList<String> ProductList;
     private javax.swing.ButtonGroup PurposeButtonGroup;
     private javax.swing.JLabel PurposeLabel;
+    private javax.swing.JButton ResetButton;
     private javax.swing.JButton SelectButton;
     private javax.swing.JRadioButton SleepButton;
     private javax.swing.JRadioButton SportsButton;

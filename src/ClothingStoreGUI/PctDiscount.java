@@ -18,7 +18,7 @@ public class PctDiscount extends Discount {
     
     @Override
     protected BigDecimal calcNewPrice(BigDecimal price) {
-        BigDecimal newPrice = price.multiply(amount.divide(new BigDecimal(100)));
+        BigDecimal newPrice = price.subtract(price.multiply(amount.divide(new BigDecimal(100))));
         return newPrice.setScale(2, RoundingMode.HALF_UP);
     }
     

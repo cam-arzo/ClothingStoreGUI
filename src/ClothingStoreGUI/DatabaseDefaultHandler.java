@@ -13,124 +13,64 @@ import java.sql.Statement;
 public class DatabaseDefaultHandler {
 
     Database database;
-    
+
     public DatabaseDefaultHandler(Database database) {
         this.database = database;
     }
-    
+
     public void createTables(Statement stmt) throws SQLException {
-        
+
         // holds different products
         if (!database.tableExists("products")) {
             createProductTable(stmt);
+            fillProductTable(stmt);
         }
 
-//        // holds product types (clothing, shoe)
-//        if (!database.tableExists("product_types")) {
-//            createProductTypesTable(stmt);
-//        }
-//
-//        // holds product categories (casual, formal...)
-//        if (!database.tableExists("categories")) {
-//            createCategoriesTable(stmt);
-//        }
-//
-//        // holds product gender (male, female, unisex)
-//        if (!database.tableExists("genders")) {
-//            createGendersTable(stmt);
-//        }
-//
-//        // holds discount types (fixed, percent)
-//        if (!database.tableExists("discounts")) {
-//            createDiscountsTable(stmt);
-//        }
-        
     }
-    
+
     public void deleteTables(Statement stmt) throws SQLException {
-        
+
         // Drop products table
         stmt.executeUpdate("DROP TABLE products");
 
-//        // Drop product_types table
-//        stmt.executeUpdate("DROP TABLE product_types");
-//
-//        // Drop categories table
-//        stmt.executeUpdate("DROP TABLE categories");
-//
-//        // Drop genders table
-//        stmt.executeUpdate("DROP TABLE genders");
-//
-//        // Drop discounts table
-//        stmt.executeUpdate("DROP TABLE discounts");
+        System.out.println("Product table dropped successfully.");
 
-        System.out.println("Tables dropped successfully.");
-        
     }
-    
-    
+
     public void createProductTable(Statement stmt) throws SQLException {
         // create table
         stmt.executeUpdate("CREATE TABLE products("
+                + "id INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY,"
                 + "available SMALLINT,"
-                + "id INT PRIMARY KEY,"
                 + "type INT NOT NULL,"
                 + "name VARCHAR(64) UNIQUE NOT NULL,"
                 + "category INT NOT NULL,"
-                + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits! and use BigDecimal
+                + "price NUMERIC(6, 2) NOT NULL," // cap prices at 6 digits! and use BigDecimal
                 + "gender_id INT NOT NULL,"
                 + "discount_id INT,"
                 + "discount_amount NUMERIC(10, 2))");
-        // !! fill table?
-        stmt.executeUpdate("INSERT INTO products (available, id, type, name, category, price, gender_id, discount_id, discount_amount) VALUES "
-                + "(1, 1, 0, 'Sexy T-Shirt', 0, 49.99, 1, 0, null),"
-                + "(1, 2, 1, 'Loafers', 0, 49.99, 1, 0, null)");
     }
 
-    public void createProductTypesTable(Statement stmt) throws SQLException {
-        stmt.executeUpdate("CREATE TABLE product_types("
-                + "id INT PRIMARY KEY,"
-                + "name VARCHAR(64) UNIQUE NOT NULL)");
-        // fill table
-        stmt.executeUpdate("INSERT INTO product_types (id, name) VALUES "
-                + "(1, 'clothing'),"
-                + "(2, 'shoes')");
+    public void fillProductTable(Statement stmt) throws SQLException {
+        // catgories: 0-CASUAL, 1-SPORT, 2-FORMAL, 3-SLEEP, NONE;
+        // gender: 0-UNISEX, 1-MALE, 2-FEMALE, NONE;
+        // discount: 0-NONE, 1-FIXED, 2-PERCENT;
+        // type: 0-CLOTHING, 1-SHOES;
+        // (avalible[0-1], id, type[0-1], name, category[0-4], price, gender[0-3], discount[0-2], discount_amount)
+        stmt.executeUpdate("INSERT INTO products (available, type, name, category, price, gender_id, discount_id, discount_amount) VALUES "
+                + "(1, 0, 'Comfy Cotton T-shirt',        0, 29.99,   1, 0, null),"
+                + "(0, 0, 'Elegant Maxi Dress',          2, 119.99,  2, 0, null),"
+                + "(1, 0, 'Flannel Sleep Set',           3, 69.99,   0, 1, 30),"
+                + "(1, 1, 'Fluffy Sheepskin Indoor Slippers', 3, 78, 0, 0, null),"
+                + "(1, 0, 'Unisex Breathable Tank Top',  1, 35,      0, 2, 50),"
+                + "(0, 0, 'Unisex Burgundy Vest',        2, 39.99,   0, 0, null),"
+                + "(1, 0, 'Womens Viscose Nightie',      3, 20,      2, 0, null),"
+                + "(0, 0, 'Wirefree Sports Bra Black',   1, 19.99,   2, 0, null),"
+                + "(1, 0, 'Navy Blue Smart Tuxedo',      2, 95,      1, 0, null),"
+                + "(1, 1, 'Casual Slip-On Sneakers',    0, 24.99,   0, 0, null),"
+                + "(1, 0, 'Sophisticated Button-up Shirt', 2, 39.99,1, 2, 30),"
+                + "(1, 0, 'Loose Spruce Ripped Jeans',  0, 59.99,   2, 1, 25),"
+                + "(1, 1, 'Open-Toe Stilletos',         2, 70,      2, 0, null),"
+                + "(1, 0, 'Black Leather Jacket',       0, 45,      1, 2, 30)");
     }
-
-    // !! remove later
-    
-    public void createCategoriesTable(Statement stmt) throws SQLException {
-        stmt.executeUpdate("CREATE TABLE categories("
-                + "id INT PRIMARY KEY,"
-                + "name VARCHAR(64) UNIQUE NOT NULL)");
-        // fill table
-        stmt.executeUpdate("INSERT INTO categories (id, name) VALUES "
-                + "(1, 'casual'),"
-                + "(2, 'formal'),"
-                + "(3, 'sport'),"
-                + "(4, 'sleep')");
-    }
-
-    public void createGendersTable(Statement stmt) throws SQLException {
-        stmt.executeUpdate("CREATE TABLE genders("
-                + "id INT PRIMARY KEY,"
-                + "name VARCHAR(64) UNIQUE NOT NULL)");
-        // fill table
-        stmt.executeUpdate("INSERT INTO genders (id, name) VALUES "
-                + "(1, 'unisex'),"
-                + "(2, 'male'),"
-                + "(3, 'female')");
-    }
-
-    public void createDiscountsTable(Statement stmt) throws SQLException {
-        stmt.executeUpdate("CREATE TABLE discounts("
-                + "id INT PRIMARY KEY,"
-                + "name VARCHAR(64) UNIQUE NOT NULL)");
-        // fill table
-        stmt.executeUpdate("INSERT INTO discounts (id, name) VALUES "
-                + "(0, 'none'),"
-                + "(1, 'fixed'),"
-                + "(2, 'percent')");
-    }
-
 }
