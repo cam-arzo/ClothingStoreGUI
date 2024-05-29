@@ -24,9 +24,9 @@ public class PctDiscount extends Discount {
     
     @Override
     public String cartString() {
-        if (super.amount.scale() == 0) {
-            return super.amount+"% off"; // e.g. $15 off
+        if (super.amount.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0) {
+            return "("+amount.intValue() +"% off!)"; // e.g. 15% off
         }
-        return String.format("%.2f% off", super.amount); // e.g. $15.50 off
+        return String.format("(%.2f%% off!)", super.amount); // e.g. 15.50% off
     }
 }

@@ -69,7 +69,7 @@ public class DatabaseDefaultHandler {
                 + "(1, 0, 'Navy Blue Smart Tuxedo',      2, 95,      1, 0, null),"
                 + "(1, 1, 'Casual Slip-On Sneakers',    0, 24.99,   0, 0, null),"
                 + "(1, 0, 'Sophisticated Button-up Shirt', 2, 39.99,1, 2, 30),"
-                + "(1, 0, 'Loose Spruce Ripped Jeans',  0, 59.99,   2, 1, 25),"
+                + "(1, 0, 'Loose Spruce Ripped Jeans',  0, 59.99,   2, 1, 20),"
                 + "(1, 1, 'Open-Toe Stilletos',         2, 70,      2, 0, null),"
                 + "(1, 0, 'Black Leather Jacket',       0, 45,      1, 2, 30)");
     }

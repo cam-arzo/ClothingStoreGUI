@@ -11,6 +11,7 @@ import java.util.Objects;
 import javax.swing.JPanel;
 import ClothingStoreGUI.Panels.PanelStaffProductView;
 import ClothingStoreGUI.Panels.PanelCustomerProductView;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -28,9 +29,10 @@ public class Model {
     Category categoryFilter = Category.NONE;
     Gender genderFilter = Gender.NONE;
     Product selectedProduct = null;
+    OrderProduct selectedOrder = null;
     // variable to tell whether staff is adding a new product (false) or modifying an existing one (true)
     boolean isModifyingProduct = false;
-    Cart cart;
+    Cart cart = new Cart();
 
     public void setDatabase(Database database) {
         this.database = database;
@@ -53,7 +55,36 @@ public class Model {
     public void setSelectedProductFromIndex(int index) {
         if ((index >= 0) && (index < filteredProductList.size())) {
             selectedProduct = filteredProductList.get(index);
-            System.out.println("SELECTED PRODUCT in model: " + selectedProduct.getName());
+            System.out.println("SELECTED PRODUCT in product view: " + selectedProduct.getName());
+        }
+    }
+    
+    public void setCartSelectedOrderFromIndex(int index) {
+        if ((index >= 0) && (index < cart.cartProducts.size())) {
+            selectedOrder = cart.cartProducts.get(index);
+            System.out.println("SELECTED ORDER in cart: " + selectedOrder.getProduct().getName());
+        }
+    }
+    
+    public void updateProductTableInPanel(JPanel panel) {
+//        System.out.println("Filtering based on category "+categoryFilter+" and gender "+genderFilter); // debug
+        if (!categoryFilter.equals(Category.NONE) || !genderFilter.equals(Gender.NONE)) {
+            filteredProductList.clear();
+            for (Product product : productList) {
+                if (categoryFilter.equals(Category.NONE) || product.getCategory().equals(categoryFilter)) {
+                    if (genderFilter.equals(Gender.NONE) || product.getGender().equals(genderFilter)) {
+                        filteredProductList.add(product);
+                    }
+                }
+            }
+        } else {
+            filteredProductList = new ArrayList<>(productList);
+        }
+        String[] stringArray = convertProductsToStringArray(filteredProductList);
+        if (panel instanceof PanelCustomerProductView) {
+            view.customerProductPanel.updateProductTable(stringArray);
+        } else if (panel instanceof PanelStaffProductView) {
+            view.staffProductPanel.updateProductTable(stringArray);
         }
     }
 
@@ -82,9 +113,69 @@ public class Model {
         view.customerSelectionPanel.getSizeDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(sizes));
         view.customerSelectionPanel.getSizeDropdown().setSelectedIndex(2); // set size to M or 7-8 instead of smallest size by default
         view.customerSelectionPanel.getQtyPicker().setValue(1);
-        // !! UNFINISHED, SELECTED PRODUCT HAS NOT BEEN ADDED TO THIS PROJECT YET
     }
 
+    public boolean customerSaveChanges() {
+        boolean validQty = checkQty();
+        
+        // return false if qty is invalid
+        if (!validQty) {
+            return false;
+        }
+        
+        String size = (String) view.customerSelectionPanel.getSizeDropdown().getSelectedItem();
+        int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
+        
+        OrderProduct newOrder = new OrderProduct(selectedProduct, size, qty);
+//        System.out.println(newOrder); // debug
+        cart.addItem(newOrder);
+        System.out.println(cart);
+        return true;
+    }
+    
+    public boolean checkQty() {
+        int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
+        if (qty > 0) {
+            view.customerSelectionPanel.getQtyErrorLabel().setVisible(false);
+            return true; // qty is positive and valid
+        } else {
+//            System.out.println("Quantity invalid"); // debug
+            view.customerSelectionPanel.getQtyErrorLabel().setVisible(true);
+            return false; // qty is negative
+        }
+    }
+    
+    public void displayCart() {
+        view.cartPanel.getCartList().setListData(cart.toStringArray());
+        selectedOrder = null;
+        
+        if (cart.getCartProducts().isEmpty()) {
+            view.cartPanel.getTotalPriceLabel().setVisible(false);
+            view.cartPanel.getErrorLabel().setVisible(true);
+            view.cartPanel.getErrorLabel().setText("Cart is empty. Please select products to add to cart.");
+            view.cartPanel.getRemoveButton().setEnabled(false);
+            view.cartPanel.getModifyButton().setEnabled(false);
+            view.cartPanel.getConfirmButton().setEnabled(false);
+            return;
+        } else {
+            view.cartPanel.getTotalPriceLabel().setVisible(true);
+            view.cartPanel.getTotalPriceLabel().setText("Total price: $"+cart.getTotalPrice());
+            view.cartPanel.getErrorLabel().setVisible(false);
+            view.cartPanel.getRemoveButton().setEnabled(true);
+            view.cartPanel.getModifyButton().setEnabled(true);
+            view.cartPanel.getConfirmButton().setEnabled(true);
+            view.cartPanel.getErrorLabel().setText("ERROR: Please select a product");
+        }
+        
+        view.cartPanel.getErrorLabel().setVisible(false);
+        
+    }
+    
+    public void removeFromCart() {
+        cart.removeOrderProduct(selectedOrder);
+        displayCart();
+    }
+    
     // STAFF FUNCTIONS
     // get info of the staff selected product and set components to display
     public void setNewProductVariables() {
@@ -209,28 +300,6 @@ public class Model {
         updateProductTableInPanel(view.staffProductPanel);
         return true;
 
-    }
-
-    public void updateProductTableInPanel(JPanel panel) {
-//        System.out.println("Filtering based on category "+categoryFilter+" and gender "+genderFilter); // debug
-        if (!categoryFilter.equals(Category.NONE) || !genderFilter.equals(Gender.NONE)) {
-            filteredProductList.clear();
-            for (Product product : productList) {
-                if (categoryFilter.equals(Category.NONE) || product.getCategory().equals(categoryFilter)) {
-                    if (genderFilter.equals(Gender.NONE) || product.getGender().equals(genderFilter)) {
-                        filteredProductList.add(product);
-                    }
-                }
-            }
-        } else {
-            filteredProductList = new ArrayList<>(productList);
-        }
-        String[] stringArray = convertProductsToStringArray(filteredProductList);
-        if (panel instanceof PanelCustomerProductView) {
-            view.customerProductPanel.updateProductTable(stringArray);
-        } else if (panel instanceof PanelStaffProductView) {
-            view.staffProductPanel.updateProductTable(stringArray);
-        }
     }
     
     public boolean isAvailableFromString() {

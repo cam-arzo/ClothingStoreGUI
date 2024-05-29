@@ -18,6 +18,7 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
     public PanelCustomerSelection(Controller controller) {
         initComponents();
         initConnections(controller);
+        QtyErrorLabel.setVisible(false);
     }
     
     public void initConnections(Controller controller) {
@@ -27,6 +28,10 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
 
     public JLabel getProductNameLabel() {
         return ProductNameLabel;
+    }
+
+    public JLabel getQtyErrorLabel() {
+        return QtyErrorLabel;
     }
 
     public JSpinner getQtyPicker() {
@@ -54,6 +59,7 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
         SizeDropdown = new javax.swing.JComboBox<>();
         QtyPicker = new javax.swing.JSpinner();
         AddToCartButton = new javax.swing.JButton();
+        QtyErrorLabel = new javax.swing.JLabel();
 
         Title.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         Title.setText("Customise your order");
@@ -74,32 +80,38 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
 
         AddToCartButton.setText("Add to cart");
 
+        QtyErrorLabel.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+        QtyErrorLabel.setText("Error: Please select a valid quantity");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(187, Short.MAX_VALUE)
+                .addContainerGap(166, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(BackButton))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(AddToCartButton)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(AddToCartButton)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(QtyLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                                    .addComponent(QtyPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(SizeLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(SizeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(QtyLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                                .addComponent(QtyPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(SizeLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(SizeDropdown, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(Title)
-                            .addGap(18, 18, 18)))
+                                .addComponent(Title)
+                                .addGap(18, 18, 18)))
+                        .addGap(18, 18, 18)
+                        .addComponent(QtyErrorLabel))
                     .addComponent(ProductNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +129,8 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(QtyPicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(QtyLabel))
+                    .addComponent(QtyLabel)
+                    .addComponent(QtyErrorLabel))
                 .addGap(18, 18, 18)
                 .addComponent(AddToCartButton)
                 .addContainerGap(105, Short.MAX_VALUE))
@@ -129,6 +142,7 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
     private javax.swing.JButton AddToCartButton;
     private javax.swing.JButton BackButton;
     private javax.swing.JLabel ProductNameLabel;
+    private javax.swing.JLabel QtyErrorLabel;
     private javax.swing.JLabel QtyLabel;
     private javax.swing.JSpinner QtyPicker;
     private javax.swing.JComboBox<String> SizeDropdown;

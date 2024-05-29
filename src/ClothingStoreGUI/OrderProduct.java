@@ -32,11 +32,12 @@ public class OrderProduct {
     // example output: Comfy Cotton T-Shirt, size M, [x2] - $59.98
     public String toString() {
         String out = "";
-        out += product.getName() + ", Size " + size + ", [x" + quantity + "] = $" + totalPrice; // total price function called so that it formats to 2dp
+//        out += product.getName() + ", Size " + size + ", [x" + quantity + "] = $" + totalPrice; // total price function called so that it formats to 2dp
+        out += String.format("%-40s %-20s %-10s $%-20.2f", product.getName(), "Size " + size, "[x" + quantity + "]", totalPrice);
 
         // print discount info e.g. (20% off!) if possible
         if (product.hasDiscount()) {
-            out += product.getDiscount();
+            out += " " + product.getDiscount().cartString();
         }
         return out;
     }
@@ -63,13 +64,14 @@ public class OrderProduct {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        setTotalPrice();
     }
 
     public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalPrice() {
+        this.totalPrice = this.product.getDiscountedPrice().multiply(new BigDecimal(this.quantity));
     }
 }
