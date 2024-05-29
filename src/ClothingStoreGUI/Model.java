@@ -20,7 +20,6 @@ import ClothingStoreGUI.Panels.PanelCustomerProductView;
 public class Model {
 
     Database database;
-
     View view;
 
     // !! might be messy storing productList and selectedProduct in Model for now
@@ -29,9 +28,9 @@ public class Model {
     Category categoryFilter = Category.NONE;
     Gender genderFilter = Gender.NONE;
     Product selectedProduct = null;
-
     // variable to tell whether staff is adding a new product (false) or modifying an existing one (true)
     boolean isModifyingProduct = false;
+    Cart cart;
 
     public void setDatabase(Database database) {
         this.database = database;
