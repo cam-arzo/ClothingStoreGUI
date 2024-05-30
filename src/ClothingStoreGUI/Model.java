@@ -483,8 +483,8 @@ public class Model {
 
         // add orders to table
         for (Order order : orderList) {
-            Object[] row = {order.getId(), order.getQuantity(), "$" + order.getPrice()};
-            modeOrderl.addRow(row);
+            Object[] row = {order.getId(), order.getQuantity(), "$" + order.getTotalPrice()};
+            model.addRow(row);
         }
         table.setModel(model);
 
