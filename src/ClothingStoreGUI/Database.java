@@ -94,6 +94,15 @@ public class Database {
         }
     }
     
+    public Order createOrder(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        int quantity = rs.getInt("quantity");
+        BigDecimal total_price = rs.getBigDecimal("total_price");
+        
+        Order order = new Order(id, quantity, total_price);
+        return order;
+    }
+    
     public Discount createDiscount(DiscountType discountType, BigDecimal discount_amount) {
         Discount discount = null;
 
@@ -163,22 +172,11 @@ public class Database {
         String sql = "SELECT * FROM products";
 
         try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
-
-//            + "available SMALLINT,"
-//            + "id INT PRIMARY KEY,"
-//            + "type INT NOT NULL,"
-//            + "name VARCHAR(64) UNIQUE NOT NULL,"
-//            + "category INT NOT NULL,"
-//            + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
-//            + "gender_id INT NOT NULL,"
-//            + "discount_id INT,"
-//            + "discount_amount NUMERIC(10, 2))");
             while (rs.next()) {
                 Product product = createProduct(rs);
 
                 // add to products list
                 products.add(product);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -189,31 +187,13 @@ public class Database {
 
     public List<Product> getAvailableProducts() {
         List<Product> products = new ArrayList<>();
-        String sql = "SELECT * FROM products";
+        String sql = "SELECT * FROM products WHERE available = 1";
 
         try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
-
-//            + "available SMALLINT,"
-//            + "id INT PRIMARY KEY,"
-//            + "type INT NOT NULL,"
-//            + "name VARCHAR(64) UNIQUE NOT NULL,"
-//            + "category INT NOT NULL,"
-//            + "price NUMERIC(6, 2) NOT NULL,"  // cap prices at 6 digits!
-//            + "gender_id INT NOT NULL,"
-//            + "discount_id INT,"
-//            + "discount_amount NUMERIC(10, 2))");
             while (rs.next()) {
-                boolean available = rs.getBoolean("available");
-
-                if (!available) {
-                    continue;
-                }
-
                 Product product = createProduct(rs);
-
                 // add to products list
                 products.add(product);
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -221,13 +201,24 @@ public class Database {
 
         return products;
     }
-
-    // other read functions could include (we might need to implement all 3): 
-    //  - getAllOrders from order table, store in a list like products.
-    //  - getNumOrders from order table, stored in an int.
-    //  - getTotalRevenue from order table, stored in a BigDecimal.
-    // these would have to be displayed in a new panel
     
+    
+    public List<Order> getOrders() {
+        List<Order> orders = new ArrayList<>();
+        String sql = "SELECT * FROM products WHERE available = 1";
+
+        try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Order order = createOrder(rs);
+                // add to products list
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orders;
+    }
     
     // WRITE FUNCTIONS
     public void addProductToDatabase(Product newProduct) {
@@ -347,7 +338,7 @@ public class Database {
         
     }
 
-    public void addOrderToDatabase(int qty, BigDecimal price) {
+    public void addOrderToDatabase(int qty, BigDecimal total_price) {
         
         String sql = "INSERT INTO orders (quantity, total_price) VALUES (?, ?)";
         
@@ -356,7 +347,7 @@ public class Database {
             
             // Set the values for the placeholders
             preparedStatement.setInt(1, qty);
-            preparedStatement.setBigDecimal(2, price);
+            preparedStatement.setBigDecimal(2, total_price);
             
             // Execute the prepared statement
             int rowsAffected = preparedStatement.executeUpdate();
@@ -371,5 +362,9 @@ public class Database {
         }
         
     }
+    
+    
+    
+    
 
 }
