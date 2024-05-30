@@ -6,6 +6,7 @@ import ClothingStoreGUI.Panels.PanelViewSelection;
 import ClothingStoreGUI.Panels.PanelStaffProductView;
 import ClothingStoreGUI.Panels.PanelCustomerProductView;
 import ClothingStoreGUI.Panels.PanelCart;
+import ClothingStoreGUI.Panels.PanelOrderInfo;
 import ClothingStoreGUI.Panels.PanelStaffModify;
 import java.util.Objects;
 import javax.swing.JFrame;
@@ -30,6 +31,7 @@ public class View extends JFrame {
     PanelCheckout checkoutPanel;
     PanelStaffProductView staffProductPanel;
     PanelStaffModify staffEditPanel;
+    PanelOrderInfo orderPanel;
     
     public View() {
         super("Clothing Store Application");
@@ -52,6 +54,7 @@ public class View extends JFrame {
         checkoutPanel = new PanelCheckout(controller);
         staffProductPanel = new PanelStaffProductView(controller);
         staffEditPanel = new PanelStaffModify(controller);
+        orderPanel = new PanelOrderInfo(controller);
         controller.setUpProductListListeners();
         
         // Switch to starting panel

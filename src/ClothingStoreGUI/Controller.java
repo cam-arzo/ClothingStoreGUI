@@ -241,7 +241,14 @@ public class Controller {
     public void discountTypeModified() {
         model.setDiscountStatus((String) view.staffEditPanel.getDiscountDropdown().getSelectedItem(), null);
     }
-    
+
+    public void orderButtonClicked() {
+        view.staffProductPanel.getErrorLabel().setVisible(false);
+        setPreviousPanel(view.staffProductPanel);
+        model.updateOrderInfo();
+        view.switchPanel(view.orderPanel);
+    }
+
     
     
 }

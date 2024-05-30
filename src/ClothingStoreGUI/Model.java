@@ -35,6 +35,9 @@ public class Model {
     OrderProduct selectedOrder = null;
     // variable to tell whether staff is adding a new product (false) or modifying an existing one (true)
     boolean isModifyingProduct = false;
+    int total_orders = 0;
+    BigDecimal total_revenue = BigDecimal.ZERO;
+    List<Order> orderList = new ArrayList<>();
     Cart cart = new Cart();
 
     public void setDatabase(Database database) {
@@ -471,6 +474,22 @@ public class Model {
             System.out.print(product.getName() + ", ");
         }
         System.out.print("]");
+    }
+
+    
+    public void updateOrderInfo() {
+        JTable table = view.orderPanel.getOrderTable();
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Order no.",  "Total items", "Total price"}, 0); // 0 rows at first
+
+        // add orders to table
+        for (Order order : orderList) {
+            Object[] row = {order.getId(), order.getQuantity(), "$" + order.getPrice()};
+            modeOrderl.addRow(row);
+        }
+        table.setModel(model);
+
+        view.orderPanel.getTotalOrderLabel().setText("Total orders: "+total_orders);
+        view.orderPanel.getTotalOrderLabel().setText("Total revenue: "+total_revenue);
     }
 
 }

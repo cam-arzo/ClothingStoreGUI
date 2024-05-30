@@ -349,7 +349,7 @@ public class Database {
 
     public void addOrderToDatabase(int qty, BigDecimal price) {
         
-        String sql = "INSERT INTO orders (quantity, price) VALUES (?, ?)";
+        String sql = "INSERT INTO orders (quantity, total_price) VALUES (?, ?)";
         
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
