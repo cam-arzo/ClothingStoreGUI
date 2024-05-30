@@ -35,7 +35,7 @@ public class Model {
     boolean isModifyingProduct = false;
     BigDecimal total_revenue = BigDecimal.ZERO;
     List<Order> orderList = new ArrayList<>();
-    Cart cart = new Cart();
+    Cart cart = Cart.getInstance();
 
     public void setDatabase(Database database) {
         this.database = database;
@@ -63,8 +63,8 @@ public class Model {
     }
 
     public void setCartSelectedOrderFromIndex(int index) {
-        if ((index >= 0) && (index < cart.cartProducts.size())) {
-            selectedOrder = cart.cartProducts.get(index);
+        if ((index >= 0) && (index < cart.getCartProducts().size())) {
+            selectedOrder = cart.getCartProducts().get(index);
             System.out.println("SELECTED ORDER in cart: " + selectedOrder.getProduct().getName());
         }
     }
@@ -167,6 +167,7 @@ public class Model {
     public void displayCart() {
         view.cartPanel.getCartList().setListData(cart.toStringArray());
         selectedOrder = null;
+        updateCartLabel();
 
         if (cart.getCartProducts().isEmpty()) {
             view.cartPanel.getTotalPriceLabel().setVisible(false);
@@ -187,7 +188,6 @@ public class Model {
         }
 
         view.cartPanel.getErrorLabel().setVisible(false);
-
     }
 
     public void removeFromCart() {
@@ -232,6 +232,7 @@ public class Model {
 
 // get info of the staff selected product and set components to display
     public void setStaffSelectedProductVariables() {
+        setDefaultProductSettings(); // a fallback
         isModifyingProduct = true;
         view.staffEditPanel.getMessage().setText("Modifying product: " + selectedProduct.getName());
         view.staffEditPanel.getNameTextField().setText(selectedProduct.getName());
@@ -456,6 +457,8 @@ public class Model {
 
     public void reset() {
         // restart program by resetting variables and views
+        cart.reset();
+        updateCartLabel();
         selectedProduct = null;
         selectedOrder = null;
         isModifyingProduct = false;
@@ -480,10 +483,11 @@ public class Model {
         
         JTable table = view.orderPanel.getOrderTable();
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Order number",  "Total items bought", "Total price paid"}, 0); // 0 rows at first
-
+        int order_no = 1;
+        
         // add orders to table
         for (Order order : orderList) {
-            Object[] row = {order.getId(), order.getQuantity(), "$" + order.getTotalPrice()};
+            Object[] row = {order_no++, order.getQuantity(), "$" + order.getTotalPrice()};
             model.addRow(row);
         }
         table.setModel(model);

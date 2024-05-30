@@ -72,7 +72,7 @@ public class DatabaseDefaultHandler {
         // (avalible[0-1], id, type[0-1], name, category[0-4], price, gender[0-3], discount[0-2], discount_amount)
         stmt.executeUpdate("INSERT INTO products (available, type, name, category, price, gender_id, discount_id, discount_amount) VALUES "
                 + "(1, 0, 'Comfy Cotton T-shirt',        0, 29.99,   1, 0, null),"
-                + "(0, 0, 'Elegant Maxi Dress',          2, 119.99,  2, 0, null),"
+                + "(1, 0, 'Elegant Maxi Dress',          2, 119.99,  2, 0, null),"
                 + "(1, 0, 'Flannel Sleep Set',           3, 69.99,   0, 1, 30),"
                 + "(1, 1, 'Fluffy Sheepskin Indoor Slippers', 3, 78, 0, 0, null),"
                 + "(1, 0, 'Unisex Breathable Tank Top',  1, 35,      0, 2, 50),"

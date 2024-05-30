@@ -13,12 +13,25 @@ import java.util.List;
  *
  * @author annek
  */
-public class Cart {
-    public List<OrderProduct> cartProducts = new ArrayList<>();
-    public int numItems = 0;
-    public BigDecimal totalPrice = BigDecimal.ZERO;
+public class Cart implements Cloneable {
+    private List<OrderProduct> cartProducts = new ArrayList<>();
+    private int numItems = 0;
+    private BigDecimal totalPrice = BigDecimal.ZERO;
+    private static Cart instance;
+
+    private Cart() {    
+    }
     
-    public Cart() {    
+    public static synchronized Cart getInstance() { // ensures only one cart is allowed
+        if (instance == null) {
+            instance = new Cart();
+        }
+        return instance;
+    }
+    
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
     }
     
     // adds item to cart
@@ -117,5 +130,11 @@ public class Cart {
             sum += product.getQuantity();
         }
         this.numItems = sum;
+    }
+
+    public void reset() {
+        cartProducts.clear();
+        numItems = 0;
+        totalPrice = BigDecimal.ZERO;
     }
 }

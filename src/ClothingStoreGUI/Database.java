@@ -44,7 +44,7 @@ public class Database {
             DatabaseDefaultHandler defaultData = new DatabaseDefaultHandler(this);
 
             // Delete tables
-//            defaultData.deleteTables(stmt);
+            defaultData.deleteTables(stmt);
             // Create tables & fill data if they don't already exist
             defaultData.createTables(stmt);
 
