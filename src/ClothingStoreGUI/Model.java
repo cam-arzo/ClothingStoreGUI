@@ -25,17 +25,14 @@ public class Model {
 
     Database database;
     View view;
-
-    // !! might be messy storing productList and selectedProduct in Model for now
     List<Product> productList;
     List<Product> filteredProductList = new ArrayList<>();
     Category categoryFilter = Category.NONE;
     Gender genderFilter = Gender.NONE;
     Product selectedProduct = null;
     OrderProduct selectedOrder = null;
-    // variable to tell whether staff is adding a new product (false) or modifying an existing one (true)
+    // variable to tell whether user is adding (false) or modifying (true) a product or order
     boolean isModifyingProduct = false;
-    int total_orders = 0;
     BigDecimal total_revenue = BigDecimal.ZERO;
     List<Order> orderList = new ArrayList<>();
     Cart cart = new Cart();
@@ -221,7 +218,7 @@ public class Model {
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
 
         view.checkoutPanel.getTotalPriceLabel().setText("Total price: $" + cart.getTotalPrice());
-
+        
         database.addOrderToDatabase(cart.getNumItems(), cart.getTotalPrice());
     }
 
@@ -478,8 +475,11 @@ public class Model {
 
     
     public void updateOrderInfo() {
+        orderList = database.getOrders();
+        total_revenue = database.getTotalRevenue();
+        
         JTable table = view.orderPanel.getOrderTable();
-        DefaultTableModel model = new DefaultTableModel(new Object[]{"Order no.",  "Total items", "Total price"}, 0); // 0 rows at first
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Order number",  "Total items bought", "Total price paid"}, 0); // 0 rows at first
 
         // add orders to table
         for (Order order : orderList) {
@@ -488,8 +488,7 @@ public class Model {
         }
         table.setModel(model);
 
-        view.orderPanel.getTotalOrderLabel().setText("Total orders: "+total_orders);
-        view.orderPanel.getTotalOrderLabel().setText("Total revenue: "+total_revenue);
+        view.orderPanel.getTotalRevenueLabel().setText("Total revenue: $"+total_revenue);
     }
 
 }

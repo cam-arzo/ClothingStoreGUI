@@ -202,10 +202,9 @@ public class Database {
         return products;
     }
     
-    
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM products WHERE available = 1";
+        String sql = "SELECT * FROM orders";
 
         try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
@@ -218,6 +217,20 @@ public class Database {
         }
 
         return orders;
+    }
+    
+    public BigDecimal getTotalRevenue() {
+        String sql = "SELECT total_price FROM orders";
+        BigDecimal sum = BigDecimal.ZERO;
+        
+        try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                sum = sum.add(rs.getBigDecimal("total_price"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sum;
     }
     
     // WRITE FUNCTIONS

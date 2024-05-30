@@ -37,9 +37,16 @@ public class DatabaseDefaultHandler {
     public void deleteTables(Statement stmt) throws SQLException {
 
         // Drop products table
-        stmt.executeUpdate("DROP TABLE products");
+        if (database.tableExists("products")) {
+            stmt.executeUpdate("DROP TABLE products");
+        }
 
-        System.out.println("Product table dropped successfully.");
+        // Drop order table
+        if (database.tableExists("orders")) {
+            stmt.executeUpdate("DROP TABLE orders");
+        }
+        
+        System.out.println("Tables dropped successfully.");
 
     }
 

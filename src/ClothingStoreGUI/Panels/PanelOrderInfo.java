@@ -33,10 +33,6 @@ public class PanelOrderInfo extends javax.swing.JPanel implements InteractivePan
         return OrderTable;
     }
 
-    public JLabel getTotalOrderLabel() {
-        return TotalOrderLabel;
-    }
-
     public JLabel getTotalRevenueLabel() {
         return TotalRevenueLabel;
     }
@@ -56,7 +52,6 @@ public class PanelOrderInfo extends javax.swing.JPanel implements InteractivePan
         Title = new javax.swing.JLabel();
         TotalRevenueLabel = new javax.swing.JLabel();
         BackButton = new javax.swing.JButton();
-        TotalOrderLabel = new javax.swing.JLabel();
 
         OrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -101,8 +96,6 @@ public class PanelOrderInfo extends javax.swing.JPanel implements InteractivePan
         BackButton.setText("Back");
         BackButton.setInheritsPopupMenu(true);
 
-        TotalOrderLabel.setText("Total orders: 3");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,8 +114,7 @@ public class PanelOrderInfo extends javax.swing.JPanel implements InteractivePan
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Message)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TotalOrderLabel))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 83, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -137,10 +129,8 @@ public class PanelOrderInfo extends javax.swing.JPanel implements InteractivePan
                 .addGap(19, 19, 19)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(TotalOrderLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TotalRevenueLabel)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -150,7 +140,6 @@ public class PanelOrderInfo extends javax.swing.JPanel implements InteractivePan
     private javax.swing.JLabel Message;
     private javax.swing.JTable OrderTable;
     private javax.swing.JLabel Title;
-    private javax.swing.JLabel TotalOrderLabel;
     private javax.swing.JLabel TotalRevenueLabel;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
