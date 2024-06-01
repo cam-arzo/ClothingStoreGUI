@@ -129,15 +129,70 @@ public class ModelTest {
         View view = new View();
         Model model = new Model();
         model.view = view;
+        controller.model = model;
+        controller.view = view;
         // Setup panel
         view.staffEditPanel = new PanelStaffModify(controller);
         
-        // Fixed or Percent
-//        view.staffEditPanel.getDiscountDropdown().getSelectedItem()
+        // Prepare dropboxes
+        model.setNewProductVariables();
+        // Update 'previous selection' so that it isnt null
+        view.staffEditPanel.updatePreviousDiscountSelection();
         
-        // TESTING VALID TEXT ENTRIES
-        view.staffEditPanel.getNameTextField().setText("Test entry");
-        assertTrue("Text should be valid: " + view.staffEditPanel.getNameTextField().getText(), model.checkName());
+        // Set to Fixed
+        view.staffEditPanel.getDiscountDropdown().setSelectedIndex(1);
+        
+        // TESTING VALID TEXT ENTRIES for Fixed Discount
+        view.staffEditPanel.getDiscountTextField().setText("$10.00");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("$15.50");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("0.31");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("20.00");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("        5   ");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("0.1");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        
+        // TESTING INVALID TEXT ENTRIES for Fixed Discount
+        // default price is 20, so $40.00 should be too much
+        view.staffEditPanel.getDiscountTextField().setText("test");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("$40.00");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("20.01");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("    \n   ");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("-10");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("0.00");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        
+        // Set to Percent
+        view.staffEditPanel.getDiscountDropdown().setSelectedIndex(2);
+        
+        view.staffEditPanel.getDiscountTextField().setText("50.00");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("100%");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("   10 ");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        
+        // TESTING INVALID TEXT ENTRIES for Percent Discount
+        view.staffEditPanel.getDiscountTextField().setText("test");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        // 150% is too much
+        view.staffEditPanel.getDiscountTextField().setText("150.00");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("100.01");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("-10");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("   \n ");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
         
     }
     
