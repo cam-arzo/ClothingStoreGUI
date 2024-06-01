@@ -360,7 +360,7 @@ public class Model {
 
     public boolean checkName() {
         String text = view.staffEditPanel.getNameTextField().getText();
-        if (text == null || text.trim().isEmpty() || text.equals("Enter new product name...")) { // placeholder text
+        if (text == null || text.strip().isEmpty() || text.equals("Enter new product name...")) { // placeholder text
             System.out.println("name invalid");
             view.staffEditPanel.getNameErrorLabel().setVisible(true);
             return false;

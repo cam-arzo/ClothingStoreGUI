@@ -6,6 +6,8 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JComboBox;
@@ -21,6 +23,9 @@ public class PanelStaffModify extends javax.swing.JPanel implements InteractiveP
     /**
      * Creates new form PanelStaffModify
      */
+    
+    String previousDiscountSelection; 
+    
     public PanelStaffModify(Controller controller) {
         initComponents();
         initConnections(controller);
@@ -29,18 +34,33 @@ public class PanelStaffModify extends javax.swing.JPanel implements InteractiveP
         DiscountErrorLabel.setVisible(false);
     }
     
+    public void updatePreviousDiscountSelection() {
+        previousDiscountSelection = DiscountDropdown.getSelectedItem().toString();
+    }
+    
     @Override
     public void initConnections(Controller controller) {
         BackButton.addActionListener(e -> controller.backButtonClicked());
         SaveButton.addActionListener(e -> controller.staffSaveProductButtonClicked());
-        DiscountDropdown.addActionListener(e -> controller.discountTypeModified());
+//        DiscountDropdown.addActionListener(e -> controller.discountTypeModified());
+        
+        // Adding an ActionListener to only update values when changing to a new discount type
+        DiscountDropdown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String currentSelection = (String) DiscountDropdown.getSelectedItem();
+                if (previousDiscountSelection.equals(currentSelection)) {
+                    return;
+                }
+                controller.discountTypeModified();
+                previousDiscountSelection = currentSelection;
+            }
+        });
         
         // detect when product name field is clicked
         NameTextField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                System.out.println("Text field focused");
-                // Call your controller method here
                 controller.nameTextFieldFieldFocused(NameTextField);
             }
 

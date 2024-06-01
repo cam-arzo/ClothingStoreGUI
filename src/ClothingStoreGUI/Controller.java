@@ -199,6 +199,7 @@ public class Controller {
         view.staffProductPanel.getErrorLabel().setVisible(false);
         setPreviousPanel(view.staffProductPanel);
         model.setNewProductVariables();
+        view.staffEditPanel.updatePreviousDiscountSelection();
         view.switchPanel(view.staffEditPanel);
     }
 
@@ -210,6 +211,7 @@ public class Controller {
             setPreviousPanel(view.staffProductPanel);
             model.setStaffSelectedProductVariables();
             view.staffProductPanel.getErrorLabel().setVisible(false);
+            view.staffEditPanel.updatePreviousDiscountSelection();
             view.switchPanel(view.staffEditPanel);
         } else {
             // if not, show error label
