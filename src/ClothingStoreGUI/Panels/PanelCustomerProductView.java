@@ -22,6 +22,7 @@ public class PanelCustomerProductView extends javax.swing.JPanel implements Inte
         initComponents();
         initConnections(controller);
         setDefaultComponentVisibilities();
+        ProductList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void initConnections(Controller controller) {

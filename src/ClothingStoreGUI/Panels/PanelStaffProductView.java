@@ -18,23 +18,24 @@ public class PanelStaffProductView extends javax.swing.JPanel implements Interac
         initComponents();
         initConnections(controller);
         setDefaultComponentVisibilities();
+        ProductList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }
     
     public void initConnections(Controller controller) {
-         ItemModifyButton.addActionListener(e -> controller.staffModifyButtonClicked());
-         AddButton.addActionListener(e -> controller.staffAddButtonClicked());
-         RemoveButton.addActionListener(e -> controller.staffRemoveButtonClicked());
-         CasualButton.addActionListener(e -> controller.categoryButtonClicked(0, this));
-         SportsButton.addActionListener(e -> controller.categoryButtonClicked(1, this));
-         FormalButton.addActionListener(e -> controller.categoryButtonClicked(2, this));
-         SleepButton.addActionListener(e -> controller.categoryButtonClicked(3, this));
-         NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4, this));
-         UnisexButton.addActionListener(e -> controller.genderButtonClicked(0, this));
-         MaleButton.addActionListener(e -> controller.genderButtonClicked(1, this));
-         FemaleButton.addActionListener(e -> controller.genderButtonClicked(2, this));
-         NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3, this));
-         ResetButton.addActionListener(e -> controller.resetButtonClicked());
-         OrderInfoButton.addActionListener(e -> controller.orderButtonClicked());
+        ItemModifyButton.addActionListener(e -> controller.staffModifyButtonClicked());
+        AddButton.addActionListener(e -> controller.staffAddButtonClicked());
+        RemoveButton.addActionListener(e -> controller.staffRemoveButtonClicked());
+        CasualButton.addActionListener(e -> controller.categoryButtonClicked(0, this));
+        SportsButton.addActionListener(e -> controller.categoryButtonClicked(1, this));
+        FormalButton.addActionListener(e -> controller.categoryButtonClicked(2, this));
+        SleepButton.addActionListener(e -> controller.categoryButtonClicked(3, this));
+        NoPurposeButton.addActionListener(e -> controller.categoryButtonClicked(4, this));
+        UnisexButton.addActionListener(e -> controller.genderButtonClicked(0, this));
+        MaleButton.addActionListener(e -> controller.genderButtonClicked(1, this));
+        FemaleButton.addActionListener(e -> controller.genderButtonClicked(2, this));
+        NoGenderButton.addActionListener(e -> controller.genderButtonClicked(3, this));
+        ResetButton.addActionListener(e -> controller.resetButtonClicked());
+        OrderInfoButton.addActionListener(e -> controller.orderButtonClicked());
 
     }
 

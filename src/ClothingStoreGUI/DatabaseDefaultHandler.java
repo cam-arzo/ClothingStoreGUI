@@ -77,14 +77,14 @@ public class DatabaseDefaultHandler {
                 + "(1, 1, 'Fluffy Sheepskin Indoor Slippers', 3, 78, 0, 0, null),"
                 + "(1, 0, 'Unisex Breathable Tank Top',  1, 35,      0, 2, 50),"
                 + "(0, 0, 'Unisex Burgundy Vest',        2, 39.99,   0, 0, null),"
-                + "(1, 0, 'Womens Viscose Nightie',      3, 20,      2, 0, null),"
+                + "(1, 0, 'Womens Viscose Nightie',      3, 59.99,      2, 2, 20),"
                 + "(0, 0, 'Wirefree Sports Bra Black',   1, 19.99,   2, 0, null),"
-                + "(1, 0, 'Navy Blue Smart Tuxedo',      2, 95,      1, 0, null),"
+                + "(1, 0, 'Navy Blue Smart Tuxedo',      2, 135,      1, 0, null),"
                 + "(1, 1, 'Casual Slip-On Sneakers',    0, 24.99,   0, 0, null),"
                 + "(1, 0, 'Sophisticated Button-up Shirt', 2, 39.99,1, 2, 30),"
                 + "(1, 0, 'Loose Spruce Ripped Jeans',  0, 59.99,   2, 1, 20),"
                 + "(1, 1, 'Open-Toe Stilettos',         2, 70,      2, 0, null),"
-                + "(1, 0, 'Black Leather Jacket',       0, 45,      1, 2, 30)");
+                + "(1, 0, 'Black Leather Jacket',       0, 149.99,      1, 2, 30)");
     }
     
     public void createOrderTable(Statement stmt) throws SQLException {

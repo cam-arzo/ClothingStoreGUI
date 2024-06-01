@@ -43,8 +43,8 @@ public class Database {
 
             DatabaseDefaultHandler defaultData = new DatabaseDefaultHandler(this);
 
-            // Delete tables
-            defaultData.deleteTables(stmt);
+            // Optionally delete tables
+//            defaultData.deleteTables(stmt);
             // Create tables & fill data if they don't already exist
             defaultData.createTables(stmt);
 
@@ -171,7 +171,7 @@ public class Database {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM products";
 
-        try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
+        try ( Connection conn = getConnection();  PreparedStatement pstmt = conn.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 Product product = createProduct(rs);
 

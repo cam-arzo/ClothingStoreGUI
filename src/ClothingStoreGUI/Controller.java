@@ -4,6 +4,7 @@ import ClothingStoreGUI.Enums.Category;
 import ClothingStoreGUI.Enums.Gender;
 import java.util.Objects;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -198,6 +199,7 @@ public class Controller {
         view.staffProductPanel.getErrorLabel().setVisible(false);
         setPreviousPanel(view.staffProductPanel);
         model.setNewProductVariables();
+        view.staffEditPanel.updatePreviousDiscountSelection();
         view.switchPanel(view.staffEditPanel);
     }
 
@@ -209,6 +211,7 @@ public class Controller {
             setPreviousPanel(view.staffProductPanel);
             model.setStaffSelectedProductVariables();
             view.staffProductPanel.getErrorLabel().setVisible(false);
+            view.staffEditPanel.updatePreviousDiscountSelection();
             view.switchPanel(view.staffEditPanel);
         } else {
             // if not, show error label
@@ -247,6 +250,20 @@ public class Controller {
         setPreviousPanel(view.staffProductPanel);
         model.updateOrderInfo();
         view.switchPanel(view.orderPanel);
+    }
+    
+    public void nameTextFieldFieldFocused(JTextField textField) {
+        if (textField.getText().equalsIgnoreCase("Enter new product name..."))
+        {
+            textField.setText("");
+        }
+    }
+    
+    public void nameTextFieldFieldUnfocused(JTextField textField) {
+        if (textField.getText().strip().equals(""))
+        {
+            textField.setText("Enter new product name...");
+        }
     }
 
     
