@@ -6,6 +6,8 @@ package ClothingStoreGUI.Panels;
 
 import ClothingStoreGUI.Controller;
 import ClothingStoreGUI.InteractivePanel;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -32,7 +34,22 @@ public class PanelStaffModify extends javax.swing.JPanel implements InteractiveP
         BackButton.addActionListener(e -> controller.backButtonClicked());
         SaveButton.addActionListener(e -> controller.staffSaveProductButtonClicked());
         DiscountDropdown.addActionListener(e -> controller.discountTypeModified());
-        // !! a dozen connections need to be made for each field OR its all read at once when saved
+        
+        // detect when product name field is clicked
+        NameTextField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                System.out.println("Text field focused");
+                // Call your controller method here
+                controller.nameTextFieldFieldFocused(NameTextField);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                controller.nameTextFieldFieldUnfocused(NameTextField);
+            }
+        });
+        
     }
 
     public JComboBox<String> getAvailableDropdown() {
