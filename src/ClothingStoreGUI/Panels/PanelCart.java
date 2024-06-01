@@ -24,13 +24,14 @@ public class PanelCart extends javax.swing.JPanel implements InteractivePanel {
         initComponents();
         initConnections(controller);
         ErrorLabel.setVisible(false);
+        CartList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }
 
     public void initConnections(Controller controller) {
-         BackButton.addActionListener(e -> controller.backButtonClicked());
-         ModifyButton.addActionListener(e -> controller.customerModifyButtonClicked());
-         RemoveButton.addActionListener(e -> controller.customerRemoveButtonClicked());
-         ConfirmButton.addActionListener(e -> controller.customerConfirmButtonClicked());
+        BackButton.addActionListener(e -> controller.backButtonClicked());
+        ModifyButton.addActionListener(e -> controller.customerModifyButtonClicked());
+        RemoveButton.addActionListener(e -> controller.customerRemoveButtonClicked());
+        ConfirmButton.addActionListener(e -> controller.customerConfirmButtonClicked());
     }
 
     public int getSelectedProductIndex() {

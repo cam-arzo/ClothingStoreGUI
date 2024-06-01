@@ -3,6 +3,7 @@ package ClothingStoreGUI;
 import ClothingStoreGUI.Enums.Category;
 import ClothingStoreGUI.Enums.DiscountType;
 import ClothingStoreGUI.Enums.Gender;
+import ClothingStoreGUI.Panels.PanelCustomerSelection;
 import ClothingStoreGUI.Panels.PanelStaffModify;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -180,6 +181,8 @@ public class ModelTest {
         assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
         view.staffEditPanel.getDiscountTextField().setText("   10 ");
         assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("   0.2 ");
+        assertTrue("Text should be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
         
         // TESTING INVALID TEXT ENTRIES for Percent Discount
         view.staffEditPanel.getDiscountTextField().setText("test");
@@ -193,8 +196,37 @@ public class ModelTest {
         assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
         view.staffEditPanel.getDiscountTextField().setText("   \n ");
         assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
+        view.staffEditPanel.getDiscountTextField().setText("0.0");
+        assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
         
     }
+    
+    
+    
+    @Test
+    public void testCheckQuantity() {
+        
+        // Setup controller, view
+        Controller controller = new Controller();
+        View view = new View();
+        Model model = new Model();
+        model.view = view;
+        // Setup panel
+        view.customerSelectionPanel = new PanelCustomerSelection(controller);
+        
+        // TESTING VALID TEXT ENTRIES
+        view.customerSelectionPanel.getQtyPicker().setValue(12);
+        assertTrue("Text should be valid: " + view.customerSelectionPanel.getQtyPicker().getValue(), model.checkQuantity());
+        
+        // TESTING INVALID TEXT ENTRIES
+        view.customerSelectionPanel.getQtyPicker().setValue(-10);
+        assertFalse("Text should be valid: " + view.customerSelectionPanel.getQtyPicker().getValue(), model.checkQuantity());
+        view.customerSelectionPanel.getQtyPicker().setValue(0);
+        assertFalse("Text should be valid: " + view.customerSelectionPanel.getQtyPicker().getValue(), model.checkQuantity());
+        
+    }
+    
+    
     
     // !! this test case is stupid
 //    @Test
