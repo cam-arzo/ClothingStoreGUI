@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ClothingStoreGUI;
 
 import java.math.BigDecimal;
@@ -18,23 +14,24 @@ public class OrderProduct {
     
     public OrderProduct(Product product) {
         this.product = product;
-        this.totalPrice = this.product.getDiscountedPrice().multiply(new BigDecimal(this.quantity));
+        this.setTotalPrice();
     }
     
     public OrderProduct(Product product, String size, int quantity) {
         this.product = product;
         this.size = size;
         this.quantity = quantity;
-        this.totalPrice = this.product.getDiscountedPrice().multiply(new BigDecimal(this.quantity));
+        this.setTotalPrice();
     }
 
     @Override
-    // example output: Comfy Cotton T-Shirt, size M, [x2] - $59.98
+    // current output: Comfy Cotton T-Shirt, size M [x2] - $59.98
     public String toString() {
         String out = "";
 //        out += product.getName() + ", Size " + size + ", [x" + quantity + "] = $" + totalPrice; // total price function called so that it formats to 2dp
-        out += String.format("%-40s %-20s %-10s $%-20.2f", product.getName(), "Size " + size, "[x" + quantity + "]", totalPrice);
-
+//        out += String.format("%-40s %-20s %-10s $%-20.2f", product.getName(), "Size " + size, "[x" + quantity + "]", totalPrice); // old formatting had inconsitent spacing
+        // new output
+        out += String.format("%s, %s %s - $%.2f", product.getName(), "Size " + size, "[x" + quantity + "]", totalPrice);
         // print discount info e.g. (20% off!) if possible
         if (product.hasDiscount()) {
             out += " " + product.getDiscount().cartString();
@@ -71,7 +68,7 @@ public class OrderProduct {
         return totalPrice;
     }
 
-    public void setTotalPrice() {
+    public final void setTotalPrice() {
         this.totalPrice = this.product.getDiscountedPrice().multiply(new BigDecimal(this.quantity));
     }
 }

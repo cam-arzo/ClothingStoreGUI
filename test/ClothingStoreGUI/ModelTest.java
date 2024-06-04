@@ -226,25 +226,4 @@ public class ModelTest {
         
     }
     
-    
-    
-    // !! this test case is stupid
-//    @Test
-//    public void testUpdateProductTableInPanel() {
-//        
-//        // Set list of products
-//        List<Product> testProducts = prepareTestProducts1();
-//        model.productList = testProducts;
-//        
-//        // Set initial model filters
-//        model.categoryFilter = Category.NONE;
-//        model.genderFilter = Gender.NONE;
-//        
-//        // view.staffProductPanel or view.customerProductPanel
-//        model.updateProductTableInPanel(panel);
-//        
-//        assertEquals("These are equal", 1, 1);
-//        
-//    }
-    
 }

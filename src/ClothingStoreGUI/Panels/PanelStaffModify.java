@@ -24,9 +24,11 @@ public class PanelStaffModify extends javax.swing.JPanel implements InteractiveP
      * Creates new form PanelStaffModify
      */
     
+    // Store previously selected discount so that clicking the same one doesnt reset string input
     String previousDiscountSelection; 
     
     public PanelStaffModify(Controller controller) {
+        System.out.println("CREATE PanelStaffModify");
         initComponents();
         initConnections(controller);
         NameErrorLabel.setVisible(false);
@@ -35,6 +37,7 @@ public class PanelStaffModify extends javax.swing.JPanel implements InteractiveP
     }
     
     public void updatePreviousDiscountSelection() {
+        System.out.println("UPDATE PREV DISCOUNT SELECTION");
         previousDiscountSelection = DiscountDropdown.getSelectedItem().toString();
     }
     
@@ -44,6 +47,9 @@ public class PanelStaffModify extends javax.swing.JPanel implements InteractiveP
         SaveButton.addActionListener(e -> controller.staffSaveProductButtonClicked());
 //        DiscountDropdown.addActionListener(e -> controller.discountTypeModified());
         
+        // update previous selection to the current discount of the selected item
+        updatePreviousDiscountSelection();
+
         // Adding an ActionListener to only update values when changing to a new discount type
         DiscountDropdown.addActionListener(new ActionListener() {
             @Override

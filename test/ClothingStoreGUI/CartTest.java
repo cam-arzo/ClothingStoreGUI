@@ -149,7 +149,7 @@ public class CartTest {
         cart.removeOrderProduct(removeOrderProductB);
         
         assertEquals("Number of items is not 3", cart.getNumItems(), 3);
-         assertTrue("Total Price is not 119.97, it is " + cart.getTotalPrice().toString(), cart.getTotalPrice().compareTo(new BigDecimal("119.97")) == 0);
+        assertTrue("Total Price is not 119.97, it is " + cart.getTotalPrice().toString(), cart.getTotalPrice().compareTo(new BigDecimal("119.97")) == 0);
     }
     
     /**
