@@ -333,8 +333,10 @@ public class Model {
         switch (productType) {
             case CLOTHING:  // Clothing
                 newProduct = new ClothingItem(-1, name, available, price, gender, category, discount, discountType);
+                break;
             case SHOES:  // Shoes
                 newProduct = new ShoeItem(-1, name, available, price, gender, category, discount, discountType);
+                break;
             default:
         }
 

@@ -62,7 +62,7 @@ public class Database {
             }
         }
     }
-    
+
     public Product createProduct(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         boolean available = rs.getBoolean("available");
@@ -76,8 +76,7 @@ public class Database {
 
         DiscountType discountType = DiscountType.intToDiscount(discount_int); // change int to enum form
         Discount discount = createDiscount(discountType, discount_amount);
-        
-        
+
         Product product = null;
 
         switch (ProductType.intToType(type)) {
@@ -93,16 +92,16 @@ public class Database {
                 return null;
         }
     }
-    
+
     public Order createOrder(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         int quantity = rs.getInt("quantity");
         BigDecimal total_price = rs.getBigDecimal("total_price");
-        
+
         Order order = new Order(id, quantity, total_price);
         return order;
     }
-    
+
     public Discount createDiscount(DiscountType discountType, BigDecimal discount_amount) {
         Discount discount = null;
 
@@ -121,7 +120,7 @@ public class Database {
         }
         return discount;
     }
-    
+
     // Print out table contents
     public void previewTable(String tableName) {
         String query = "SELECT * FROM " + tableName;
@@ -201,7 +200,7 @@ public class Database {
 
         return products;
     }
-    
+
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders";
@@ -218,33 +217,33 @@ public class Database {
 
         return orders;
     }
-    
+
     public BigDecimal getTotalRevenue() {
-        String sql = "SELECT total_price FROM orders";
+        String sql = "SELECT SUM(total_price) AS total_sum FROM orders";
         BigDecimal sum = BigDecimal.ZERO;
         
         try ( Connection con = getConnection();  PreparedStatement pstmt = con.prepareStatement(sql);  ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                sum = sum.add(rs.getBigDecimal("total_price"));
+            if (rs.next()) {
+                sum = rs.getBigDecimal("total_sum");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return sum;
+
     }
-    
+
     // WRITE FUNCTIONS
     public void addProductToDatabase(Product newProduct) {
         // id is -1
         // add function in category, discounttype gender and producttype enums to
         // get int from category
         //INSERT INTO products (available, type, name, category, price, gender_id, discount_id, discount_amount) VALUES (1, 0, 'Comfy Cotton T-shirt',        0, 29.99,   1, 0, null)
-    
+
         String sql = "INSERT INTO products (available, type, name, category, price, gender_id, discount_id, discount_amount) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            
+
+        try ( Connection connection = getConnection();  PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
             // Set the values for the placeholders
             preparedStatement.setInt(1, newProduct.isAvailable() ? 1 : 0); // available
             preparedStatement.setInt(2, newProduct.getType().toInt()); // type  // !! check this is right
@@ -253,18 +252,16 @@ public class Database {
             preparedStatement.setBigDecimal(5, newProduct.getPrice()); // price
             preparedStatement.setInt(6, newProduct.getGender().toInt()); // gender_id
             preparedStatement.setInt(7, newProduct.getDiscountType().toInt()); // discount_id
-            
-            if (newProduct.hasDiscount())
-            {
+
+            if (newProduct.hasDiscount()) {
                 preparedStatement.setBigDecimal(8, newProduct.getDiscount().amount);
-            }
-            else {
+            } else {
                 preparedStatement.setNull(8, java.sql.Types.INTEGER);
             }
-            
+
             // Execute the prepared statement
             int rowsAffected = preparedStatement.executeUpdate();
-            
+
             if (rowsAffected > 0) {
                 System.out.println("Product added successfully.");
             } else {
@@ -273,26 +270,25 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    
+
     }
 
     public void modifyProductInDatabase(Product product) {
         // use id to modify
-        
-        String sql =    "UPDATE products \n" +
-                        "SET available = ?, \n" +
-                        "    type = ?, \n" +
-                        "    name = ?, \n" +
-                        "    category = ?, \n" +
-                        "    price = ?, \n" +
-                        "    gender_id = ?, \n" +
-                        "    discount_id = ?, \n" +
-                        "    discount_amount = ? \n" +
-                        "WHERE id = ?";
-        
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            
+
+        String sql = "UPDATE products \n"
+                + "SET available = ?, \n"
+                + "    type = ?, \n"
+                + "    name = ?, \n"
+                + "    category = ?, \n"
+                + "    price = ?, \n"
+                + "    gender_id = ?, \n"
+                + "    discount_id = ?, \n"
+                + "    discount_amount = ? \n"
+                + "WHERE id = ?";
+
+        try ( Connection connection = getConnection();  PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
             // Set the values for the placeholders
             preparedStatement.setInt(1, product.isAvailable() ? 1 : 0); // available
             preparedStatement.setInt(2, product.getType().toInt()); // type
@@ -301,20 +297,18 @@ public class Database {
             preparedStatement.setBigDecimal(5, product.getPrice()); // price
             preparedStatement.setInt(6, product.getGender().toInt()); // gender_id
             preparedStatement.setInt(7, product.getDiscountType().toInt()); // discount_id
-            
-            if (product.hasDiscount())
-            {
+
+            if (product.hasDiscount()) {
                 preparedStatement.setBigDecimal(8, product.getDiscount().amount);
-            }
-            else {
+            } else {
                 preparedStatement.setNull(8, java.sql.Types.INTEGER);
             }
-            
+
             preparedStatement.setInt(9, product.getID());
-            
+
             // Execute the prepared statement
             int rowsAffected = preparedStatement.executeUpdate();
-            
+
             if (rowsAffected > 0) {
                 System.out.println("Product modified successfully.");
             } else {
@@ -323,23 +317,22 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
     }
 
     public void removeProductFromDatabase(Product product) {
         // use id to identify and remove
-        
+
         String sql = "DELETE FROM products WHERE id = ?";
-        
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            
+
+        try ( Connection connection = getConnection();  PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
             // Set the values for the placeholders
             preparedStatement.setInt(1, product.getID());
-            
+
             // Execute the prepared statement
             int rowsAffected = preparedStatement.executeUpdate();
-            
+
             if (rowsAffected > 0) {
                 System.out.println("Product deleted successfully.");
             } else {
@@ -348,23 +341,22 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
     }
 
     public void addOrderToDatabase(int qty, BigDecimal total_price) {
-        
+
         String sql = "INSERT INTO orders (quantity, total_price) VALUES (?, ?)";
-        
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            
+
+        try ( Connection connection = getConnection();  PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
             // Set the values for the placeholders
             preparedStatement.setInt(1, qty);
             preparedStatement.setBigDecimal(2, total_price);
-            
+
             // Execute the prepared statement
             int rowsAffected = preparedStatement.executeUpdate();
-            
+
             if (rowsAffected > 0) {
                 System.out.println("Order details added successfully.");
             } else {
@@ -373,11 +365,7 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
     }
-    
-    
-    
-    
 
 }
