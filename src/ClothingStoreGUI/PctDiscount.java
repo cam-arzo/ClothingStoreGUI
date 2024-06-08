@@ -18,12 +18,14 @@ public class PctDiscount extends Discount {
     
     @Override
     protected BigDecimal calcNewPrice(BigDecimal price) {
+        // price - (price * discount amount) = new price
         BigDecimal newPrice = price.subtract(price.multiply(amount.divide(new BigDecimal(100))));
         return newPrice.setScale(2, RoundingMode.HALF_UP);
     }
     
     @Override
     public String cartString() {
+        // how the discount displays in cart panel
         if (super.amount.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0) {
             return "("+amount.intValue() +"% off!)"; // e.g. 15% off
         }
