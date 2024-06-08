@@ -25,6 +25,7 @@ public class PanelCustomerSelection extends javax.swing.JPanel implements Intera
     public void initConnections(Controller controller) {
         BackButton.addActionListener(e -> controller.backButtonClicked());
         AddToCartButton.addActionListener(e -> controller.addToCartButtonClicked());
+        // There is a ProductListSelectionListener in controller for handling list selection
     }
 
     public JLabel getProductNameLabel() {

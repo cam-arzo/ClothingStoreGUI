@@ -62,6 +62,7 @@ public class Model {
         }
     }
 
+    // update selected order in model, !! update cart with selected index
     public void setCartSelectedOrderFromIndex(int index) {
         if ((index >= 0) && (index < cart.getCartProducts().size())) {
             selectedOrder = cart.getCartProducts().get(index);
@@ -128,7 +129,7 @@ public class Model {
         view.customerSelectionPanel.getQtyPicker().setValue(selectedOrder.getQuantity());
         view.customerSelectionPanel.getAddToCartButton().setText("Save changes");
     }
-
+    
     public boolean customerSaveChanges() {
         boolean validQuantity = checkQuantity();
 
@@ -139,12 +140,15 @@ public class Model {
 
         String size = (String) view.customerSelectionPanel.getSizeDropdown().getSelectedItem();
         int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
-
-        OrderProduct newOrder = new OrderProduct(selectedProduct, size, qty);
-
+        
         if (isModifyingProduct) { // user is modifying
+            // make new OrderProduct from the selected order in CART
+            // (don't use SelectedProduct as this is the product from the product selection screen!)
+            OrderProduct newOrder = new OrderProduct(selectedOrder.getProduct(), size, qty);
             cart.updateCart(selectedOrder, newOrder);
         } else { // user is adding
+            // make new OrderProduct from the selected product in PRODUCT VIEW
+            OrderProduct newOrder = new OrderProduct(selectedProduct, size, qty);
             cart.addItem(newOrder);
         }
         displayCart();

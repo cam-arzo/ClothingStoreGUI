@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
 package ClothingStoreGUI;
 
 import org.junit.After;
@@ -28,18 +24,6 @@ public class DatabaseTest {
     public static void setUpClass() {
         database = new Database();
         database.setup();
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -120,58 +104,4 @@ public class DatabaseTest {
             fail("SQL Exception: " + e.getMessage());
         }
     }
-
-//    /**
-//     * Test of addProductToDatabase method, of class Database.
-//     */
-//    @Test
-//    public void testAddProductToDatabase() {
-//        System.out.println("addProductToDatabase");
-//        Product newProduct = null;
-//        Database instance = new Database();
-//        instance.addProductToDatabase(newProduct);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of modifyProductInDatabase method, of class Database.
-//     */
-//    @Test
-//    public void testModifyProductInDatabase() {
-//        System.out.println("modifyProductInDatabase");
-//        Product product = null;
-//        Database instance = new Database();
-//        instance.modifyProductInDatabase(product);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of removeProductFromDatabase method, of class Database.
-//     */
-//    @Test
-//    public void testRemoveProductFromDatabase() {
-//        System.out.println("removeProductFromDatabase");
-//        Product product = null;
-//        Database instance = new Database();
-//        instance.removeProductFromDatabase(product);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-//
-//    /**
-//     * Test of addOrderToDatabase method, of class Database.
-//     */
-//    @Test
-//    public void testAddOrderToDatabase() {
-//        System.out.println("addOrderToDatabase");
-//        int qty = 0;
-//        BigDecimal total_price = null;
-//        Database instance = new Database();
-//        instance.addOrderToDatabase(qty, total_price);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-    
 }

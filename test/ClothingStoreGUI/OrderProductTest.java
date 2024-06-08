@@ -51,13 +51,6 @@ public class OrderProductTest {
         return testOrderProductList;
     }
     
-    public OrderProductTest() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
     // Test total prices for a range of products
     // Total price includes adjusting the price for any discounts and for quantity
     

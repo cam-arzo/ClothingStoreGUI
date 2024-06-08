@@ -69,6 +69,7 @@ public class Controller {
             }
         });
         
+        // When selecting order in cart, update model with the selected product
         view.cartPanel.addProductListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {

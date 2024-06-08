@@ -1,27 +1,11 @@
 package ClothingStoreGUI;
 
-import ClothingStoreGUI.Enums.Category;
-import ClothingStoreGUI.Enums.Gender;
 import ClothingStoreGUI.Panels.PanelCustomerSelection;
 import ClothingStoreGUI.Panels.PanelStaffModify;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ModelTest {
-    
-    // test products: no discounts, all unisex casual
-    private List<Product> prepareTestProducts() {
-        List<Product> testProductList = new ArrayList<>();
-        testProductList.add( new ClothingItem(1, "Product One", true, new BigDecimal(39.99), Gender.UNISEX, Category.CASUAL, null, null) );
-        testProductList.add( new ClothingItem(2, "Product Two", true, new BigDecimal(39.99), Gender.UNISEX, Category.CASUAL, null, null) );
-        testProductList.add( new ClothingItem(3, "Product Three", true, new BigDecimal(39.99), Gender.UNISEX, Category.CASUAL, null, null) );
-        testProductList.add( new ClothingItem(4, "Product Four", true, new BigDecimal(39.99), Gender.UNISEX, Category.CASUAL, null, null) );
-        testProductList.add( new ClothingItem(5, "Product Five", true, new BigDecimal(39.99), Gender.UNISEX, Category.CASUAL, null, null) );
-        return testProductList;
-    }
     
     @Test
     public void testCheckName() {
@@ -169,8 +153,6 @@ public class ModelTest {
         assertFalse("Text shouldn't be valid: " + view.staffEditPanel.getDiscountTextField().getText(), model.checkDiscountAmount());
         
     }
-    
-    
     
     @Test
     public void testCheckQuantity() {

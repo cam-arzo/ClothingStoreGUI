@@ -87,7 +87,7 @@ public class Cart implements Cloneable {
         setNumItems(); // update total no of items
         setTotalPrice(); // update total price
     }
-
+    
     public void updateCart(OrderProduct oldProduct, OrderProduct newProduct) {
         // search through the cart products to find the old product
         for (int i = 0; i < cartProducts.size(); i++) {
@@ -131,7 +131,7 @@ public class Cart implements Cloneable {
         }
         this.numItems = sum;
     }
-
+      
     public void reset() {
         cartProducts.clear();
         numItems = 0;

@@ -49,15 +49,6 @@ public class CartTest {
         return testOrderProductList;
     }
     
-    private List<OrderProduct> prepareTestOrderProducts2(List<Product> testProductList) {
-        List<OrderProduct> testOrderProductList = new ArrayList<>();
-        // create many order products. size medium, quantity 1.
-        for (Product product : testProductList) {
-            testOrderProductList.add(new OrderProduct(product, "M", 1));
-        }
-        return testOrderProductList;
-    }
-    
     /**
      * Testing cart add
      * Total price and total items should increase correctly
