@@ -119,6 +119,7 @@ public class Model {
 
     // CUSTOMER FUNCTIONS
     // get info of the customers selected product and set components to display
+    // !! need to use info from Selected Order if modifying cart item
     public void setCustomerSelectedProductVariables() {
         isModifyingProduct = false; // adding a new order product
         view.customerSelectionPanel.getProductNameLabel().setText(selectedProduct.toString());
@@ -133,6 +134,8 @@ public class Model {
     public void setOrderModify() {
         isModifyingProduct = true; // modifying an order
         view.customerSelectionPanel.getProductNameLabel().setText(selectedOrder.getProduct().toString());
+        String[] sizes = selectedOrder.getProduct().getSizeSystem();
+        view.customerSelectionPanel.getSizeDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(sizes));
         view.customerSelectionPanel.getSizeDropdown().setSelectedItem(selectedOrder.getSize());
         view.customerSelectionPanel.getQtyPicker().setValue(selectedOrder.getQuantity());
         view.customerSelectionPanel.getAddToCartButton().setText("Save changes");

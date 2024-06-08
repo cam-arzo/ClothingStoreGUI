@@ -156,7 +156,7 @@ public class Controller {
     public void customerModifyButtonClicked() {
         if (Objects.nonNull(model.selectedOrder)) { // check if user has selected something
             // go to customer selection
-            model.setCustomerSelectedProductVariables();
+//            model.setCustomerSelectedProductVariables();
             model.setOrderModify();
             setPreviousPanel(view.cartPanel);
             view.switchPanel(view.customerSelectionPanel);
