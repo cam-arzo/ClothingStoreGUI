@@ -1,47 +1,16 @@
 package ClothingStoreGUI;
 
 import ClothingStoreGUI.Enums.Category;
-import ClothingStoreGUI.Enums.DiscountType;
 import ClothingStoreGUI.Enums.Gender;
 import ClothingStoreGUI.Panels.PanelCustomerSelection;
 import ClothingStoreGUI.Panels.PanelStaffModify;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JPanel;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ModelTest {
-    
-    private static Model model;
-    
-    @BeforeClass
-    public static void setUpClass() {
-        model = new Model();
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * 
-     * ClothingItem(int id, String name, Boolean available, BigDecimal price, Gender gender, Category category, Discount discount, DiscountType discountType)
-     * 
-     */
     
     // test products: no discounts, all unisex casual
     private List<Product> prepareTestProducts() {

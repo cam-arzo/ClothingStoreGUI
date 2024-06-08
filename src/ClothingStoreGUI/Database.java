@@ -44,7 +44,7 @@ public class Database {
             DatabaseDefaultHandler defaultData = new DatabaseDefaultHandler(this);
 
             // Optionally delete tables
-//            defaultData.deleteTables(stmt);
+            defaultData.deleteTables(stmt);
             // Create tables & fill data if they don't already exist
             defaultData.createTables(stmt);
 
@@ -165,7 +165,7 @@ public class Database {
         }
     }
 
-    // READ FUNCTIONS
+    // READ OPERATIONS
     public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
         String sql = "SELECT * FROM products";
@@ -233,7 +233,7 @@ public class Database {
 
     }
 
-    // WRITE FUNCTIONS
+    // WRITE OPERATIONS
     public void addProductToDatabase(Product newProduct) {
         // id is -1
         // add function in category, discounttype gender and producttype enums to

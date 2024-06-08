@@ -18,8 +18,6 @@ import static org.junit.Assert.*;
  * 
  */
 
-
-
 public class OrderProductTest {
     
     // make test products: no discounts, all unisex casual
