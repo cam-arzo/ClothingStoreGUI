@@ -38,24 +38,29 @@ public class Model {
     Cart cart = Cart.getInstance();
 
     public void setDatabase(Database database) {
+        // set database instance
         this.database = database;
     }
 
     public void setView(View view) {
+        // set view instance
         this.view = view;
     }
 
     public void processAllProducts() {
+        // retrieve all products from database (for staff view)
         productList = database.getAllProducts();
         updateProductTableInPanel(view.staffProductPanel);
     }
 
     public void processAvailableProducts() {
+        // retrieve only available products from database (for customer view)
         productList = database.getAvailableProducts();
         updateProductTableInPanel(view.customerProductPanel);
     }
 
     public void setSelectedProductFromIndex(int index) {
+        // get the product that the user has highlighted in the product list
         if ((index >= 0) && (index < filteredProductList.size())) {
             selectedProduct = filteredProductList.get(index);
             System.out.println("SELECTED PRODUCT in product view: " + selectedProduct.getName());
@@ -64,6 +69,7 @@ public class Model {
 
     // update selected order in model, !! update cart with selected index
     public void setCartSelectedOrderFromIndex(int index) {
+        // get the order that the user has selected in cart view
         if ((index >= 0) && (index < cart.getCartProducts().size())) {
             selectedOrder = cart.getCartProducts().get(index);
             System.out.println("SELECTED ORDER in cart: " + selectedOrder.getProduct().getName());
@@ -71,20 +77,22 @@ public class Model {
     }
 
     public void updateProductTableInPanel(JPanel panel) {
+        // display products based on the chosen category and gender
 //        System.out.println("Filtering based on category "+categoryFilter+" and gender "+genderFilter); // debug
         if (!categoryFilter.equals(Category.NONE) || !genderFilter.equals(Gender.NONE)) {
-            filteredProductList.clear();
+            filteredProductList.clear(); // make sure sure product list is empty
             for (Product product : productList) {
                 if (categoryFilter.equals(Category.NONE) || product.getCategory().equals(categoryFilter)) {
                     if (genderFilter.equals(Gender.NONE) || product.getGender().equals(genderFilter)) {
-                        filteredProductList.add(product);
+                        filteredProductList.add(product); // add product to list if it fits the current category and gender
                     }
                 }
             }
         } else {
-            filteredProductList = new ArrayList<>(productList);
+            filteredProductList = new ArrayList<>(productList); // if there are no filters, show all products
         }
         String[] stringArray = convertProductsToStringArray(filteredProductList);
+        // find what list to update (staff or customer) by checking the panel
         if (panel instanceof PanelCustomerProductView) {
             view.customerProductPanel.updateProductTable(stringArray);
         } else if (panel instanceof PanelStaffProductView) {
@@ -112,7 +120,7 @@ public class Model {
     // CUSTOMER FUNCTIONS
     // get info of the customers selected product and set components to display
     public void setCustomerSelectedProductVariables() {
-        isModifyingProduct = false;
+        isModifyingProduct = false; // adding a new order product
         view.customerSelectionPanel.getProductNameLabel().setText(selectedProduct.toString());
         String[] sizes = selectedProduct.getSizeSystem();
         view.customerSelectionPanel.getSizeDropdown().setModel(new javax.swing.DefaultComboBoxModel<>(sizes));
@@ -123,14 +131,16 @@ public class Model {
 
     // get info on OrderProduct when user selects it to modify
     public void setOrderModify() {
-        isModifyingProduct = true;
+        isModifyingProduct = true; // modifying an order
         view.customerSelectionPanel.getProductNameLabel().setText(selectedOrder.getProduct().toString());
         view.customerSelectionPanel.getSizeDropdown().setSelectedItem(selectedOrder.getSize());
         view.customerSelectionPanel.getQtyPicker().setValue(selectedOrder.getQuantity());
         view.customerSelectionPanel.getAddToCartButton().setText("Save changes");
     }
-    
+
+    // returns true if changes are saved successfully
     public boolean customerSaveChanges() {
+        // validate inputs (quantity must be positive)
         boolean validQuantity = checkQuantity();
 
         // return false if qty is invalid
@@ -138,6 +148,7 @@ public class Model {
             return false;
         }
 
+        // get variables
         String size = (String) view.customerSelectionPanel.getSizeDropdown().getSelectedItem();
         int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
         
@@ -156,6 +167,7 @@ public class Model {
         return true;
     }
 
+    // check quantity is positive
     public boolean checkQuantity() {
         int qty = (int) view.customerSelectionPanel.getQtyPicker().getValue();
         if (qty > 0) {
@@ -168,12 +180,14 @@ public class Model {
         }
     }
 
+    // update cart display
     public void displayCart() {
         view.cartPanel.getCartList().setListData(cart.toStringArray());
-        selectedOrder = null;
+        selectedOrder = null; // reset selected order as it becomes automatically deselected
         updateCartLabel();
 
         if (cart.getCartProducts().isEmpty()) {
+            // disable all interactions if there are no products in cart
             view.cartPanel.getTotalPriceLabel().setVisible(false);
             view.cartPanel.getErrorLabel().setVisible(true);
             view.cartPanel.getErrorLabel().setText("Cart is empty. Please select products to add to cart.");
@@ -182,6 +196,7 @@ public class Model {
             view.cartPanel.getConfirmButton().setEnabled(false);
             return;
         } else {
+            // enable interactions
             view.cartPanel.getTotalPriceLabel().setVisible(true);
             view.cartPanel.getTotalPriceLabel().setText("Total price: $" + cart.getTotalPrice());
             view.cartPanel.getErrorLabel().setVisible(false);
@@ -194,17 +209,20 @@ public class Model {
         view.cartPanel.getErrorLabel().setVisible(false);
     }
 
+    // remove item from cart
     public void removeFromCart() {
         cart.removeOrderProduct(selectedOrder);
         displayCart();
     }
 
+    // update label that shows '0 items' next to cart button in customer product panel
     public void updateCartLabel() {
         int numItems = cart.getNumItems();
         String labelText = numItems + " item" + (numItems != 1 ? "s" : ""); // show "item" if only 1 item, otherwise show "items"
         view.customerProductPanel.getNumItemsLabel().setText(labelText);
     }
-
+    
+    // show receipt in table in checkout panel
     public void printReceipt() {
         JTable table = view.checkoutPanel.getReceiptTable();
         DefaultTableModel model = new DefaultTableModel(new Object[]{"Name", "Size", "Qty", "Price"}, 0); // 0 rows at first
@@ -216,29 +234,33 @@ public class Model {
         }
         table.setModel(model);
 
+        // set column widths
         table.getColumnModel().getColumn(0).setPreferredWidth(300);
         table.getColumnModel().getColumn(1).setPreferredWidth(50);
         table.getColumnModel().getColumn(2).setPreferredWidth(50);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
 
+        // show total price
         view.checkoutPanel.getTotalPriceLabel().setText("Total price: $" + cart.getTotalPrice());
-        
+        // update orders database
         database.addOrderToDatabase(cart.getNumItems(), cart.getTotalPrice());
     }
 
     // STAFF FUNCTIONS
     // get info of the staff selected product and set components to display
     public void setNewProductVariables() {
-        isModifyingProduct = false;
+        isModifyingProduct = false; // staff is adding a new product
         view.staffEditPanel.getMessage().setText("Adding new product");
-        setDefaultProductSettings();
+        setDefaultProductSettings(); // set components to show correct options e.g. gender dropdown
     }
 
 // get info of the staff selected product and set components to display
     public void setStaffSelectedProductVariables() {
-        setDefaultProductSettings(); // a fallback
-        isModifyingProduct = true;
+        setDefaultProductSettings(); // set components to show correct options e.g. gender dropdown
+        isModifyingProduct = true; // user is modifying an existing product
         view.staffEditPanel.getMessage().setText("Modifying product: " + selectedProduct.getName());
+        
+        // get and set the existing product information
         view.staffEditPanel.getNameTextField().setText(selectedProduct.getName());
         view.staffEditPanel.getPriceTextField().setText("$" + selectedProduct.getPrice());
         view.staffEditPanel.getCategoryDropdown().setSelectedItem(selectedProduct.getCategory().getDisplayName());
@@ -269,26 +291,27 @@ public class Model {
 
     // sets the text field to match the discount type
     public void setDiscountStatus(String type, BigDecimal value) {
-        BigDecimal amount = new BigDecimal(10);
+        BigDecimal amount = new BigDecimal(10); // set amount to 10 as default in case value hasnt been passed in
         if (Objects.nonNull(value)) {
             amount = value;
         }
         switch (type) {
-            case "None":
+            case "None": // displays "No discount"
                 view.staffEditPanel.getDiscountTextField().setText("No discount");
                 view.staffEditPanel.getDiscountTextField().setEditable(false);
                 break;
-            case "Fixed":
+            case "Fixed": // displays "$10"
                 view.staffEditPanel.getDiscountTextField().setEditable(true);
                 view.staffEditPanel.getDiscountTextField().setText("$" + amount.setScale(2, BigDecimal.ROUND_HALF_UP));
                 break;
-            case "Percent":
+            case "Percent": // displays "10%"
                 view.staffEditPanel.getDiscountTextField().setEditable(true);
                 view.staffEditPanel.getDiscountTextField().setText(amount.setScale(0, BigDecimal.ROUND_HALF_UP) + "%");
                 break;
         }
     }
 
+    // remove product from database
     public void removeProduct() {
         productList.remove(selectedProduct);
         database.removeProductFromDatabase(selectedProduct);
@@ -308,7 +331,7 @@ public class Model {
             return false;
         }
 
-        // name price type category gender avaliability discount amount
+        // gets name price type category gender avaliability discount amount
         String name = view.staffEditPanel.getNameTextField().getText();
         BigDecimal price = convertStringToBigDecimal(view.staffEditPanel.getPriceTextField().getText());
         ProductType productType = ProductType.fromDisplayName((String) view.staffEditPanel.getItemTypeDropdown().getSelectedItem());
@@ -319,6 +342,7 @@ public class Model {
         BigDecimal discountAmount = convertStringToBigDecimal(view.staffEditPanel.getDiscountTextField().getText());
         Discount discount = null;
 
+        // create discount based on type
         switch (discountType) {
             case NONE:
                 break;
@@ -334,6 +358,7 @@ public class Model {
         Product newProduct = null;
         //    public Product(int id, String name, boolean available, BigDecimal price, Gender gender, Category category, Discount discount, DiscountType discountType, ProductType productType) {
 
+        // create product based on product type
         switch (productType) {
             case CLOTHING:  // Clothing
                 newProduct = new ClothingItem(-1, name, available, price, gender, category, discount, discountType);
@@ -345,9 +370,11 @@ public class Model {
         }
 
         if (isModifyingProduct) { // staff is modifying
+            // change existing product in product list and in database
             modifySelectedProduct(newProduct);
             database.modifyProductInDatabase(selectedProduct);
         } else { // staff is adding
+            // add product to product list and to database
             productList.add(newProduct);
             database.addProductToDatabase(newProduct);
         }
@@ -356,6 +383,7 @@ public class Model {
 
     }
 
+    // returns true or false by reading the availability dropdown
     public boolean isAvailableFromString() {
         String string = (String) view.staffEditPanel.getAvailableDropdown().getSelectedItem();
         if (string.equals("True")) {
@@ -364,6 +392,7 @@ public class Model {
         return false;
     }
 
+    // checks name text field to make sure it is not empty, shows or hides error message
     public boolean checkName() {
         String text = view.staffEditPanel.getNameTextField().getText();
         if (text == null || text.strip().isEmpty() || text.equals("Enter new product name...")) { // placeholder text
@@ -376,6 +405,7 @@ public class Model {
         }
     }
 
+    // checks price to make sure it is not null or negative, shows or hides error message
     public boolean checkPrice() {
         String text = view.staffEditPanel.getPriceTextField().getText();
         BigDecimal price = convertStringToBigDecimal(text);
@@ -389,6 +419,7 @@ public class Model {
         return false;
     }
 
+    // checks discount next field for valid amount, shows or hides error message
     public boolean checkDiscountAmount() {
         DiscountType discountType = DiscountType.fromDisplayName((String) view.staffEditPanel.getDiscountDropdown().getSelectedItem());
 
@@ -423,6 +454,7 @@ public class Model {
         return number.compareTo(min) > 0 && number.compareTo(max) <= 0;
     }
 
+    // reads string input from price text fields and converts to big decimal
     public BigDecimal convertStringToBigDecimal(String string) {
         try {
             String cleanedText = string.replaceAll("[\\s\\$\\%]", ""); // remove all whitespace and chars that are $ or %
@@ -451,16 +483,19 @@ public class Model {
         selectedProduct.setType(newProduct.getProductType());
     }
 
+    // set user-selected category filter
     public void setCategoryFilter(int value, JPanel panel) {
         categoryFilter = Category.intToCategory(value);
         updateProductTableInPanel(panel);
     }
 
+    // set user-selected gender filter
     public void setGenderFilter(int value, JPanel panel) {
         genderFilter = Gender.intToGender(value);
         updateProductTableInPanel(panel);
     }
 
+    // resets and goes back to view selection panel
     public void reset() {
         // restart program by resetting variables and views
         cart.reset();
@@ -474,6 +509,7 @@ public class Model {
         view.staffProductPanel.setDefaultComponentVisibilities();
     }
 
+    // debug function
     public void printDebugProductList(List<Product> productList) {
         System.out.print("[");
         for (Product product : productList) {
@@ -482,8 +518,9 @@ public class Model {
         System.out.print("]");
     }
 
-    
+    // displays order table in staff view
     public void updateOrderInfo() {
+        // shows orders and total revenue
         orderList = database.getOrders();
         total_revenue = database.getTotalRevenue();
         

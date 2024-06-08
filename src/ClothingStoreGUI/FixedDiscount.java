@@ -13,25 +13,18 @@ public class FixedDiscount extends Discount{
     
     @Override
     protected BigDecimal calcNewPrice(BigDecimal price) {
+        // price - discount amount = new price
         BigDecimal newPrice = price.subtract(amount);
         return newPrice.setScale(2, RoundingMode.HALF_UP);
     }
     
     @Override
     public String cartString() {
+        // how the discount displays in cart panel
         if (super.amount.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0) {
             return String.format("($%.0f off!)", super.amount); // e.g. $15 off
         }
         return String.format("($%.2f off!)", super.amount); // e.g. $15.50 off
     }
-    
-//    // string formatting for viewCart function
-//    public String cartString() {
-//        // format without decimals if there isnt a cents value
-//        if (super.amount.scale() == 0) {
-//            return " ($"+super.amount+" off!)"; // e.g. ($15 off!)
-//        }
-//        return String.format(" ($%.2f off!)", super.amount); // e.g. ($15.50 off!)
-//    }
 
 }

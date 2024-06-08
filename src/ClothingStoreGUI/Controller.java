@@ -197,9 +197,9 @@ public class Controller {
     // STAFF VIEW BUTTONS
     // Staff product view
     public void staffAddButtonClicked() {
-        view.staffProductPanel.getErrorLabel().setVisible(false);
-        setPreviousPanel(view.staffProductPanel);
-        model.setNewProductVariables();
+        view.staffProductPanel.getErrorLabel().setVisible(false); // hide error label
+        setPreviousPanel(view.staffProductPanel); // set previous panel as reference for back button
+        model.setNewProductVariables(); // set up the panel
         view.staffEditPanel.updatePreviousDiscountSelection();
         view.switchPanel(view.staffEditPanel);
     }
@@ -219,7 +219,6 @@ public class Controller {
             view.staffProductPanel.getErrorLabel().setVisible(true);
         }
 
-        // modify: need to read and LOAD name price category gender avaliability discount type/amount from the selected product
     }
 
     public void staffRemoveButtonClicked() {
@@ -247,13 +246,15 @@ public class Controller {
     }
 
     public void orderButtonClicked() {
+        // displays order information and total revenue from orders database
         view.staffProductPanel.getErrorLabel().setVisible(false);
         setPreviousPanel(view.staffProductPanel);
-        model.updateOrderInfo();
+        model.updateOrderInfo(); // re-display the orders table
         view.switchPanel(view.orderPanel);
     }
     
     public void nameTextFieldFieldFocused(JTextField textField) {
+        // make prompt text disappear when clicked
         if (textField.getText().equalsIgnoreCase("Enter new product name..."))
         {
             textField.setText("");
@@ -261,6 +262,7 @@ public class Controller {
     }
     
     public void nameTextFieldFieldUnfocused(JTextField textField) {
+        // show prompt text appear if text field is empty
         if (textField.getText().strip().equals(""))
         {
             textField.setText("Enter new product name...");
