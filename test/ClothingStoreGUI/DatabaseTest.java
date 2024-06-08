@@ -4,11 +4,6 @@
  */
 package ClothingStoreGUI;
 
-import ClothingStoreGUI.Enums.Category;
-import ClothingStoreGUI.Enums.DiscountType;
-import ClothingStoreGUI.Enums.Gender;
-import java.math.BigDecimal;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,9 +26,6 @@ public class DatabaseTest {
     
     @BeforeClass
     public static void setUpClass() {
-        String url = "jdbc:derby:ClothingStoreDB;create=true";  // URL of the DB host
-        String dbusername = "pdc";  // DB username
-        String dbpassword = "pdc";  // DB password
         database = new Database();
         database.setup();
     }
